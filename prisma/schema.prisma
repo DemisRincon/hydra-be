@@ -1,14 +1,255 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client"
-  output   = "../generated/prisma"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+/* =========================
+   USERS & ROLES
+========================= */
+
+model roles {
+  id           String    @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+  name         role_type @unique
+  display_name String
+  users        users[]
+}
+
+model users {
+  id         String  @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+  email      String  @unique
+  username   String  @unique
+  password   String?
+  role_id    String  @db.Uuid
+  first_name String
+  last_name  String
+  is_active  Boolean @default(true)
+
+  roles      roles   @relation(fields: [role_id], references: [id])
+
+  addresses  user_addresses[]
+  carts      carts?
+  orders     orders[]
+  listings   listings[]
+}
+
+/* =========================
+   ADDRESSES
+========================= */
+
+model user_addresses {
+  id         String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+  user_id    String @db.Uuid
+  street     String
+  city       String
+  state      String
+  zip_code   String
+  country    String
+  is_default Boolean @default(false)
+
+  users         users           @relation(fields: [user_id], references: [id])
+  orderShipping order_shipping[]
+}
+
+/* =========================
+   CATALOG
+========================= */
+
+model categories {
+  id    String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+  name  String @unique
+  order Int
+
+  products products[]
+}
+
+model conditions {
+  id   String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+  name String @unique
+
+  products products[]
+}
+
+model languages {
+  id   String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+  name String @unique
+
+  products products[]
+}
+
+model rarities {
+  id   String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+  name String @unique
+
+  products products[]
+}
+
+/* =========================
+   PRODUCTS
+========================= */
+
+model products {
+  id           String   @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+  name         String
+  price        Decimal  @db.Decimal(10,2)
+  image_url    String
+  category_id  String   @db.Uuid
+  condition_id String?  @db.Uuid
+  language_id  String?  @db.Uuid
+  rarity_id    String?  @db.Uuid
+
+  categories categories @relation(fields: [category_id], references: [id])
+  conditions conditions? @relation(fields: [condition_id], references: [id])
+  languages  languages?  @relation(fields: [language_id], references: [id])
+  rarities   rarities?   @relation(fields: [rarity_id], references: [id])
+
+  tags       product_tags[]
+  stock      stock_items[]
+  cartItems  cart_items[]
+  orderItems order_items[]
+  listings   listings[]
+}
+
+/* =========================
+   TAGS (M:N)
+========================= */
+
+model tags {
+  id   String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+  name String @unique
+
+  products product_tags[]
+}
+
+model product_tags {
+  product_id String @db.Uuid
+  tag_id     String @db.Uuid
+
+  products products @relation(fields: [product_id], references: [id])
+  tags     tags     @relation(fields: [tag_id], references: [id])
+
+  @@id([product_id, tag_id])
+}
+
+/* =========================
+   INVENTORY
+========================= */
+
+model stock_items {
+  id         String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+  product_id String @db.Uuid
+  quantity   Int
+
+  products products @relation(fields: [product_id], references: [id])
+}
+
+/* =========================
+   CART
+========================= */
+
+model carts {
+  id      String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+  user_id String @unique @db.Uuid
+
+  users users @relation(fields: [user_id], references: [id])
+  items cart_items[]
+}
+
+model cart_items {
+  id         String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+  cart_id    String @db.Uuid
+  product_id String @db.Uuid
+  quantity   Int
+
+  carts    carts    @relation(fields: [cart_id], references: [id])
+  products products @relation(fields: [product_id], references: [id])
+}
+
+/* =========================
+   ORDERS
+========================= */
+
+model orders {
+  id         String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+  user_id    String @db.Uuid
+  status     order_status_enum
+  created_at DateTime @default(now())
+
+  users users @relation(fields: [user_id], references: [id])
+  items order_items[]
+  shipping order_shipping?
+}
+
+model order_items {
+  id         String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+  order_id  String @db.Uuid
+  product_id String @db.Uuid
+  quantity   Int
+  unit_price Decimal @db.Decimal(10,2)
+
+  orders   orders   @relation(fields: [order_id], references: [id])
+  products products @relation(fields: [product_id], references: [id])
+}
+
+/* =========================
+   SHIPPING
+========================= */
+
+model shipping_methods {
+  id   String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+  name String @unique
+
+  orders order_shipping[]
+}
+
+model order_shipping {
+  id                 String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+  order_id           String @unique @db.Uuid
+  shipping_method_id String @db.Uuid
+  address_id         String @db.Uuid
+
+  orders           orders           @relation(fields: [order_id], references: [id])
+  shipping_methods shipping_methods @relation(fields: [shipping_method_id], references: [id])
+  user_addresses   user_addresses   @relation(fields: [address_id], references: [id])
+}
+
+/* =========================
+   LISTINGS (SELLERS)
+========================= */
+
+model listings {
+  id         String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+  user_id    String @db.Uuid
+  product_id String @db.Uuid
+  status     listing_status_enum
+
+  users    users    @relation(fields: [user_id], references: [id])
+  products products @relation(fields: [product_id], references: [id])
+}
+
+/* =========================
+   ENUMS
+========================= */
+
+enum role_type {
+  ADMIN
+  CLIENT
+  SELLER
+}
+
+enum order_status_enum {
+  PENDING
+  PAID
+  SHIPPED
+  COMPLETED
+  CANCELLED
+}
+
+enum listing_status_enum {
+  ACTIVE
+  SOLD
+  DISABLED
 }

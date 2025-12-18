@@ -1,34 +1,71 @@
-# Prisma Configuration for hydra-be
+# Database Setup Guide
 
-This project uses the same Prisma configuration as `hydra-backend`.
+## Initial Setup
 
-## .env Configuration
+### 1. Create Database Schema
 
-Your `.env` file should have the following (matching `hydra-backend`):
+First, you need to create the database tables. You have two options:
 
-```env
-# Use Session Mode (port 5432) for DATABASE_URL - required for introspection
-DATABASE_URL="postgresql://prisma.[PROJECT-REF]:[PASSWORD]@[REGION].pooler.supabase.com:5432/postgres"
-
-# For migrations, use the same Session Mode connection
-DIRECT_URL="postgresql://prisma.[PROJECT-REF]:[PASSWORD]@[REGION].pooler.supabase.com:5432/postgres"
+**Option A: Using Migrations (Recommended for production)**
+```bash
+pnpm prisma migrate dev --name init
 ```
 
-**Important:**
-- Use `prisma.[PROJECT-REF]` as the username (custom prisma user)
-- Use port **5432** (Session Mode) for both `DATABASE_URL` and `DIRECT_URL` for local development
-- For serverless deployments, you can override `DATABASE_URL` to use port 6543 (Transaction Mode) in the deployment environment
+**Option B: Push Schema Directly (Quick setup for development)**
+```bash
+pnpm prisma db push
+```
 
-## Setup Steps
+### 2. Seed the Database
 
-1. **Create Prisma User in Supabase** (if not already done)
-   - See `hydra-backend/prisma/setup-supabase-prisma-user.sql`
+After the schema is created, seed the database with initial data (roles):
 
-2. **Update .env** with the connection strings using the prisma user
+```bash
+pnpm db:seed
+```
 
-3. **Run Prisma commands:**
+This will create the following roles:
+- **ADMIN** - Administrator
+- **CLIENT** - Client
+- **SELLER** - Seller
+
+## Creating Users
+
+Once the database is seeded with roles, you can create users via the API:
+
+1. Start the server:
    ```bash
-   pnpm prisma db pull      # Introspect database
-   pnpm prisma:generate     # Generate Prisma Client
+   pnpm start:dev
    ```
 
+2. Open Swagger UI: http://localhost:3000/api
+
+3. Use the POST `/users` endpoint to create a user. You'll need to provide:
+   - `email` - User email address
+   - `username` - Unique username
+   - `password` - User password (optional but recommended)
+   - `role_id` - UUID of one of the seeded roles
+   - `first_name` - First name
+   - `last_name` - Last name
+   - `is_active` - Whether the user is active (default: true)
+
+4. To get role IDs, use the GET `/users` endpoint after seeding, or query the database directly.
+
+## Getting Role IDs
+
+After seeding, you can get role IDs by:
+
+1. Using the Supabase SQL Editor:
+   ```sql
+   SELECT id, name, display_name FROM roles;
+   ```
+
+2. Or create a roles endpoint in your API to fetch them.
+
+## Environment Variables
+
+Make sure your `.env` file has:
+```
+DATABASE_URL="postgresql://postgres.gxkxkjnehvhhxpjrxuhq:[YOUR-PASSWORD]@aws-1-us-east-1.pooler.supabase.com:5432/postgres"
+DIRECT_URL="postgresql://postgres.gxkxkjnehvhhxpjrxuhq:[YOUR-PASSWORD]@aws-1-us-east-1.pooler.supabase.com:5432/postgres"
+```
