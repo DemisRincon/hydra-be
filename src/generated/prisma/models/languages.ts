@@ -26,34 +26,46 @@ export type AggregateLanguages = {
 
 export type LanguagesMinAggregateOutputType = {
   id: string | null
+  code: string | null
   name: string | null
+  display_name: string | null
 }
 
 export type LanguagesMaxAggregateOutputType = {
   id: string | null
+  code: string | null
   name: string | null
+  display_name: string | null
 }
 
 export type LanguagesCountAggregateOutputType = {
   id: number
+  code: number
   name: number
+  display_name: number
   _all: number
 }
 
 
 export type LanguagesMinAggregateInputType = {
   id?: true
+  code?: true
   name?: true
+  display_name?: true
 }
 
 export type LanguagesMaxAggregateInputType = {
   id?: true
+  code?: true
   name?: true
+  display_name?: true
 }
 
 export type LanguagesCountAggregateInputType = {
   id?: true
+  code?: true
   name?: true
+  display_name?: true
   _all?: true
 }
 
@@ -131,7 +143,9 @@ export type languagesGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 
 export type LanguagesGroupByOutputType = {
   id: string
+  code: string
   name: string
+  display_name: string
   _count: LanguagesCountAggregateOutputType | null
   _min: LanguagesMinAggregateOutputType | null
   _max: LanguagesMaxAggregateOutputType | null
@@ -157,28 +171,36 @@ export type languagesWhereInput = {
   OR?: Prisma.languagesWhereInput[]
   NOT?: Prisma.languagesWhereInput | Prisma.languagesWhereInput[]
   id?: Prisma.UuidFilter<"languages"> | string
+  code?: Prisma.StringFilter<"languages"> | string
   name?: Prisma.StringFilter<"languages"> | string
+  display_name?: Prisma.StringFilter<"languages"> | string
   products?: Prisma.ProductsListRelationFilter
 }
 
 export type languagesOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  code?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  display_name?: Prisma.SortOrder
   products?: Prisma.productsOrderByRelationAggregateInput
 }
 
 export type languagesWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  code?: string
   name?: string
   AND?: Prisma.languagesWhereInput | Prisma.languagesWhereInput[]
   OR?: Prisma.languagesWhereInput[]
   NOT?: Prisma.languagesWhereInput | Prisma.languagesWhereInput[]
+  display_name?: Prisma.StringFilter<"languages"> | string
   products?: Prisma.ProductsListRelationFilter
-}, "id" | "name">
+}, "id" | "code" | "name">
 
 export type languagesOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  code?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  display_name?: Prisma.SortOrder
   _count?: Prisma.languagesCountOrderByAggregateInput
   _max?: Prisma.languagesMaxOrderByAggregateInput
   _min?: Prisma.languagesMinOrderByAggregateInput
@@ -189,61 +211,83 @@ export type languagesScalarWhereWithAggregatesInput = {
   OR?: Prisma.languagesScalarWhereWithAggregatesInput[]
   NOT?: Prisma.languagesScalarWhereWithAggregatesInput | Prisma.languagesScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"languages"> | string
+  code?: Prisma.StringWithAggregatesFilter<"languages"> | string
   name?: Prisma.StringWithAggregatesFilter<"languages"> | string
+  display_name?: Prisma.StringWithAggregatesFilter<"languages"> | string
 }
 
 export type languagesCreateInput = {
   id?: string
+  code: string
   name: string
+  display_name: string
   products?: Prisma.productsCreateNestedManyWithoutLanguagesInput
 }
 
 export type languagesUncheckedCreateInput = {
   id?: string
+  code: string
   name: string
+  display_name: string
   products?: Prisma.productsUncheckedCreateNestedManyWithoutLanguagesInput
 }
 
 export type languagesUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  display_name?: Prisma.StringFieldUpdateOperationsInput | string
   products?: Prisma.productsUpdateManyWithoutLanguagesNestedInput
 }
 
 export type languagesUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  display_name?: Prisma.StringFieldUpdateOperationsInput | string
   products?: Prisma.productsUncheckedUpdateManyWithoutLanguagesNestedInput
 }
 
 export type languagesCreateManyInput = {
   id?: string
+  code: string
   name: string
+  display_name: string
 }
 
 export type languagesUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  display_name?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type languagesUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  display_name?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type languagesCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  code?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  display_name?: Prisma.SortOrder
 }
 
 export type languagesMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  code?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  display_name?: Prisma.SortOrder
 }
 
 export type languagesMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  code?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  display_name?: Prisma.SortOrder
 }
 
 export type LanguagesNullableScalarRelationFilter = {
@@ -269,12 +313,16 @@ export type languagesUpdateOneWithoutProductsNestedInput = {
 
 export type languagesCreateWithoutProductsInput = {
   id?: string
+  code: string
   name: string
+  display_name: string
 }
 
 export type languagesUncheckedCreateWithoutProductsInput = {
   id?: string
+  code: string
   name: string
+  display_name: string
 }
 
 export type languagesCreateOrConnectWithoutProductsInput = {
@@ -295,12 +343,16 @@ export type languagesUpdateToOneWithWhereWithoutProductsInput = {
 
 export type languagesUpdateWithoutProductsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  display_name?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type languagesUncheckedUpdateWithoutProductsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  display_name?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -336,27 +388,35 @@ export type LanguagesCountOutputTypeCountProductsArgs<ExtArgs extends runtime.Ty
 
 export type languagesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  code?: boolean
   name?: boolean
+  display_name?: boolean
   products?: boolean | Prisma.languages$productsArgs<ExtArgs>
   _count?: boolean | Prisma.LanguagesCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["languages"]>
 
 export type languagesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  code?: boolean
   name?: boolean
+  display_name?: boolean
 }, ExtArgs["result"]["languages"]>
 
 export type languagesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  code?: boolean
   name?: boolean
+  display_name?: boolean
 }, ExtArgs["result"]["languages"]>
 
 export type languagesSelectScalar = {
   id?: boolean
+  code?: boolean
   name?: boolean
+  display_name?: boolean
 }
 
-export type languagesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name", ExtArgs["result"]["languages"]>
+export type languagesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "display_name", ExtArgs["result"]["languages"]>
 export type languagesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   products?: boolean | Prisma.languages$productsArgs<ExtArgs>
   _count?: boolean | Prisma.LanguagesCountOutputTypeDefaultArgs<ExtArgs>
@@ -371,7 +431,9 @@ export type $languagesPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    code: string
     name: string
+    display_name: string
   }, ExtArgs["result"]["languages"]>
   composites: {}
 }
@@ -797,7 +859,9 @@ export interface Prisma__languagesClient<T, Null = never, ExtArgs extends runtim
  */
 export interface languagesFieldRefs {
   readonly id: Prisma.FieldRef<"languages", 'String'>
+  readonly code: Prisma.FieldRef<"languages", 'String'>
   readonly name: Prisma.FieldRef<"languages", 'String'>
+  readonly display_name: Prisma.FieldRef<"languages", 'String'>
 }
     
 

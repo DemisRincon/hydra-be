@@ -143,7 +143,9 @@ export type ConditionsScalarFieldEnum = (typeof ConditionsScalarFieldEnum)[keyof
 
 export const LanguagesScalarFieldEnum = {
   id: 'id',
-  name: 'name'
+  code: 'code',
+  name: 'name',
+  display_name: 'display_name'
 } as const
 
 export type LanguagesScalarFieldEnum = (typeof LanguagesScalarFieldEnum)[keyof typeof LanguagesScalarFieldEnum]

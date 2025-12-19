@@ -59,6 +59,87 @@ async function main() {
     }
   }
 
+  // Seed languages
+  console.log('Seeding languages...');
+  
+  const languages = [
+    {
+      code: 'JP',
+      name: 'Japonés',
+      display_name: 'Japonés',
+    },
+    {
+      code: 'EN',
+      name: 'Inglés',
+      display_name: 'Inglés',
+    },
+    {
+      code: 'CS',
+      name: 'Chino Simplificado',
+      display_name: 'Chino Simplificado',
+    },
+    {
+      code: 'CT',
+      name: 'Chino Tradicional',
+      display_name: 'Chino Tradicional',
+    },
+    {
+      code: 'FR',
+      name: 'Francés',
+      display_name: 'Francés',
+    },
+    {
+      code: 'DE',
+      name: 'Alemán',
+      display_name: 'Alemán',
+    },
+    {
+      code: 'IT',
+      name: 'Italiano',
+      display_name: 'Italiano',
+    },
+    {
+      code: 'KO',
+      name: 'Coreano',
+      display_name: 'Coreano',
+    },
+    {
+      code: 'PT',
+      name: 'Portugués',
+      display_name: 'Portugués',
+    },
+    {
+      code: 'RU',
+      name: 'Ruso',
+      display_name: 'Ruso',
+    },
+    {
+      code: 'ES',
+      name: 'Español',
+      display_name: 'Español',
+    },
+    {
+      code: 'AG',
+      name: 'Antiguo',
+      display_name: 'Antiguo',
+    },
+  ];
+
+  for (const language of languages) {
+    const existingLanguage = await prisma.languages.findUnique({
+      where: { code: language.code },
+    });
+
+    if (existingLanguage) {
+      console.log(`Language ${language.code} (${language.name}) already exists, skipping...`);
+    } else {
+      const created = await prisma.languages.create({
+        data: language,
+      });
+      console.log(`Created language: ${created.display_name} (${created.code})`);
+    }
+  }
+
   console.log('Database seed completed successfully!');
 }
 

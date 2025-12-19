@@ -9,6 +9,7 @@ import { RolesModule } from './roles/roles.module.js';
 import { ListingsModule } from './listings/listings.module.js';
 import { SearchModule } from './search/search.module.js';
 import { ProductsModule } from './products/products.module.js';
+import { LanguagesModule } from './languages/languages.module.js';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { ProductsModule } from './products/products.module.js';
     ListingsModule,
     SearchModule,
     ProductsModule,
+    LanguagesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
