@@ -8,6 +8,7 @@ import {
 import { AuthService } from './auth.service.js';
 import { LoginDto } from './dto/login.dto.js';
 import { AdminLoginDto } from './dto/admin-login.dto.js';
+import { OAuthSupabaseDto } from './dto/oauth-supabase.dto.js';
 import { LoginResponseDto } from './dto/login-response.dto.js';
 import { Public } from './guards/jwt-auth.guard.js';
 
@@ -54,6 +55,28 @@ export class AuthController {
   })
   async adminLogin(@Body() adminLoginDto: AdminLoginDto) {
     return this.authService.adminLogin(adminLoginDto);
+  }
+
+  @Post('oauth/supabase')
+  @Public()
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'OAuth login/signup via Supabase' })
+  @ApiBody({ type: OAuthSupabaseDto })
+  @ApiResponse({
+    status: 200,
+    description: 'OAuth authentication successful',
+    type: LoginResponseDto,
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'CLIENT role not found',
+  })
+  async oauthSupabase(@Body() oauthDto: OAuthSupabaseDto) {
+    return this.authService.oauthSupabase(oauthDto);
   }
 }
 

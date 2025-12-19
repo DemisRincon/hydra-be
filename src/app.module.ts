@@ -22,5 +22,6 @@ import { ListingsModule } from './listings/listings.module.js';
   ],
   controllers: [AppController],
   providers: [AppService],
+  exports: [PrismaModule],
 })
 export class AppModule {}

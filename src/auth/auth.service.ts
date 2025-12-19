@@ -3,11 +3,13 @@ import {
   UnauthorizedException,
   NotFoundException,
   ForbiddenException,
+  ConflictException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../database/prisma.service.js';
 import { LoginDto } from './dto/login.dto.js';
 import { AdminLoginDto } from './dto/admin-login.dto.js';
+import { OAuthSupabaseDto } from './dto/oauth-supabase.dto.js';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -141,6 +143,114 @@ export class AuthService {
           display_name: userWithoutPassword.roles.display_name,
         },
       },
+    };
+  }
+
+  async oauthSupabase(oauthDto: OAuthSupabaseDto) {
+    // Find existing user by email
+    let user = await this.prisma.users.findUnique({
+      where: { email: oauthDto.email },
+      include: { roles: true },
+    });
+
+    const isNewUser = !user;
+
+    if (user) {
+      // User exists - link the OAuth account
+      // Check if user is active
+      if (!user.is_active) {
+        throw new UnauthorizedException('User account is inactive');
+      }
+
+      // Update user with OAuth info if needed (e.g., first_name, last_name if missing)
+      if (!user.first_name && oauthDto.firstName) {
+        await this.prisma.users.update({
+          where: { id: user.id },
+          data: { first_name: oauthDto.firstName },
+        });
+        user.first_name = oauthDto.firstName;
+      }
+
+      if (!user.last_name && oauthDto.lastName) {
+        await this.prisma.users.update({
+          where: { id: user.id },
+          data: { last_name: oauthDto.lastName },
+        });
+        user.last_name = oauthDto.lastName;
+      }
+    } else {
+      // Create new user from OAuth
+      // Get CLIENT role (default for OAuth signups)
+      const clientRole = await this.prisma.roles.findUnique({
+        where: { name: 'CLIENT' },
+      });
+
+      if (!clientRole) {
+        throw new NotFoundException('CLIENT role not found');
+      }
+
+      // Generate username from email if not provided
+      const baseUsername = oauthDto.email.split('@')[0];
+      let username = baseUsername;
+      let usernameExists = await this.prisma.users.findUnique({
+        where: { username },
+      });
+
+      // If username exists, append numbers
+      let counter = 1;
+      while (usernameExists) {
+        username = `${baseUsername}${counter}`;
+        usernameExists = await this.prisma.users.findUnique({
+          where: { username },
+        });
+        counter++;
+      }
+
+      // Create user
+      user = await this.prisma.users.create({
+        data: {
+          email: oauthDto.email,
+          username: username,
+          password: null, // OAuth users don't have passwords
+          role_id: clientRole.id,
+          first_name: oauthDto.firstName || 'User',
+          last_name: oauthDto.lastName || '',
+          is_active: true,
+        },
+        include: {
+          roles: true,
+        },
+      });
+    }
+
+    // Generate JWT token
+    const payload = {
+      sub: user.id,
+      email: user.email,
+      username: user.username,
+      role: user.roles.name,
+    };
+
+    const accessToken = this.jwtService.sign(payload);
+
+    // Remove password from user object
+    const { password, ...userWithoutPassword } = user;
+
+    return {
+      accessToken,
+      user: {
+        id: userWithoutPassword.id,
+        email: userWithoutPassword.email,
+        username: userWithoutPassword.username,
+        first_name: userWithoutPassword.first_name,
+        last_name: userWithoutPassword.last_name,
+        role: {
+          id: userWithoutPassword.roles.id,
+          name: userWithoutPassword.roles.name,
+          display_name: userWithoutPassword.roles.display_name,
+        },
+      },
+      isNewUser,
     };
   }
 }

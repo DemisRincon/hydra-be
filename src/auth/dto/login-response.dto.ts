@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class LoginResponseDto {
   @ApiProperty({
@@ -22,5 +22,11 @@ export class LoginResponseDto {
       display_name: string;
     };
   };
+
+  @ApiPropertyOptional({
+    description: 'Whether this is a new user (for OAuth signups)',
+    example: false,
+  })
+  isNewUser?: boolean;
 }
 
