@@ -21,6 +21,7 @@ import {
 } from '@nestjs/swagger';
 import { ProductsService } from './products.service.js';
 import { CreateSingleDto } from './dto/create-single.dto.js';
+import { CreateBulkSinglesDto } from './dto/create-bulk-singles.dto.js';
 import { Public } from '../auth/guards/jwt-auth.guard.js';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard.js';
 import { RolesGuard } from '../auth/guards/roles.guard.js';
@@ -49,6 +50,24 @@ export class ProductsController {
   @ApiResponse({ status: 409, description: 'Product already exists' })
   async create(@Body() createDto: CreateSingleDto) {
     return this.productsService.create(createDto);
+  }
+
+  @Post('bulk')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('ADMIN', 'SELLER')
+  @ApiBearerAuth('JWT-auth')
+  @HttpCode(HttpStatus.CREATED)
+  @ApiOperation({ summary: 'Create multiple single products at once (ADMIN, SELLER only)' })
+  @ApiBody({ type: CreateBulkSinglesDto })
+  @ApiResponse({
+    status: 201,
+    description: 'Products created successfully (some may have failed)',
+  })
+  @ApiResponse({ status: 400, description: 'Invalid product data' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden - Admin or Seller role required' })
+  async createBulk(@Body() bulkDto: CreateBulkSinglesDto) {
+    return this.productsService.createBulk(bulkDto.products);
   }
 
   @Get('hareruya/:hareruyaId')

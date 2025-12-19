@@ -147,6 +147,35 @@ export class ProductsService {
     }
   }
 
+  async createBulk(createDtos: CreateSingleDto[]) {
+    const results = {
+      created: [] as any[],
+      failed: [] as Array<{ product: CreateSingleDto; error: string }>,
+    };
+
+    for (const createDto of createDtos) {
+      try {
+        const product = await this.create(createDto);
+        results.created.push(product);
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        results.failed.push({
+          product: createDto,
+          error: errorMessage,
+        });
+      }
+    }
+
+    return {
+      success: results.failed.length === 0,
+      created: results.created,
+      failed: results.failed,
+      total: createDtos.length,
+      createdCount: results.created.length,
+      failedCount: results.failed.length,
+    };
+  }
+
   async updateFromHareruya(productId: string, updateDto: CreateSingleDto) {
     const {
       category_id,

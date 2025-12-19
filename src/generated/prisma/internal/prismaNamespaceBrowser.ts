@@ -203,7 +203,12 @@ export type SinglesScalarFieldEnum = (typeof SinglesScalarFieldEnum)[keyof typeo
 
 export const TagsScalarFieldEnum = {
   id: 'id',
-  name: 'name'
+  name: 'name',
+  display_name: 'display_name',
+  is_default: 'is_default',
+  is_active: 'is_active',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
 export type TagsScalarFieldEnum = (typeof TagsScalarFieldEnum)[keyof typeof TagsScalarFieldEnum]

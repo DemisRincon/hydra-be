@@ -27,16 +27,31 @@ export type AggregateTags = {
 export type TagsMinAggregateOutputType = {
   id: string | null
   name: string | null
+  display_name: string | null
+  is_default: boolean | null
+  is_active: boolean | null
+  created_at: Date | null
+  updated_at: Date | null
 }
 
 export type TagsMaxAggregateOutputType = {
   id: string | null
   name: string | null
+  display_name: string | null
+  is_default: boolean | null
+  is_active: boolean | null
+  created_at: Date | null
+  updated_at: Date | null
 }
 
 export type TagsCountAggregateOutputType = {
   id: number
   name: number
+  display_name: number
+  is_default: number
+  is_active: number
+  created_at: number
+  updated_at: number
   _all: number
 }
 
@@ -44,16 +59,31 @@ export type TagsCountAggregateOutputType = {
 export type TagsMinAggregateInputType = {
   id?: true
   name?: true
+  display_name?: true
+  is_default?: true
+  is_active?: true
+  created_at?: true
+  updated_at?: true
 }
 
 export type TagsMaxAggregateInputType = {
   id?: true
   name?: true
+  display_name?: true
+  is_default?: true
+  is_active?: true
+  created_at?: true
+  updated_at?: true
 }
 
 export type TagsCountAggregateInputType = {
   id?: true
   name?: true
+  display_name?: true
+  is_default?: true
+  is_active?: true
+  created_at?: true
+  updated_at?: true
   _all?: true
 }
 
@@ -132,6 +162,11 @@ export type tagsGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type TagsGroupByOutputType = {
   id: string
   name: string
+  display_name: string | null
+  is_default: boolean
+  is_active: boolean
+  created_at: Date
+  updated_at: Date
   _count: TagsCountAggregateOutputType | null
   _min: TagsMinAggregateOutputType | null
   _max: TagsMaxAggregateOutputType | null
@@ -158,12 +193,22 @@ export type tagsWhereInput = {
   NOT?: Prisma.tagsWhereInput | Prisma.tagsWhereInput[]
   id?: Prisma.UuidFilter<"tags"> | string
   name?: Prisma.StringFilter<"tags"> | string
+  display_name?: Prisma.StringNullableFilter<"tags"> | string | null
+  is_default?: Prisma.BoolFilter<"tags"> | boolean
+  is_active?: Prisma.BoolFilter<"tags"> | boolean
+  created_at?: Prisma.DateTimeFilter<"tags"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"tags"> | Date | string
   singles?: Prisma.Single_tagsListRelationFilter
 }
 
 export type tagsOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  display_name?: Prisma.SortOrderInput | Prisma.SortOrder
+  is_default?: Prisma.SortOrder
+  is_active?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
   singles?: Prisma.single_tagsOrderByRelationAggregateInput
 }
 
@@ -173,12 +218,22 @@ export type tagsWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.tagsWhereInput | Prisma.tagsWhereInput[]
   OR?: Prisma.tagsWhereInput[]
   NOT?: Prisma.tagsWhereInput | Prisma.tagsWhereInput[]
+  display_name?: Prisma.StringNullableFilter<"tags"> | string | null
+  is_default?: Prisma.BoolFilter<"tags"> | boolean
+  is_active?: Prisma.BoolFilter<"tags"> | boolean
+  created_at?: Prisma.DateTimeFilter<"tags"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"tags"> | Date | string
   singles?: Prisma.Single_tagsListRelationFilter
 }, "id" | "name">
 
 export type tagsOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  display_name?: Prisma.SortOrderInput | Prisma.SortOrder
+  is_default?: Prisma.SortOrder
+  is_active?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
   _count?: Prisma.tagsCountOrderByAggregateInput
   _max?: Prisma.tagsMaxOrderByAggregateInput
   _min?: Prisma.tagsMinOrderByAggregateInput
@@ -190,60 +245,115 @@ export type tagsScalarWhereWithAggregatesInput = {
   NOT?: Prisma.tagsScalarWhereWithAggregatesInput | Prisma.tagsScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"tags"> | string
   name?: Prisma.StringWithAggregatesFilter<"tags"> | string
+  display_name?: Prisma.StringNullableWithAggregatesFilter<"tags"> | string | null
+  is_default?: Prisma.BoolWithAggregatesFilter<"tags"> | boolean
+  is_active?: Prisma.BoolWithAggregatesFilter<"tags"> | boolean
+  created_at?: Prisma.DateTimeWithAggregatesFilter<"tags"> | Date | string
+  updated_at?: Prisma.DateTimeWithAggregatesFilter<"tags"> | Date | string
 }
 
 export type tagsCreateInput = {
   id?: string
   name: string
+  display_name?: string | null
+  is_default?: boolean
+  is_active?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
   singles?: Prisma.single_tagsCreateNestedManyWithoutTagsInput
 }
 
 export type tagsUncheckedCreateInput = {
   id?: string
   name: string
+  display_name?: string | null
+  is_default?: boolean
+  is_active?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
   singles?: Prisma.single_tagsUncheckedCreateNestedManyWithoutTagsInput
 }
 
 export type tagsUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  display_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_default?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   singles?: Prisma.single_tagsUpdateManyWithoutTagsNestedInput
 }
 
 export type tagsUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  display_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_default?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   singles?: Prisma.single_tagsUncheckedUpdateManyWithoutTagsNestedInput
 }
 
 export type tagsCreateManyInput = {
   id?: string
   name: string
+  display_name?: string | null
+  is_default?: boolean
+  is_active?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type tagsUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  display_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_default?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type tagsUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  display_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_default?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type tagsCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  display_name?: Prisma.SortOrder
+  is_default?: Prisma.SortOrder
+  is_active?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type tagsMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  display_name?: Prisma.SortOrder
+  is_default?: Prisma.SortOrder
+  is_active?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type tagsMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  display_name?: Prisma.SortOrder
+  is_default?: Prisma.SortOrder
+  is_active?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type TagsScalarRelationFilter = {
@@ -268,11 +378,21 @@ export type tagsUpdateOneRequiredWithoutSinglesNestedInput = {
 export type tagsCreateWithoutSinglesInput = {
   id?: string
   name: string
+  display_name?: string | null
+  is_default?: boolean
+  is_active?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type tagsUncheckedCreateWithoutSinglesInput = {
   id?: string
   name: string
+  display_name?: string | null
+  is_default?: boolean
+  is_active?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type tagsCreateOrConnectWithoutSinglesInput = {
@@ -294,11 +414,21 @@ export type tagsUpdateToOneWithWhereWithoutSinglesInput = {
 export type tagsUpdateWithoutSinglesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  display_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_default?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type tagsUncheckedUpdateWithoutSinglesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  display_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_default?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -335,6 +465,11 @@ export type TagsCountOutputTypeCountSinglesArgs<ExtArgs extends runtime.Types.Ex
 export type tagsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  display_name?: boolean
+  is_default?: boolean
+  is_active?: boolean
+  created_at?: boolean
+  updated_at?: boolean
   singles?: boolean | Prisma.tags$singlesArgs<ExtArgs>
   _count?: boolean | Prisma.TagsCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tags"]>
@@ -342,19 +477,34 @@ export type tagsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 export type tagsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  display_name?: boolean
+  is_default?: boolean
+  is_active?: boolean
+  created_at?: boolean
+  updated_at?: boolean
 }, ExtArgs["result"]["tags"]>
 
 export type tagsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  display_name?: boolean
+  is_default?: boolean
+  is_active?: boolean
+  created_at?: boolean
+  updated_at?: boolean
 }, ExtArgs["result"]["tags"]>
 
 export type tagsSelectScalar = {
   id?: boolean
   name?: boolean
+  display_name?: boolean
+  is_default?: boolean
+  is_active?: boolean
+  created_at?: boolean
+  updated_at?: boolean
 }
 
-export type tagsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name", ExtArgs["result"]["tags"]>
+export type tagsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "display_name" | "is_default" | "is_active" | "created_at" | "updated_at", ExtArgs["result"]["tags"]>
 export type tagsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   singles?: boolean | Prisma.tags$singlesArgs<ExtArgs>
   _count?: boolean | Prisma.TagsCountOutputTypeDefaultArgs<ExtArgs>
@@ -370,6 +520,11 @@ export type $tagsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
+    display_name: string | null
+    is_default: boolean
+    is_active: boolean
+    created_at: Date
+    updated_at: Date
   }, ExtArgs["result"]["tags"]>
   composites: {}
 }
@@ -796,6 +951,11 @@ export interface Prisma__tagsClient<T, Null = never, ExtArgs extends runtime.Typ
 export interface tagsFieldRefs {
   readonly id: Prisma.FieldRef<"tags", 'String'>
   readonly name: Prisma.FieldRef<"tags", 'String'>
+  readonly display_name: Prisma.FieldRef<"tags", 'String'>
+  readonly is_default: Prisma.FieldRef<"tags", 'Boolean'>
+  readonly is_active: Prisma.FieldRef<"tags", 'Boolean'>
+  readonly created_at: Prisma.FieldRef<"tags", 'DateTime'>
+  readonly updated_at: Prisma.FieldRef<"tags", 'DateTime'>
 }
     
 
