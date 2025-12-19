@@ -1870,7 +1870,19 @@ export const ProductsScalarFieldEnum = {
   category_id: 'category_id',
   condition_id: 'condition_id',
   language_id: 'language_id',
-  rarity_id: 'rarity_id'
+  rarity_id: 'rarity_id',
+  owner_id: 'owner_id',
+  hareruya_product_id: 'hareruya_product_id',
+  card_name: 'card_name',
+  product_name_en: 'product_name_en',
+  product_name_jp: 'product_name_jp',
+  is_foil: 'is_foil',
+  hareruya_stock: 'hareruya_stock',
+  hareruya_product_class: 'hareruya_product_class',
+  hareruya_sale_flg: 'hareruya_sale_flg',
+  hareruya_weekly_sales: 'hareruya_weekly_sales',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
 export type ProductsScalarFieldEnum = (typeof ProductsScalarFieldEnum)[keyof typeof ProductsScalarFieldEnum]
@@ -2062,20 +2074,6 @@ export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMo
 
 
 /**
- * Reference to a field of type 'order_status_enum'
- */
-export type Enumorder_status_enumFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'order_status_enum'>
-    
-
-
-/**
- * Reference to a field of type 'order_status_enum[]'
- */
-export type ListEnumorder_status_enumFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'order_status_enum[]'>
-    
-
-
-/**
  * Reference to a field of type 'DateTime'
  */
 export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -2086,6 +2084,20 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'order_status_enum'
+ */
+export type Enumorder_status_enumFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'order_status_enum'>
+    
+
+
+/**
+ * Reference to a field of type 'order_status_enum[]'
+ */
+export type ListEnumorder_status_enumFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'order_status_enum[]'>
     
 
 

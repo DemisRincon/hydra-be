@@ -360,10 +360,6 @@ export type Enumorder_status_enumFieldUpdateOperationsInput = {
   set?: $Enums.order_status_enum
 }
 
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
-}
-
 export type ordersCreateNestedOneWithoutItemsInput = {
   create?: Prisma.XOR<Prisma.ordersCreateWithoutItemsInput, Prisma.ordersUncheckedCreateWithoutItemsInput>
   connectOrCreate?: Prisma.ordersCreateOrConnectWithoutItemsInput

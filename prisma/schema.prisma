@@ -34,6 +34,7 @@ model users {
   carts      carts?
   orders     orders[]
   listings   listings[]
+  ownedProducts products[]
 }
 
 /* =========================
@@ -74,8 +75,10 @@ model conditions {
 }
 
 model languages {
-  id   String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
-  name String @unique
+  id          String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+  code        String @unique // Language code (JP, EN, CS, CT, FR, DE, IT, KO, PT, RU, ES, AG)
+  name        String @unique // Human-readable name in Spanish (Japonés, Inglés, etc.)
+  display_name String // Display name for UI
 
   products products[]
 }
@@ -100,11 +103,26 @@ model products {
   condition_id String?  @db.Uuid
   language_id  String?  @db.Uuid
   rarity_id    String?  @db.Uuid
+  owner_id     String   @db.Uuid
+
+  // Hareruya-specific fields
+  hareruya_product_id     String?  @unique
+  card_name               String?
+  product_name_en         String?
+  product_name_jp         String?
+  is_foil                 Boolean  @default(false)
+  hareruya_stock          Int      @default(0)
+  hareruya_product_class  String?
+  hareruya_sale_flg       Boolean  @default(false)
+  hareruya_weekly_sales   Int      @default(0)
+  created_at              DateTime @default(now())
+  updated_at              DateTime @updatedAt
 
   categories categories @relation(fields: [category_id], references: [id])
   conditions conditions? @relation(fields: [condition_id], references: [id])
   languages  languages?  @relation(fields: [language_id], references: [id])
   rarities   rarities?   @relation(fields: [rarity_id], references: [id])
+  owner      users       @relation(fields: [owner_id], references: [id])
 
   tags       product_tags[]
   stock      stock_items[]

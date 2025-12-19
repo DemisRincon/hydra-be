@@ -28,10 +28,14 @@ export type AggregateProducts = {
 
 export type ProductsAvgAggregateOutputType = {
   price: runtime.Decimal | null
+  hareruya_stock: number | null
+  hareruya_weekly_sales: number | null
 }
 
 export type ProductsSumAggregateOutputType = {
   price: runtime.Decimal | null
+  hareruya_stock: number | null
+  hareruya_weekly_sales: number | null
 }
 
 export type ProductsMinAggregateOutputType = {
@@ -43,6 +47,18 @@ export type ProductsMinAggregateOutputType = {
   condition_id: string | null
   language_id: string | null
   rarity_id: string | null
+  owner_id: string | null
+  hareruya_product_id: string | null
+  card_name: string | null
+  product_name_en: string | null
+  product_name_jp: string | null
+  is_foil: boolean | null
+  hareruya_stock: number | null
+  hareruya_product_class: string | null
+  hareruya_sale_flg: boolean | null
+  hareruya_weekly_sales: number | null
+  created_at: Date | null
+  updated_at: Date | null
 }
 
 export type ProductsMaxAggregateOutputType = {
@@ -54,6 +70,18 @@ export type ProductsMaxAggregateOutputType = {
   condition_id: string | null
   language_id: string | null
   rarity_id: string | null
+  owner_id: string | null
+  hareruya_product_id: string | null
+  card_name: string | null
+  product_name_en: string | null
+  product_name_jp: string | null
+  is_foil: boolean | null
+  hareruya_stock: number | null
+  hareruya_product_class: string | null
+  hareruya_sale_flg: boolean | null
+  hareruya_weekly_sales: number | null
+  created_at: Date | null
+  updated_at: Date | null
 }
 
 export type ProductsCountAggregateOutputType = {
@@ -65,16 +93,32 @@ export type ProductsCountAggregateOutputType = {
   condition_id: number
   language_id: number
   rarity_id: number
+  owner_id: number
+  hareruya_product_id: number
+  card_name: number
+  product_name_en: number
+  product_name_jp: number
+  is_foil: number
+  hareruya_stock: number
+  hareruya_product_class: number
+  hareruya_sale_flg: number
+  hareruya_weekly_sales: number
+  created_at: number
+  updated_at: number
   _all: number
 }
 
 
 export type ProductsAvgAggregateInputType = {
   price?: true
+  hareruya_stock?: true
+  hareruya_weekly_sales?: true
 }
 
 export type ProductsSumAggregateInputType = {
   price?: true
+  hareruya_stock?: true
+  hareruya_weekly_sales?: true
 }
 
 export type ProductsMinAggregateInputType = {
@@ -86,6 +130,18 @@ export type ProductsMinAggregateInputType = {
   condition_id?: true
   language_id?: true
   rarity_id?: true
+  owner_id?: true
+  hareruya_product_id?: true
+  card_name?: true
+  product_name_en?: true
+  product_name_jp?: true
+  is_foil?: true
+  hareruya_stock?: true
+  hareruya_product_class?: true
+  hareruya_sale_flg?: true
+  hareruya_weekly_sales?: true
+  created_at?: true
+  updated_at?: true
 }
 
 export type ProductsMaxAggregateInputType = {
@@ -97,6 +153,18 @@ export type ProductsMaxAggregateInputType = {
   condition_id?: true
   language_id?: true
   rarity_id?: true
+  owner_id?: true
+  hareruya_product_id?: true
+  card_name?: true
+  product_name_en?: true
+  product_name_jp?: true
+  is_foil?: true
+  hareruya_stock?: true
+  hareruya_product_class?: true
+  hareruya_sale_flg?: true
+  hareruya_weekly_sales?: true
+  created_at?: true
+  updated_at?: true
 }
 
 export type ProductsCountAggregateInputType = {
@@ -108,6 +176,18 @@ export type ProductsCountAggregateInputType = {
   condition_id?: true
   language_id?: true
   rarity_id?: true
+  owner_id?: true
+  hareruya_product_id?: true
+  card_name?: true
+  product_name_en?: true
+  product_name_jp?: true
+  is_foil?: true
+  hareruya_stock?: true
+  hareruya_product_class?: true
+  hareruya_sale_flg?: true
+  hareruya_weekly_sales?: true
+  created_at?: true
+  updated_at?: true
   _all?: true
 }
 
@@ -206,6 +286,18 @@ export type ProductsGroupByOutputType = {
   condition_id: string | null
   language_id: string | null
   rarity_id: string | null
+  owner_id: string
+  hareruya_product_id: string | null
+  card_name: string | null
+  product_name_en: string | null
+  product_name_jp: string | null
+  is_foil: boolean
+  hareruya_stock: number
+  hareruya_product_class: string | null
+  hareruya_sale_flg: boolean
+  hareruya_weekly_sales: number
+  created_at: Date
+  updated_at: Date
   _count: ProductsCountAggregateOutputType | null
   _avg: ProductsAvgAggregateOutputType | null
   _sum: ProductsSumAggregateOutputType | null
@@ -240,10 +332,23 @@ export type productsWhereInput = {
   condition_id?: Prisma.UuidNullableFilter<"products"> | string | null
   language_id?: Prisma.UuidNullableFilter<"products"> | string | null
   rarity_id?: Prisma.UuidNullableFilter<"products"> | string | null
+  owner_id?: Prisma.UuidFilter<"products"> | string
+  hareruya_product_id?: Prisma.StringNullableFilter<"products"> | string | null
+  card_name?: Prisma.StringNullableFilter<"products"> | string | null
+  product_name_en?: Prisma.StringNullableFilter<"products"> | string | null
+  product_name_jp?: Prisma.StringNullableFilter<"products"> | string | null
+  is_foil?: Prisma.BoolFilter<"products"> | boolean
+  hareruya_stock?: Prisma.IntFilter<"products"> | number
+  hareruya_product_class?: Prisma.StringNullableFilter<"products"> | string | null
+  hareruya_sale_flg?: Prisma.BoolFilter<"products"> | boolean
+  hareruya_weekly_sales?: Prisma.IntFilter<"products"> | number
+  created_at?: Prisma.DateTimeFilter<"products"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"products"> | Date | string
   categories?: Prisma.XOR<Prisma.CategoriesScalarRelationFilter, Prisma.categoriesWhereInput>
   conditions?: Prisma.XOR<Prisma.ConditionsNullableScalarRelationFilter, Prisma.conditionsWhereInput> | null
   languages?: Prisma.XOR<Prisma.LanguagesNullableScalarRelationFilter, Prisma.languagesWhereInput> | null
   rarities?: Prisma.XOR<Prisma.RaritiesNullableScalarRelationFilter, Prisma.raritiesWhereInput> | null
+  owner?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
   tags?: Prisma.Product_tagsListRelationFilter
   stock?: Prisma.Stock_itemsListRelationFilter
   cartItems?: Prisma.Cart_itemsListRelationFilter
@@ -260,10 +365,23 @@ export type productsOrderByWithRelationInput = {
   condition_id?: Prisma.SortOrderInput | Prisma.SortOrder
   language_id?: Prisma.SortOrderInput | Prisma.SortOrder
   rarity_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  owner_id?: Prisma.SortOrder
+  hareruya_product_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  card_name?: Prisma.SortOrderInput | Prisma.SortOrder
+  product_name_en?: Prisma.SortOrderInput | Prisma.SortOrder
+  product_name_jp?: Prisma.SortOrderInput | Prisma.SortOrder
+  is_foil?: Prisma.SortOrder
+  hareruya_stock?: Prisma.SortOrder
+  hareruya_product_class?: Prisma.SortOrderInput | Prisma.SortOrder
+  hareruya_sale_flg?: Prisma.SortOrder
+  hareruya_weekly_sales?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
   categories?: Prisma.categoriesOrderByWithRelationInput
   conditions?: Prisma.conditionsOrderByWithRelationInput
   languages?: Prisma.languagesOrderByWithRelationInput
   rarities?: Prisma.raritiesOrderByWithRelationInput
+  owner?: Prisma.usersOrderByWithRelationInput
   tags?: Prisma.product_tagsOrderByRelationAggregateInput
   stock?: Prisma.stock_itemsOrderByRelationAggregateInput
   cartItems?: Prisma.cart_itemsOrderByRelationAggregateInput
@@ -273,6 +391,7 @@ export type productsOrderByWithRelationInput = {
 
 export type productsWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  hareruya_product_id?: string
   AND?: Prisma.productsWhereInput | Prisma.productsWhereInput[]
   OR?: Prisma.productsWhereInput[]
   NOT?: Prisma.productsWhereInput | Prisma.productsWhereInput[]
@@ -283,16 +402,28 @@ export type productsWhereUniqueInput = Prisma.AtLeast<{
   condition_id?: Prisma.UuidNullableFilter<"products"> | string | null
   language_id?: Prisma.UuidNullableFilter<"products"> | string | null
   rarity_id?: Prisma.UuidNullableFilter<"products"> | string | null
+  owner_id?: Prisma.UuidFilter<"products"> | string
+  card_name?: Prisma.StringNullableFilter<"products"> | string | null
+  product_name_en?: Prisma.StringNullableFilter<"products"> | string | null
+  product_name_jp?: Prisma.StringNullableFilter<"products"> | string | null
+  is_foil?: Prisma.BoolFilter<"products"> | boolean
+  hareruya_stock?: Prisma.IntFilter<"products"> | number
+  hareruya_product_class?: Prisma.StringNullableFilter<"products"> | string | null
+  hareruya_sale_flg?: Prisma.BoolFilter<"products"> | boolean
+  hareruya_weekly_sales?: Prisma.IntFilter<"products"> | number
+  created_at?: Prisma.DateTimeFilter<"products"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"products"> | Date | string
   categories?: Prisma.XOR<Prisma.CategoriesScalarRelationFilter, Prisma.categoriesWhereInput>
   conditions?: Prisma.XOR<Prisma.ConditionsNullableScalarRelationFilter, Prisma.conditionsWhereInput> | null
   languages?: Prisma.XOR<Prisma.LanguagesNullableScalarRelationFilter, Prisma.languagesWhereInput> | null
   rarities?: Prisma.XOR<Prisma.RaritiesNullableScalarRelationFilter, Prisma.raritiesWhereInput> | null
+  owner?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
   tags?: Prisma.Product_tagsListRelationFilter
   stock?: Prisma.Stock_itemsListRelationFilter
   cartItems?: Prisma.Cart_itemsListRelationFilter
   orderItems?: Prisma.Order_itemsListRelationFilter
   listings?: Prisma.ListingsListRelationFilter
-}, "id">
+}, "id" | "hareruya_product_id">
 
 export type productsOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -303,6 +434,18 @@ export type productsOrderByWithAggregationInput = {
   condition_id?: Prisma.SortOrderInput | Prisma.SortOrder
   language_id?: Prisma.SortOrderInput | Prisma.SortOrder
   rarity_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  owner_id?: Prisma.SortOrder
+  hareruya_product_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  card_name?: Prisma.SortOrderInput | Prisma.SortOrder
+  product_name_en?: Prisma.SortOrderInput | Prisma.SortOrder
+  product_name_jp?: Prisma.SortOrderInput | Prisma.SortOrder
+  is_foil?: Prisma.SortOrder
+  hareruya_stock?: Prisma.SortOrder
+  hareruya_product_class?: Prisma.SortOrderInput | Prisma.SortOrder
+  hareruya_sale_flg?: Prisma.SortOrder
+  hareruya_weekly_sales?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
   _count?: Prisma.productsCountOrderByAggregateInput
   _avg?: Prisma.productsAvgOrderByAggregateInput
   _max?: Prisma.productsMaxOrderByAggregateInput
@@ -322,6 +465,18 @@ export type productsScalarWhereWithAggregatesInput = {
   condition_id?: Prisma.UuidNullableWithAggregatesFilter<"products"> | string | null
   language_id?: Prisma.UuidNullableWithAggregatesFilter<"products"> | string | null
   rarity_id?: Prisma.UuidNullableWithAggregatesFilter<"products"> | string | null
+  owner_id?: Prisma.UuidWithAggregatesFilter<"products"> | string
+  hareruya_product_id?: Prisma.StringNullableWithAggregatesFilter<"products"> | string | null
+  card_name?: Prisma.StringNullableWithAggregatesFilter<"products"> | string | null
+  product_name_en?: Prisma.StringNullableWithAggregatesFilter<"products"> | string | null
+  product_name_jp?: Prisma.StringNullableWithAggregatesFilter<"products"> | string | null
+  is_foil?: Prisma.BoolWithAggregatesFilter<"products"> | boolean
+  hareruya_stock?: Prisma.IntWithAggregatesFilter<"products"> | number
+  hareruya_product_class?: Prisma.StringNullableWithAggregatesFilter<"products"> | string | null
+  hareruya_sale_flg?: Prisma.BoolWithAggregatesFilter<"products"> | boolean
+  hareruya_weekly_sales?: Prisma.IntWithAggregatesFilter<"products"> | number
+  created_at?: Prisma.DateTimeWithAggregatesFilter<"products"> | Date | string
+  updated_at?: Prisma.DateTimeWithAggregatesFilter<"products"> | Date | string
 }
 
 export type productsCreateInput = {
@@ -329,10 +484,22 @@ export type productsCreateInput = {
   name: string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   image_url: string
+  hareruya_product_id?: string | null
+  card_name?: string | null
+  product_name_en?: string | null
+  product_name_jp?: string | null
+  is_foil?: boolean
+  hareruya_stock?: number
+  hareruya_product_class?: string | null
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: number
+  created_at?: Date | string
+  updated_at?: Date | string
   categories: Prisma.categoriesCreateNestedOneWithoutProductsInput
   conditions?: Prisma.conditionsCreateNestedOneWithoutProductsInput
   languages?: Prisma.languagesCreateNestedOneWithoutProductsInput
   rarities?: Prisma.raritiesCreateNestedOneWithoutProductsInput
+  owner: Prisma.usersCreateNestedOneWithoutOwnedProductsInput
   tags?: Prisma.product_tagsCreateNestedManyWithoutProductsInput
   stock?: Prisma.stock_itemsCreateNestedManyWithoutProductsInput
   cartItems?: Prisma.cart_itemsCreateNestedManyWithoutProductsInput
@@ -349,6 +516,18 @@ export type productsUncheckedCreateInput = {
   condition_id?: string | null
   language_id?: string | null
   rarity_id?: string | null
+  owner_id: string
+  hareruya_product_id?: string | null
+  card_name?: string | null
+  product_name_en?: string | null
+  product_name_jp?: string | null
+  is_foil?: boolean
+  hareruya_stock?: number
+  hareruya_product_class?: string | null
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: number
+  created_at?: Date | string
+  updated_at?: Date | string
   tags?: Prisma.product_tagsUncheckedCreateNestedManyWithoutProductsInput
   stock?: Prisma.stock_itemsUncheckedCreateNestedManyWithoutProductsInput
   cartItems?: Prisma.cart_itemsUncheckedCreateNestedManyWithoutProductsInput
@@ -361,10 +540,22 @@ export type productsUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   image_url?: Prisma.StringFieldUpdateOperationsInput | string
+  hareruya_product_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  card_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_en?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_jp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_stock?: Prisma.IntFieldUpdateOperationsInput | number
+  hareruya_product_class?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hareruya_sale_flg?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_weekly_sales?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   categories?: Prisma.categoriesUpdateOneRequiredWithoutProductsNestedInput
   conditions?: Prisma.conditionsUpdateOneWithoutProductsNestedInput
   languages?: Prisma.languagesUpdateOneWithoutProductsNestedInput
   rarities?: Prisma.raritiesUpdateOneWithoutProductsNestedInput
+  owner?: Prisma.usersUpdateOneRequiredWithoutOwnedProductsNestedInput
   tags?: Prisma.product_tagsUpdateManyWithoutProductsNestedInput
   stock?: Prisma.stock_itemsUpdateManyWithoutProductsNestedInput
   cartItems?: Prisma.cart_itemsUpdateManyWithoutProductsNestedInput
@@ -381,6 +572,18 @@ export type productsUncheckedUpdateInput = {
   condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  owner_id?: Prisma.StringFieldUpdateOperationsInput | string
+  hareruya_product_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  card_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_en?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_jp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_stock?: Prisma.IntFieldUpdateOperationsInput | number
+  hareruya_product_class?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hareruya_sale_flg?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_weekly_sales?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tags?: Prisma.product_tagsUncheckedUpdateManyWithoutProductsNestedInput
   stock?: Prisma.stock_itemsUncheckedUpdateManyWithoutProductsNestedInput
   cartItems?: Prisma.cart_itemsUncheckedUpdateManyWithoutProductsNestedInput
@@ -397,6 +600,18 @@ export type productsCreateManyInput = {
   condition_id?: string | null
   language_id?: string | null
   rarity_id?: string | null
+  owner_id: string
+  hareruya_product_id?: string | null
+  card_name?: string | null
+  product_name_en?: string | null
+  product_name_jp?: string | null
+  is_foil?: boolean
+  hareruya_stock?: number
+  hareruya_product_class?: string | null
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: number
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type productsUpdateManyMutationInput = {
@@ -404,6 +619,17 @@ export type productsUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   image_url?: Prisma.StringFieldUpdateOperationsInput | string
+  hareruya_product_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  card_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_en?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_jp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_stock?: Prisma.IntFieldUpdateOperationsInput | number
+  hareruya_product_class?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hareruya_sale_flg?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_weekly_sales?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type productsUncheckedUpdateManyInput = {
@@ -415,6 +641,18 @@ export type productsUncheckedUpdateManyInput = {
   condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  owner_id?: Prisma.StringFieldUpdateOperationsInput | string
+  hareruya_product_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  card_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_en?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_jp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_stock?: Prisma.IntFieldUpdateOperationsInput | number
+  hareruya_product_class?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hareruya_sale_flg?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_weekly_sales?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ProductsListRelationFilter = {
@@ -436,10 +674,24 @@ export type productsCountOrderByAggregateInput = {
   condition_id?: Prisma.SortOrder
   language_id?: Prisma.SortOrder
   rarity_id?: Prisma.SortOrder
+  owner_id?: Prisma.SortOrder
+  hareruya_product_id?: Prisma.SortOrder
+  card_name?: Prisma.SortOrder
+  product_name_en?: Prisma.SortOrder
+  product_name_jp?: Prisma.SortOrder
+  is_foil?: Prisma.SortOrder
+  hareruya_stock?: Prisma.SortOrder
+  hareruya_product_class?: Prisma.SortOrder
+  hareruya_sale_flg?: Prisma.SortOrder
+  hareruya_weekly_sales?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type productsAvgOrderByAggregateInput = {
   price?: Prisma.SortOrder
+  hareruya_stock?: Prisma.SortOrder
+  hareruya_weekly_sales?: Prisma.SortOrder
 }
 
 export type productsMaxOrderByAggregateInput = {
@@ -451,6 +703,18 @@ export type productsMaxOrderByAggregateInput = {
   condition_id?: Prisma.SortOrder
   language_id?: Prisma.SortOrder
   rarity_id?: Prisma.SortOrder
+  owner_id?: Prisma.SortOrder
+  hareruya_product_id?: Prisma.SortOrder
+  card_name?: Prisma.SortOrder
+  product_name_en?: Prisma.SortOrder
+  product_name_jp?: Prisma.SortOrder
+  is_foil?: Prisma.SortOrder
+  hareruya_stock?: Prisma.SortOrder
+  hareruya_product_class?: Prisma.SortOrder
+  hareruya_sale_flg?: Prisma.SortOrder
+  hareruya_weekly_sales?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type productsMinOrderByAggregateInput = {
@@ -462,15 +726,71 @@ export type productsMinOrderByAggregateInput = {
   condition_id?: Prisma.SortOrder
   language_id?: Prisma.SortOrder
   rarity_id?: Prisma.SortOrder
+  owner_id?: Prisma.SortOrder
+  hareruya_product_id?: Prisma.SortOrder
+  card_name?: Prisma.SortOrder
+  product_name_en?: Prisma.SortOrder
+  product_name_jp?: Prisma.SortOrder
+  is_foil?: Prisma.SortOrder
+  hareruya_stock?: Prisma.SortOrder
+  hareruya_product_class?: Prisma.SortOrder
+  hareruya_sale_flg?: Prisma.SortOrder
+  hareruya_weekly_sales?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type productsSumOrderByAggregateInput = {
   price?: Prisma.SortOrder
+  hareruya_stock?: Prisma.SortOrder
+  hareruya_weekly_sales?: Prisma.SortOrder
 }
 
 export type ProductsScalarRelationFilter = {
   is?: Prisma.productsWhereInput
   isNot?: Prisma.productsWhereInput
+}
+
+export type productsCreateNestedManyWithoutOwnerInput = {
+  create?: Prisma.XOR<Prisma.productsCreateWithoutOwnerInput, Prisma.productsUncheckedCreateWithoutOwnerInput> | Prisma.productsCreateWithoutOwnerInput[] | Prisma.productsUncheckedCreateWithoutOwnerInput[]
+  connectOrCreate?: Prisma.productsCreateOrConnectWithoutOwnerInput | Prisma.productsCreateOrConnectWithoutOwnerInput[]
+  createMany?: Prisma.productsCreateManyOwnerInputEnvelope
+  connect?: Prisma.productsWhereUniqueInput | Prisma.productsWhereUniqueInput[]
+}
+
+export type productsUncheckedCreateNestedManyWithoutOwnerInput = {
+  create?: Prisma.XOR<Prisma.productsCreateWithoutOwnerInput, Prisma.productsUncheckedCreateWithoutOwnerInput> | Prisma.productsCreateWithoutOwnerInput[] | Prisma.productsUncheckedCreateWithoutOwnerInput[]
+  connectOrCreate?: Prisma.productsCreateOrConnectWithoutOwnerInput | Prisma.productsCreateOrConnectWithoutOwnerInput[]
+  createMany?: Prisma.productsCreateManyOwnerInputEnvelope
+  connect?: Prisma.productsWhereUniqueInput | Prisma.productsWhereUniqueInput[]
+}
+
+export type productsUpdateManyWithoutOwnerNestedInput = {
+  create?: Prisma.XOR<Prisma.productsCreateWithoutOwnerInput, Prisma.productsUncheckedCreateWithoutOwnerInput> | Prisma.productsCreateWithoutOwnerInput[] | Prisma.productsUncheckedCreateWithoutOwnerInput[]
+  connectOrCreate?: Prisma.productsCreateOrConnectWithoutOwnerInput | Prisma.productsCreateOrConnectWithoutOwnerInput[]
+  upsert?: Prisma.productsUpsertWithWhereUniqueWithoutOwnerInput | Prisma.productsUpsertWithWhereUniqueWithoutOwnerInput[]
+  createMany?: Prisma.productsCreateManyOwnerInputEnvelope
+  set?: Prisma.productsWhereUniqueInput | Prisma.productsWhereUniqueInput[]
+  disconnect?: Prisma.productsWhereUniqueInput | Prisma.productsWhereUniqueInput[]
+  delete?: Prisma.productsWhereUniqueInput | Prisma.productsWhereUniqueInput[]
+  connect?: Prisma.productsWhereUniqueInput | Prisma.productsWhereUniqueInput[]
+  update?: Prisma.productsUpdateWithWhereUniqueWithoutOwnerInput | Prisma.productsUpdateWithWhereUniqueWithoutOwnerInput[]
+  updateMany?: Prisma.productsUpdateManyWithWhereWithoutOwnerInput | Prisma.productsUpdateManyWithWhereWithoutOwnerInput[]
+  deleteMany?: Prisma.productsScalarWhereInput | Prisma.productsScalarWhereInput[]
+}
+
+export type productsUncheckedUpdateManyWithoutOwnerNestedInput = {
+  create?: Prisma.XOR<Prisma.productsCreateWithoutOwnerInput, Prisma.productsUncheckedCreateWithoutOwnerInput> | Prisma.productsCreateWithoutOwnerInput[] | Prisma.productsUncheckedCreateWithoutOwnerInput[]
+  connectOrCreate?: Prisma.productsCreateOrConnectWithoutOwnerInput | Prisma.productsCreateOrConnectWithoutOwnerInput[]
+  upsert?: Prisma.productsUpsertWithWhereUniqueWithoutOwnerInput | Prisma.productsUpsertWithWhereUniqueWithoutOwnerInput[]
+  createMany?: Prisma.productsCreateManyOwnerInputEnvelope
+  set?: Prisma.productsWhereUniqueInput | Prisma.productsWhereUniqueInput[]
+  disconnect?: Prisma.productsWhereUniqueInput | Prisma.productsWhereUniqueInput[]
+  delete?: Prisma.productsWhereUniqueInput | Prisma.productsWhereUniqueInput[]
+  connect?: Prisma.productsWhereUniqueInput | Prisma.productsWhereUniqueInput[]
+  update?: Prisma.productsUpdateWithWhereUniqueWithoutOwnerInput | Prisma.productsUpdateWithWhereUniqueWithoutOwnerInput[]
+  updateMany?: Prisma.productsUpdateManyWithWhereWithoutOwnerInput | Prisma.productsUpdateManyWithWhereWithoutOwnerInput[]
+  deleteMany?: Prisma.productsScalarWhereInput | Prisma.productsScalarWhereInput[]
 }
 
 export type productsCreateNestedManyWithoutCategoriesInput = {
@@ -649,6 +969,10 @@ export type DecimalFieldUpdateOperationsInput = {
   divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
+}
+
 export type productsCreateNestedOneWithoutTagsInput = {
   create?: Prisma.XOR<Prisma.productsCreateWithoutTagsInput, Prisma.productsUncheckedCreateWithoutTagsInput>
   connectOrCreate?: Prisma.productsCreateOrConnectWithoutTagsInput
@@ -719,14 +1043,132 @@ export type productsUpdateOneRequiredWithoutListingsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.productsUpdateToOneWithWhereWithoutListingsInput, Prisma.productsUpdateWithoutListingsInput>, Prisma.productsUncheckedUpdateWithoutListingsInput>
 }
 
+export type productsCreateWithoutOwnerInput = {
+  id?: string
+  name: string
+  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  image_url: string
+  hareruya_product_id?: string | null
+  card_name?: string | null
+  product_name_en?: string | null
+  product_name_jp?: string | null
+  is_foil?: boolean
+  hareruya_stock?: number
+  hareruya_product_class?: string | null
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: number
+  created_at?: Date | string
+  updated_at?: Date | string
+  categories: Prisma.categoriesCreateNestedOneWithoutProductsInput
+  conditions?: Prisma.conditionsCreateNestedOneWithoutProductsInput
+  languages?: Prisma.languagesCreateNestedOneWithoutProductsInput
+  rarities?: Prisma.raritiesCreateNestedOneWithoutProductsInput
+  tags?: Prisma.product_tagsCreateNestedManyWithoutProductsInput
+  stock?: Prisma.stock_itemsCreateNestedManyWithoutProductsInput
+  cartItems?: Prisma.cart_itemsCreateNestedManyWithoutProductsInput
+  orderItems?: Prisma.order_itemsCreateNestedManyWithoutProductsInput
+  listings?: Prisma.listingsCreateNestedManyWithoutProductsInput
+}
+
+export type productsUncheckedCreateWithoutOwnerInput = {
+  id?: string
+  name: string
+  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  image_url: string
+  category_id: string
+  condition_id?: string | null
+  language_id?: string | null
+  rarity_id?: string | null
+  hareruya_product_id?: string | null
+  card_name?: string | null
+  product_name_en?: string | null
+  product_name_jp?: string | null
+  is_foil?: boolean
+  hareruya_stock?: number
+  hareruya_product_class?: string | null
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: number
+  created_at?: Date | string
+  updated_at?: Date | string
+  tags?: Prisma.product_tagsUncheckedCreateNestedManyWithoutProductsInput
+  stock?: Prisma.stock_itemsUncheckedCreateNestedManyWithoutProductsInput
+  cartItems?: Prisma.cart_itemsUncheckedCreateNestedManyWithoutProductsInput
+  orderItems?: Prisma.order_itemsUncheckedCreateNestedManyWithoutProductsInput
+  listings?: Prisma.listingsUncheckedCreateNestedManyWithoutProductsInput
+}
+
+export type productsCreateOrConnectWithoutOwnerInput = {
+  where: Prisma.productsWhereUniqueInput
+  create: Prisma.XOR<Prisma.productsCreateWithoutOwnerInput, Prisma.productsUncheckedCreateWithoutOwnerInput>
+}
+
+export type productsCreateManyOwnerInputEnvelope = {
+  data: Prisma.productsCreateManyOwnerInput | Prisma.productsCreateManyOwnerInput[]
+  skipDuplicates?: boolean
+}
+
+export type productsUpsertWithWhereUniqueWithoutOwnerInput = {
+  where: Prisma.productsWhereUniqueInput
+  update: Prisma.XOR<Prisma.productsUpdateWithoutOwnerInput, Prisma.productsUncheckedUpdateWithoutOwnerInput>
+  create: Prisma.XOR<Prisma.productsCreateWithoutOwnerInput, Prisma.productsUncheckedCreateWithoutOwnerInput>
+}
+
+export type productsUpdateWithWhereUniqueWithoutOwnerInput = {
+  where: Prisma.productsWhereUniqueInput
+  data: Prisma.XOR<Prisma.productsUpdateWithoutOwnerInput, Prisma.productsUncheckedUpdateWithoutOwnerInput>
+}
+
+export type productsUpdateManyWithWhereWithoutOwnerInput = {
+  where: Prisma.productsScalarWhereInput
+  data: Prisma.XOR<Prisma.productsUpdateManyMutationInput, Prisma.productsUncheckedUpdateManyWithoutOwnerInput>
+}
+
+export type productsScalarWhereInput = {
+  AND?: Prisma.productsScalarWhereInput | Prisma.productsScalarWhereInput[]
+  OR?: Prisma.productsScalarWhereInput[]
+  NOT?: Prisma.productsScalarWhereInput | Prisma.productsScalarWhereInput[]
+  id?: Prisma.UuidFilter<"products"> | string
+  name?: Prisma.StringFilter<"products"> | string
+  price?: Prisma.DecimalFilter<"products"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  image_url?: Prisma.StringFilter<"products"> | string
+  category_id?: Prisma.UuidFilter<"products"> | string
+  condition_id?: Prisma.UuidNullableFilter<"products"> | string | null
+  language_id?: Prisma.UuidNullableFilter<"products"> | string | null
+  rarity_id?: Prisma.UuidNullableFilter<"products"> | string | null
+  owner_id?: Prisma.UuidFilter<"products"> | string
+  hareruya_product_id?: Prisma.StringNullableFilter<"products"> | string | null
+  card_name?: Prisma.StringNullableFilter<"products"> | string | null
+  product_name_en?: Prisma.StringNullableFilter<"products"> | string | null
+  product_name_jp?: Prisma.StringNullableFilter<"products"> | string | null
+  is_foil?: Prisma.BoolFilter<"products"> | boolean
+  hareruya_stock?: Prisma.IntFilter<"products"> | number
+  hareruya_product_class?: Prisma.StringNullableFilter<"products"> | string | null
+  hareruya_sale_flg?: Prisma.BoolFilter<"products"> | boolean
+  hareruya_weekly_sales?: Prisma.IntFilter<"products"> | number
+  created_at?: Prisma.DateTimeFilter<"products"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"products"> | Date | string
+}
+
 export type productsCreateWithoutCategoriesInput = {
   id?: string
   name: string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   image_url: string
+  hareruya_product_id?: string | null
+  card_name?: string | null
+  product_name_en?: string | null
+  product_name_jp?: string | null
+  is_foil?: boolean
+  hareruya_stock?: number
+  hareruya_product_class?: string | null
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: number
+  created_at?: Date | string
+  updated_at?: Date | string
   conditions?: Prisma.conditionsCreateNestedOneWithoutProductsInput
   languages?: Prisma.languagesCreateNestedOneWithoutProductsInput
   rarities?: Prisma.raritiesCreateNestedOneWithoutProductsInput
+  owner: Prisma.usersCreateNestedOneWithoutOwnedProductsInput
   tags?: Prisma.product_tagsCreateNestedManyWithoutProductsInput
   stock?: Prisma.stock_itemsCreateNestedManyWithoutProductsInput
   cartItems?: Prisma.cart_itemsCreateNestedManyWithoutProductsInput
@@ -742,6 +1184,18 @@ export type productsUncheckedCreateWithoutCategoriesInput = {
   condition_id?: string | null
   language_id?: string | null
   rarity_id?: string | null
+  owner_id: string
+  hareruya_product_id?: string | null
+  card_name?: string | null
+  product_name_en?: string | null
+  product_name_jp?: string | null
+  is_foil?: boolean
+  hareruya_stock?: number
+  hareruya_product_class?: string | null
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: number
+  created_at?: Date | string
+  updated_at?: Date | string
   tags?: Prisma.product_tagsUncheckedCreateNestedManyWithoutProductsInput
   stock?: Prisma.stock_itemsUncheckedCreateNestedManyWithoutProductsInput
   cartItems?: Prisma.cart_itemsUncheckedCreateNestedManyWithoutProductsInput
@@ -775,28 +1229,26 @@ export type productsUpdateManyWithWhereWithoutCategoriesInput = {
   data: Prisma.XOR<Prisma.productsUpdateManyMutationInput, Prisma.productsUncheckedUpdateManyWithoutCategoriesInput>
 }
 
-export type productsScalarWhereInput = {
-  AND?: Prisma.productsScalarWhereInput | Prisma.productsScalarWhereInput[]
-  OR?: Prisma.productsScalarWhereInput[]
-  NOT?: Prisma.productsScalarWhereInput | Prisma.productsScalarWhereInput[]
-  id?: Prisma.UuidFilter<"products"> | string
-  name?: Prisma.StringFilter<"products"> | string
-  price?: Prisma.DecimalFilter<"products"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  image_url?: Prisma.StringFilter<"products"> | string
-  category_id?: Prisma.UuidFilter<"products"> | string
-  condition_id?: Prisma.UuidNullableFilter<"products"> | string | null
-  language_id?: Prisma.UuidNullableFilter<"products"> | string | null
-  rarity_id?: Prisma.UuidNullableFilter<"products"> | string | null
-}
-
 export type productsCreateWithoutConditionsInput = {
   id?: string
   name: string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   image_url: string
+  hareruya_product_id?: string | null
+  card_name?: string | null
+  product_name_en?: string | null
+  product_name_jp?: string | null
+  is_foil?: boolean
+  hareruya_stock?: number
+  hareruya_product_class?: string | null
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: number
+  created_at?: Date | string
+  updated_at?: Date | string
   categories: Prisma.categoriesCreateNestedOneWithoutProductsInput
   languages?: Prisma.languagesCreateNestedOneWithoutProductsInput
   rarities?: Prisma.raritiesCreateNestedOneWithoutProductsInput
+  owner: Prisma.usersCreateNestedOneWithoutOwnedProductsInput
   tags?: Prisma.product_tagsCreateNestedManyWithoutProductsInput
   stock?: Prisma.stock_itemsCreateNestedManyWithoutProductsInput
   cartItems?: Prisma.cart_itemsCreateNestedManyWithoutProductsInput
@@ -812,6 +1264,18 @@ export type productsUncheckedCreateWithoutConditionsInput = {
   category_id: string
   language_id?: string | null
   rarity_id?: string | null
+  owner_id: string
+  hareruya_product_id?: string | null
+  card_name?: string | null
+  product_name_en?: string | null
+  product_name_jp?: string | null
+  is_foil?: boolean
+  hareruya_stock?: number
+  hareruya_product_class?: string | null
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: number
+  created_at?: Date | string
+  updated_at?: Date | string
   tags?: Prisma.product_tagsUncheckedCreateNestedManyWithoutProductsInput
   stock?: Prisma.stock_itemsUncheckedCreateNestedManyWithoutProductsInput
   cartItems?: Prisma.cart_itemsUncheckedCreateNestedManyWithoutProductsInput
@@ -850,9 +1314,21 @@ export type productsCreateWithoutLanguagesInput = {
   name: string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   image_url: string
+  hareruya_product_id?: string | null
+  card_name?: string | null
+  product_name_en?: string | null
+  product_name_jp?: string | null
+  is_foil?: boolean
+  hareruya_stock?: number
+  hareruya_product_class?: string | null
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: number
+  created_at?: Date | string
+  updated_at?: Date | string
   categories: Prisma.categoriesCreateNestedOneWithoutProductsInput
   conditions?: Prisma.conditionsCreateNestedOneWithoutProductsInput
   rarities?: Prisma.raritiesCreateNestedOneWithoutProductsInput
+  owner: Prisma.usersCreateNestedOneWithoutOwnedProductsInput
   tags?: Prisma.product_tagsCreateNestedManyWithoutProductsInput
   stock?: Prisma.stock_itemsCreateNestedManyWithoutProductsInput
   cartItems?: Prisma.cart_itemsCreateNestedManyWithoutProductsInput
@@ -868,6 +1344,18 @@ export type productsUncheckedCreateWithoutLanguagesInput = {
   category_id: string
   condition_id?: string | null
   rarity_id?: string | null
+  owner_id: string
+  hareruya_product_id?: string | null
+  card_name?: string | null
+  product_name_en?: string | null
+  product_name_jp?: string | null
+  is_foil?: boolean
+  hareruya_stock?: number
+  hareruya_product_class?: string | null
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: number
+  created_at?: Date | string
+  updated_at?: Date | string
   tags?: Prisma.product_tagsUncheckedCreateNestedManyWithoutProductsInput
   stock?: Prisma.stock_itemsUncheckedCreateNestedManyWithoutProductsInput
   cartItems?: Prisma.cart_itemsUncheckedCreateNestedManyWithoutProductsInput
@@ -906,9 +1394,21 @@ export type productsCreateWithoutRaritiesInput = {
   name: string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   image_url: string
+  hareruya_product_id?: string | null
+  card_name?: string | null
+  product_name_en?: string | null
+  product_name_jp?: string | null
+  is_foil?: boolean
+  hareruya_stock?: number
+  hareruya_product_class?: string | null
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: number
+  created_at?: Date | string
+  updated_at?: Date | string
   categories: Prisma.categoriesCreateNestedOneWithoutProductsInput
   conditions?: Prisma.conditionsCreateNestedOneWithoutProductsInput
   languages?: Prisma.languagesCreateNestedOneWithoutProductsInput
+  owner: Prisma.usersCreateNestedOneWithoutOwnedProductsInput
   tags?: Prisma.product_tagsCreateNestedManyWithoutProductsInput
   stock?: Prisma.stock_itemsCreateNestedManyWithoutProductsInput
   cartItems?: Prisma.cart_itemsCreateNestedManyWithoutProductsInput
@@ -924,6 +1424,18 @@ export type productsUncheckedCreateWithoutRaritiesInput = {
   category_id: string
   condition_id?: string | null
   language_id?: string | null
+  owner_id: string
+  hareruya_product_id?: string | null
+  card_name?: string | null
+  product_name_en?: string | null
+  product_name_jp?: string | null
+  is_foil?: boolean
+  hareruya_stock?: number
+  hareruya_product_class?: string | null
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: number
+  created_at?: Date | string
+  updated_at?: Date | string
   tags?: Prisma.product_tagsUncheckedCreateNestedManyWithoutProductsInput
   stock?: Prisma.stock_itemsUncheckedCreateNestedManyWithoutProductsInput
   cartItems?: Prisma.cart_itemsUncheckedCreateNestedManyWithoutProductsInput
@@ -962,10 +1474,22 @@ export type productsCreateWithoutTagsInput = {
   name: string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   image_url: string
+  hareruya_product_id?: string | null
+  card_name?: string | null
+  product_name_en?: string | null
+  product_name_jp?: string | null
+  is_foil?: boolean
+  hareruya_stock?: number
+  hareruya_product_class?: string | null
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: number
+  created_at?: Date | string
+  updated_at?: Date | string
   categories: Prisma.categoriesCreateNestedOneWithoutProductsInput
   conditions?: Prisma.conditionsCreateNestedOneWithoutProductsInput
   languages?: Prisma.languagesCreateNestedOneWithoutProductsInput
   rarities?: Prisma.raritiesCreateNestedOneWithoutProductsInput
+  owner: Prisma.usersCreateNestedOneWithoutOwnedProductsInput
   stock?: Prisma.stock_itemsCreateNestedManyWithoutProductsInput
   cartItems?: Prisma.cart_itemsCreateNestedManyWithoutProductsInput
   orderItems?: Prisma.order_itemsCreateNestedManyWithoutProductsInput
@@ -981,6 +1505,18 @@ export type productsUncheckedCreateWithoutTagsInput = {
   condition_id?: string | null
   language_id?: string | null
   rarity_id?: string | null
+  owner_id: string
+  hareruya_product_id?: string | null
+  card_name?: string | null
+  product_name_en?: string | null
+  product_name_jp?: string | null
+  is_foil?: boolean
+  hareruya_stock?: number
+  hareruya_product_class?: string | null
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: number
+  created_at?: Date | string
+  updated_at?: Date | string
   stock?: Prisma.stock_itemsUncheckedCreateNestedManyWithoutProductsInput
   cartItems?: Prisma.cart_itemsUncheckedCreateNestedManyWithoutProductsInput
   orderItems?: Prisma.order_itemsUncheckedCreateNestedManyWithoutProductsInput
@@ -1008,10 +1544,22 @@ export type productsUpdateWithoutTagsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   image_url?: Prisma.StringFieldUpdateOperationsInput | string
+  hareruya_product_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  card_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_en?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_jp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_stock?: Prisma.IntFieldUpdateOperationsInput | number
+  hareruya_product_class?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hareruya_sale_flg?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_weekly_sales?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   categories?: Prisma.categoriesUpdateOneRequiredWithoutProductsNestedInput
   conditions?: Prisma.conditionsUpdateOneWithoutProductsNestedInput
   languages?: Prisma.languagesUpdateOneWithoutProductsNestedInput
   rarities?: Prisma.raritiesUpdateOneWithoutProductsNestedInput
+  owner?: Prisma.usersUpdateOneRequiredWithoutOwnedProductsNestedInput
   stock?: Prisma.stock_itemsUpdateManyWithoutProductsNestedInput
   cartItems?: Prisma.cart_itemsUpdateManyWithoutProductsNestedInput
   orderItems?: Prisma.order_itemsUpdateManyWithoutProductsNestedInput
@@ -1027,6 +1575,18 @@ export type productsUncheckedUpdateWithoutTagsInput = {
   condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  owner_id?: Prisma.StringFieldUpdateOperationsInput | string
+  hareruya_product_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  card_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_en?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_jp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_stock?: Prisma.IntFieldUpdateOperationsInput | number
+  hareruya_product_class?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hareruya_sale_flg?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_weekly_sales?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stock?: Prisma.stock_itemsUncheckedUpdateManyWithoutProductsNestedInput
   cartItems?: Prisma.cart_itemsUncheckedUpdateManyWithoutProductsNestedInput
   orderItems?: Prisma.order_itemsUncheckedUpdateManyWithoutProductsNestedInput
@@ -1038,10 +1598,22 @@ export type productsCreateWithoutStockInput = {
   name: string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   image_url: string
+  hareruya_product_id?: string | null
+  card_name?: string | null
+  product_name_en?: string | null
+  product_name_jp?: string | null
+  is_foil?: boolean
+  hareruya_stock?: number
+  hareruya_product_class?: string | null
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: number
+  created_at?: Date | string
+  updated_at?: Date | string
   categories: Prisma.categoriesCreateNestedOneWithoutProductsInput
   conditions?: Prisma.conditionsCreateNestedOneWithoutProductsInput
   languages?: Prisma.languagesCreateNestedOneWithoutProductsInput
   rarities?: Prisma.raritiesCreateNestedOneWithoutProductsInput
+  owner: Prisma.usersCreateNestedOneWithoutOwnedProductsInput
   tags?: Prisma.product_tagsCreateNestedManyWithoutProductsInput
   cartItems?: Prisma.cart_itemsCreateNestedManyWithoutProductsInput
   orderItems?: Prisma.order_itemsCreateNestedManyWithoutProductsInput
@@ -1057,6 +1629,18 @@ export type productsUncheckedCreateWithoutStockInput = {
   condition_id?: string | null
   language_id?: string | null
   rarity_id?: string | null
+  owner_id: string
+  hareruya_product_id?: string | null
+  card_name?: string | null
+  product_name_en?: string | null
+  product_name_jp?: string | null
+  is_foil?: boolean
+  hareruya_stock?: number
+  hareruya_product_class?: string | null
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: number
+  created_at?: Date | string
+  updated_at?: Date | string
   tags?: Prisma.product_tagsUncheckedCreateNestedManyWithoutProductsInput
   cartItems?: Prisma.cart_itemsUncheckedCreateNestedManyWithoutProductsInput
   orderItems?: Prisma.order_itemsUncheckedCreateNestedManyWithoutProductsInput
@@ -1084,10 +1668,22 @@ export type productsUpdateWithoutStockInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   image_url?: Prisma.StringFieldUpdateOperationsInput | string
+  hareruya_product_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  card_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_en?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_jp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_stock?: Prisma.IntFieldUpdateOperationsInput | number
+  hareruya_product_class?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hareruya_sale_flg?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_weekly_sales?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   categories?: Prisma.categoriesUpdateOneRequiredWithoutProductsNestedInput
   conditions?: Prisma.conditionsUpdateOneWithoutProductsNestedInput
   languages?: Prisma.languagesUpdateOneWithoutProductsNestedInput
   rarities?: Prisma.raritiesUpdateOneWithoutProductsNestedInput
+  owner?: Prisma.usersUpdateOneRequiredWithoutOwnedProductsNestedInput
   tags?: Prisma.product_tagsUpdateManyWithoutProductsNestedInput
   cartItems?: Prisma.cart_itemsUpdateManyWithoutProductsNestedInput
   orderItems?: Prisma.order_itemsUpdateManyWithoutProductsNestedInput
@@ -1103,6 +1699,18 @@ export type productsUncheckedUpdateWithoutStockInput = {
   condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  owner_id?: Prisma.StringFieldUpdateOperationsInput | string
+  hareruya_product_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  card_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_en?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_jp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_stock?: Prisma.IntFieldUpdateOperationsInput | number
+  hareruya_product_class?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hareruya_sale_flg?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_weekly_sales?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tags?: Prisma.product_tagsUncheckedUpdateManyWithoutProductsNestedInput
   cartItems?: Prisma.cart_itemsUncheckedUpdateManyWithoutProductsNestedInput
   orderItems?: Prisma.order_itemsUncheckedUpdateManyWithoutProductsNestedInput
@@ -1114,10 +1722,22 @@ export type productsCreateWithoutCartItemsInput = {
   name: string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   image_url: string
+  hareruya_product_id?: string | null
+  card_name?: string | null
+  product_name_en?: string | null
+  product_name_jp?: string | null
+  is_foil?: boolean
+  hareruya_stock?: number
+  hareruya_product_class?: string | null
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: number
+  created_at?: Date | string
+  updated_at?: Date | string
   categories: Prisma.categoriesCreateNestedOneWithoutProductsInput
   conditions?: Prisma.conditionsCreateNestedOneWithoutProductsInput
   languages?: Prisma.languagesCreateNestedOneWithoutProductsInput
   rarities?: Prisma.raritiesCreateNestedOneWithoutProductsInput
+  owner: Prisma.usersCreateNestedOneWithoutOwnedProductsInput
   tags?: Prisma.product_tagsCreateNestedManyWithoutProductsInput
   stock?: Prisma.stock_itemsCreateNestedManyWithoutProductsInput
   orderItems?: Prisma.order_itemsCreateNestedManyWithoutProductsInput
@@ -1133,6 +1753,18 @@ export type productsUncheckedCreateWithoutCartItemsInput = {
   condition_id?: string | null
   language_id?: string | null
   rarity_id?: string | null
+  owner_id: string
+  hareruya_product_id?: string | null
+  card_name?: string | null
+  product_name_en?: string | null
+  product_name_jp?: string | null
+  is_foil?: boolean
+  hareruya_stock?: number
+  hareruya_product_class?: string | null
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: number
+  created_at?: Date | string
+  updated_at?: Date | string
   tags?: Prisma.product_tagsUncheckedCreateNestedManyWithoutProductsInput
   stock?: Prisma.stock_itemsUncheckedCreateNestedManyWithoutProductsInput
   orderItems?: Prisma.order_itemsUncheckedCreateNestedManyWithoutProductsInput
@@ -1160,10 +1792,22 @@ export type productsUpdateWithoutCartItemsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   image_url?: Prisma.StringFieldUpdateOperationsInput | string
+  hareruya_product_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  card_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_en?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_jp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_stock?: Prisma.IntFieldUpdateOperationsInput | number
+  hareruya_product_class?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hareruya_sale_flg?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_weekly_sales?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   categories?: Prisma.categoriesUpdateOneRequiredWithoutProductsNestedInput
   conditions?: Prisma.conditionsUpdateOneWithoutProductsNestedInput
   languages?: Prisma.languagesUpdateOneWithoutProductsNestedInput
   rarities?: Prisma.raritiesUpdateOneWithoutProductsNestedInput
+  owner?: Prisma.usersUpdateOneRequiredWithoutOwnedProductsNestedInput
   tags?: Prisma.product_tagsUpdateManyWithoutProductsNestedInput
   stock?: Prisma.stock_itemsUpdateManyWithoutProductsNestedInput
   orderItems?: Prisma.order_itemsUpdateManyWithoutProductsNestedInput
@@ -1179,6 +1823,18 @@ export type productsUncheckedUpdateWithoutCartItemsInput = {
   condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  owner_id?: Prisma.StringFieldUpdateOperationsInput | string
+  hareruya_product_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  card_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_en?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_jp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_stock?: Prisma.IntFieldUpdateOperationsInput | number
+  hareruya_product_class?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hareruya_sale_flg?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_weekly_sales?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tags?: Prisma.product_tagsUncheckedUpdateManyWithoutProductsNestedInput
   stock?: Prisma.stock_itemsUncheckedUpdateManyWithoutProductsNestedInput
   orderItems?: Prisma.order_itemsUncheckedUpdateManyWithoutProductsNestedInput
@@ -1190,10 +1846,22 @@ export type productsCreateWithoutOrderItemsInput = {
   name: string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   image_url: string
+  hareruya_product_id?: string | null
+  card_name?: string | null
+  product_name_en?: string | null
+  product_name_jp?: string | null
+  is_foil?: boolean
+  hareruya_stock?: number
+  hareruya_product_class?: string | null
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: number
+  created_at?: Date | string
+  updated_at?: Date | string
   categories: Prisma.categoriesCreateNestedOneWithoutProductsInput
   conditions?: Prisma.conditionsCreateNestedOneWithoutProductsInput
   languages?: Prisma.languagesCreateNestedOneWithoutProductsInput
   rarities?: Prisma.raritiesCreateNestedOneWithoutProductsInput
+  owner: Prisma.usersCreateNestedOneWithoutOwnedProductsInput
   tags?: Prisma.product_tagsCreateNestedManyWithoutProductsInput
   stock?: Prisma.stock_itemsCreateNestedManyWithoutProductsInput
   cartItems?: Prisma.cart_itemsCreateNestedManyWithoutProductsInput
@@ -1209,6 +1877,18 @@ export type productsUncheckedCreateWithoutOrderItemsInput = {
   condition_id?: string | null
   language_id?: string | null
   rarity_id?: string | null
+  owner_id: string
+  hareruya_product_id?: string | null
+  card_name?: string | null
+  product_name_en?: string | null
+  product_name_jp?: string | null
+  is_foil?: boolean
+  hareruya_stock?: number
+  hareruya_product_class?: string | null
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: number
+  created_at?: Date | string
+  updated_at?: Date | string
   tags?: Prisma.product_tagsUncheckedCreateNestedManyWithoutProductsInput
   stock?: Prisma.stock_itemsUncheckedCreateNestedManyWithoutProductsInput
   cartItems?: Prisma.cart_itemsUncheckedCreateNestedManyWithoutProductsInput
@@ -1236,10 +1916,22 @@ export type productsUpdateWithoutOrderItemsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   image_url?: Prisma.StringFieldUpdateOperationsInput | string
+  hareruya_product_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  card_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_en?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_jp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_stock?: Prisma.IntFieldUpdateOperationsInput | number
+  hareruya_product_class?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hareruya_sale_flg?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_weekly_sales?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   categories?: Prisma.categoriesUpdateOneRequiredWithoutProductsNestedInput
   conditions?: Prisma.conditionsUpdateOneWithoutProductsNestedInput
   languages?: Prisma.languagesUpdateOneWithoutProductsNestedInput
   rarities?: Prisma.raritiesUpdateOneWithoutProductsNestedInput
+  owner?: Prisma.usersUpdateOneRequiredWithoutOwnedProductsNestedInput
   tags?: Prisma.product_tagsUpdateManyWithoutProductsNestedInput
   stock?: Prisma.stock_itemsUpdateManyWithoutProductsNestedInput
   cartItems?: Prisma.cart_itemsUpdateManyWithoutProductsNestedInput
@@ -1255,6 +1947,18 @@ export type productsUncheckedUpdateWithoutOrderItemsInput = {
   condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  owner_id?: Prisma.StringFieldUpdateOperationsInput | string
+  hareruya_product_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  card_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_en?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_jp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_stock?: Prisma.IntFieldUpdateOperationsInput | number
+  hareruya_product_class?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hareruya_sale_flg?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_weekly_sales?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tags?: Prisma.product_tagsUncheckedUpdateManyWithoutProductsNestedInput
   stock?: Prisma.stock_itemsUncheckedUpdateManyWithoutProductsNestedInput
   cartItems?: Prisma.cart_itemsUncheckedUpdateManyWithoutProductsNestedInput
@@ -1266,10 +1970,22 @@ export type productsCreateWithoutListingsInput = {
   name: string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   image_url: string
+  hareruya_product_id?: string | null
+  card_name?: string | null
+  product_name_en?: string | null
+  product_name_jp?: string | null
+  is_foil?: boolean
+  hareruya_stock?: number
+  hareruya_product_class?: string | null
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: number
+  created_at?: Date | string
+  updated_at?: Date | string
   categories: Prisma.categoriesCreateNestedOneWithoutProductsInput
   conditions?: Prisma.conditionsCreateNestedOneWithoutProductsInput
   languages?: Prisma.languagesCreateNestedOneWithoutProductsInput
   rarities?: Prisma.raritiesCreateNestedOneWithoutProductsInput
+  owner: Prisma.usersCreateNestedOneWithoutOwnedProductsInput
   tags?: Prisma.product_tagsCreateNestedManyWithoutProductsInput
   stock?: Prisma.stock_itemsCreateNestedManyWithoutProductsInput
   cartItems?: Prisma.cart_itemsCreateNestedManyWithoutProductsInput
@@ -1285,6 +2001,18 @@ export type productsUncheckedCreateWithoutListingsInput = {
   condition_id?: string | null
   language_id?: string | null
   rarity_id?: string | null
+  owner_id: string
+  hareruya_product_id?: string | null
+  card_name?: string | null
+  product_name_en?: string | null
+  product_name_jp?: string | null
+  is_foil?: boolean
+  hareruya_stock?: number
+  hareruya_product_class?: string | null
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: number
+  created_at?: Date | string
+  updated_at?: Date | string
   tags?: Prisma.product_tagsUncheckedCreateNestedManyWithoutProductsInput
   stock?: Prisma.stock_itemsUncheckedCreateNestedManyWithoutProductsInput
   cartItems?: Prisma.cart_itemsUncheckedCreateNestedManyWithoutProductsInput
@@ -1312,10 +2040,22 @@ export type productsUpdateWithoutListingsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   image_url?: Prisma.StringFieldUpdateOperationsInput | string
+  hareruya_product_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  card_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_en?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_jp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_stock?: Prisma.IntFieldUpdateOperationsInput | number
+  hareruya_product_class?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hareruya_sale_flg?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_weekly_sales?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   categories?: Prisma.categoriesUpdateOneRequiredWithoutProductsNestedInput
   conditions?: Prisma.conditionsUpdateOneWithoutProductsNestedInput
   languages?: Prisma.languagesUpdateOneWithoutProductsNestedInput
   rarities?: Prisma.raritiesUpdateOneWithoutProductsNestedInput
+  owner?: Prisma.usersUpdateOneRequiredWithoutOwnedProductsNestedInput
   tags?: Prisma.product_tagsUpdateManyWithoutProductsNestedInput
   stock?: Prisma.stock_itemsUpdateManyWithoutProductsNestedInput
   cartItems?: Prisma.cart_itemsUpdateManyWithoutProductsNestedInput
@@ -1331,10 +2071,120 @@ export type productsUncheckedUpdateWithoutListingsInput = {
   condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  owner_id?: Prisma.StringFieldUpdateOperationsInput | string
+  hareruya_product_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  card_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_en?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_jp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_stock?: Prisma.IntFieldUpdateOperationsInput | number
+  hareruya_product_class?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hareruya_sale_flg?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_weekly_sales?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tags?: Prisma.product_tagsUncheckedUpdateManyWithoutProductsNestedInput
   stock?: Prisma.stock_itemsUncheckedUpdateManyWithoutProductsNestedInput
   cartItems?: Prisma.cart_itemsUncheckedUpdateManyWithoutProductsNestedInput
   orderItems?: Prisma.order_itemsUncheckedUpdateManyWithoutProductsNestedInput
+}
+
+export type productsCreateManyOwnerInput = {
+  id?: string
+  name: string
+  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  image_url: string
+  category_id: string
+  condition_id?: string | null
+  language_id?: string | null
+  rarity_id?: string | null
+  hareruya_product_id?: string | null
+  card_name?: string | null
+  product_name_en?: string | null
+  product_name_jp?: string | null
+  is_foil?: boolean
+  hareruya_stock?: number
+  hareruya_product_class?: string | null
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: number
+  created_at?: Date | string
+  updated_at?: Date | string
+}
+
+export type productsUpdateWithoutOwnerInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  image_url?: Prisma.StringFieldUpdateOperationsInput | string
+  hareruya_product_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  card_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_en?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_jp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_stock?: Prisma.IntFieldUpdateOperationsInput | number
+  hareruya_product_class?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hareruya_sale_flg?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_weekly_sales?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  categories?: Prisma.categoriesUpdateOneRequiredWithoutProductsNestedInput
+  conditions?: Prisma.conditionsUpdateOneWithoutProductsNestedInput
+  languages?: Prisma.languagesUpdateOneWithoutProductsNestedInput
+  rarities?: Prisma.raritiesUpdateOneWithoutProductsNestedInput
+  tags?: Prisma.product_tagsUpdateManyWithoutProductsNestedInput
+  stock?: Prisma.stock_itemsUpdateManyWithoutProductsNestedInput
+  cartItems?: Prisma.cart_itemsUpdateManyWithoutProductsNestedInput
+  orderItems?: Prisma.order_itemsUpdateManyWithoutProductsNestedInput
+  listings?: Prisma.listingsUpdateManyWithoutProductsNestedInput
+}
+
+export type productsUncheckedUpdateWithoutOwnerInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  image_url?: Prisma.StringFieldUpdateOperationsInput | string
+  category_id?: Prisma.StringFieldUpdateOperationsInput | string
+  condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hareruya_product_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  card_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_en?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_jp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_stock?: Prisma.IntFieldUpdateOperationsInput | number
+  hareruya_product_class?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hareruya_sale_flg?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_weekly_sales?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tags?: Prisma.product_tagsUncheckedUpdateManyWithoutProductsNestedInput
+  stock?: Prisma.stock_itemsUncheckedUpdateManyWithoutProductsNestedInput
+  cartItems?: Prisma.cart_itemsUncheckedUpdateManyWithoutProductsNestedInput
+  orderItems?: Prisma.order_itemsUncheckedUpdateManyWithoutProductsNestedInput
+  listings?: Prisma.listingsUncheckedUpdateManyWithoutProductsNestedInput
+}
+
+export type productsUncheckedUpdateManyWithoutOwnerInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  image_url?: Prisma.StringFieldUpdateOperationsInput | string
+  category_id?: Prisma.StringFieldUpdateOperationsInput | string
+  condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hareruya_product_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  card_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_en?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_jp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_stock?: Prisma.IntFieldUpdateOperationsInput | number
+  hareruya_product_class?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hareruya_sale_flg?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_weekly_sales?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type productsCreateManyCategoriesInput = {
@@ -1345,6 +2195,18 @@ export type productsCreateManyCategoriesInput = {
   condition_id?: string | null
   language_id?: string | null
   rarity_id?: string | null
+  owner_id: string
+  hareruya_product_id?: string | null
+  card_name?: string | null
+  product_name_en?: string | null
+  product_name_jp?: string | null
+  is_foil?: boolean
+  hareruya_stock?: number
+  hareruya_product_class?: string | null
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: number
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type productsUpdateWithoutCategoriesInput = {
@@ -1352,9 +2214,21 @@ export type productsUpdateWithoutCategoriesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   image_url?: Prisma.StringFieldUpdateOperationsInput | string
+  hareruya_product_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  card_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_en?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_jp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_stock?: Prisma.IntFieldUpdateOperationsInput | number
+  hareruya_product_class?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hareruya_sale_flg?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_weekly_sales?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   conditions?: Prisma.conditionsUpdateOneWithoutProductsNestedInput
   languages?: Prisma.languagesUpdateOneWithoutProductsNestedInput
   rarities?: Prisma.raritiesUpdateOneWithoutProductsNestedInput
+  owner?: Prisma.usersUpdateOneRequiredWithoutOwnedProductsNestedInput
   tags?: Prisma.product_tagsUpdateManyWithoutProductsNestedInput
   stock?: Prisma.stock_itemsUpdateManyWithoutProductsNestedInput
   cartItems?: Prisma.cart_itemsUpdateManyWithoutProductsNestedInput
@@ -1370,6 +2244,18 @@ export type productsUncheckedUpdateWithoutCategoriesInput = {
   condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  owner_id?: Prisma.StringFieldUpdateOperationsInput | string
+  hareruya_product_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  card_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_en?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_jp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_stock?: Prisma.IntFieldUpdateOperationsInput | number
+  hareruya_product_class?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hareruya_sale_flg?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_weekly_sales?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tags?: Prisma.product_tagsUncheckedUpdateManyWithoutProductsNestedInput
   stock?: Prisma.stock_itemsUncheckedUpdateManyWithoutProductsNestedInput
   cartItems?: Prisma.cart_itemsUncheckedUpdateManyWithoutProductsNestedInput
@@ -1385,6 +2271,18 @@ export type productsUncheckedUpdateManyWithoutCategoriesInput = {
   condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  owner_id?: Prisma.StringFieldUpdateOperationsInput | string
+  hareruya_product_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  card_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_en?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_jp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_stock?: Prisma.IntFieldUpdateOperationsInput | number
+  hareruya_product_class?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hareruya_sale_flg?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_weekly_sales?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type productsCreateManyConditionsInput = {
@@ -1395,6 +2293,18 @@ export type productsCreateManyConditionsInput = {
   category_id: string
   language_id?: string | null
   rarity_id?: string | null
+  owner_id: string
+  hareruya_product_id?: string | null
+  card_name?: string | null
+  product_name_en?: string | null
+  product_name_jp?: string | null
+  is_foil?: boolean
+  hareruya_stock?: number
+  hareruya_product_class?: string | null
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: number
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type productsUpdateWithoutConditionsInput = {
@@ -1402,9 +2312,21 @@ export type productsUpdateWithoutConditionsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   image_url?: Prisma.StringFieldUpdateOperationsInput | string
+  hareruya_product_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  card_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_en?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_jp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_stock?: Prisma.IntFieldUpdateOperationsInput | number
+  hareruya_product_class?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hareruya_sale_flg?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_weekly_sales?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   categories?: Prisma.categoriesUpdateOneRequiredWithoutProductsNestedInput
   languages?: Prisma.languagesUpdateOneWithoutProductsNestedInput
   rarities?: Prisma.raritiesUpdateOneWithoutProductsNestedInput
+  owner?: Prisma.usersUpdateOneRequiredWithoutOwnedProductsNestedInput
   tags?: Prisma.product_tagsUpdateManyWithoutProductsNestedInput
   stock?: Prisma.stock_itemsUpdateManyWithoutProductsNestedInput
   cartItems?: Prisma.cart_itemsUpdateManyWithoutProductsNestedInput
@@ -1420,6 +2342,18 @@ export type productsUncheckedUpdateWithoutConditionsInput = {
   category_id?: Prisma.StringFieldUpdateOperationsInput | string
   language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  owner_id?: Prisma.StringFieldUpdateOperationsInput | string
+  hareruya_product_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  card_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_en?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_jp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_stock?: Prisma.IntFieldUpdateOperationsInput | number
+  hareruya_product_class?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hareruya_sale_flg?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_weekly_sales?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tags?: Prisma.product_tagsUncheckedUpdateManyWithoutProductsNestedInput
   stock?: Prisma.stock_itemsUncheckedUpdateManyWithoutProductsNestedInput
   cartItems?: Prisma.cart_itemsUncheckedUpdateManyWithoutProductsNestedInput
@@ -1435,6 +2369,18 @@ export type productsUncheckedUpdateManyWithoutConditionsInput = {
   category_id?: Prisma.StringFieldUpdateOperationsInput | string
   language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  owner_id?: Prisma.StringFieldUpdateOperationsInput | string
+  hareruya_product_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  card_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_en?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_jp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_stock?: Prisma.IntFieldUpdateOperationsInput | number
+  hareruya_product_class?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hareruya_sale_flg?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_weekly_sales?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type productsCreateManyLanguagesInput = {
@@ -1445,6 +2391,18 @@ export type productsCreateManyLanguagesInput = {
   category_id: string
   condition_id?: string | null
   rarity_id?: string | null
+  owner_id: string
+  hareruya_product_id?: string | null
+  card_name?: string | null
+  product_name_en?: string | null
+  product_name_jp?: string | null
+  is_foil?: boolean
+  hareruya_stock?: number
+  hareruya_product_class?: string | null
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: number
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type productsUpdateWithoutLanguagesInput = {
@@ -1452,9 +2410,21 @@ export type productsUpdateWithoutLanguagesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   image_url?: Prisma.StringFieldUpdateOperationsInput | string
+  hareruya_product_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  card_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_en?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_jp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_stock?: Prisma.IntFieldUpdateOperationsInput | number
+  hareruya_product_class?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hareruya_sale_flg?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_weekly_sales?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   categories?: Prisma.categoriesUpdateOneRequiredWithoutProductsNestedInput
   conditions?: Prisma.conditionsUpdateOneWithoutProductsNestedInput
   rarities?: Prisma.raritiesUpdateOneWithoutProductsNestedInput
+  owner?: Prisma.usersUpdateOneRequiredWithoutOwnedProductsNestedInput
   tags?: Prisma.product_tagsUpdateManyWithoutProductsNestedInput
   stock?: Prisma.stock_itemsUpdateManyWithoutProductsNestedInput
   cartItems?: Prisma.cart_itemsUpdateManyWithoutProductsNestedInput
@@ -1470,6 +2440,18 @@ export type productsUncheckedUpdateWithoutLanguagesInput = {
   category_id?: Prisma.StringFieldUpdateOperationsInput | string
   condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  owner_id?: Prisma.StringFieldUpdateOperationsInput | string
+  hareruya_product_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  card_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_en?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_jp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_stock?: Prisma.IntFieldUpdateOperationsInput | number
+  hareruya_product_class?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hareruya_sale_flg?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_weekly_sales?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tags?: Prisma.product_tagsUncheckedUpdateManyWithoutProductsNestedInput
   stock?: Prisma.stock_itemsUncheckedUpdateManyWithoutProductsNestedInput
   cartItems?: Prisma.cart_itemsUncheckedUpdateManyWithoutProductsNestedInput
@@ -1485,6 +2467,18 @@ export type productsUncheckedUpdateManyWithoutLanguagesInput = {
   category_id?: Prisma.StringFieldUpdateOperationsInput | string
   condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  owner_id?: Prisma.StringFieldUpdateOperationsInput | string
+  hareruya_product_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  card_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_en?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_jp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_stock?: Prisma.IntFieldUpdateOperationsInput | number
+  hareruya_product_class?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hareruya_sale_flg?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_weekly_sales?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type productsCreateManyRaritiesInput = {
@@ -1495,6 +2489,18 @@ export type productsCreateManyRaritiesInput = {
   category_id: string
   condition_id?: string | null
   language_id?: string | null
+  owner_id: string
+  hareruya_product_id?: string | null
+  card_name?: string | null
+  product_name_en?: string | null
+  product_name_jp?: string | null
+  is_foil?: boolean
+  hareruya_stock?: number
+  hareruya_product_class?: string | null
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: number
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type productsUpdateWithoutRaritiesInput = {
@@ -1502,9 +2508,21 @@ export type productsUpdateWithoutRaritiesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   image_url?: Prisma.StringFieldUpdateOperationsInput | string
+  hareruya_product_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  card_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_en?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_jp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_stock?: Prisma.IntFieldUpdateOperationsInput | number
+  hareruya_product_class?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hareruya_sale_flg?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_weekly_sales?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   categories?: Prisma.categoriesUpdateOneRequiredWithoutProductsNestedInput
   conditions?: Prisma.conditionsUpdateOneWithoutProductsNestedInput
   languages?: Prisma.languagesUpdateOneWithoutProductsNestedInput
+  owner?: Prisma.usersUpdateOneRequiredWithoutOwnedProductsNestedInput
   tags?: Prisma.product_tagsUpdateManyWithoutProductsNestedInput
   stock?: Prisma.stock_itemsUpdateManyWithoutProductsNestedInput
   cartItems?: Prisma.cart_itemsUpdateManyWithoutProductsNestedInput
@@ -1520,6 +2538,18 @@ export type productsUncheckedUpdateWithoutRaritiesInput = {
   category_id?: Prisma.StringFieldUpdateOperationsInput | string
   condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  owner_id?: Prisma.StringFieldUpdateOperationsInput | string
+  hareruya_product_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  card_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_en?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_jp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_stock?: Prisma.IntFieldUpdateOperationsInput | number
+  hareruya_product_class?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hareruya_sale_flg?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_weekly_sales?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tags?: Prisma.product_tagsUncheckedUpdateManyWithoutProductsNestedInput
   stock?: Prisma.stock_itemsUncheckedUpdateManyWithoutProductsNestedInput
   cartItems?: Prisma.cart_itemsUncheckedUpdateManyWithoutProductsNestedInput
@@ -1535,6 +2565,18 @@ export type productsUncheckedUpdateManyWithoutRaritiesInput = {
   category_id?: Prisma.StringFieldUpdateOperationsInput | string
   condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  owner_id?: Prisma.StringFieldUpdateOperationsInput | string
+  hareruya_product_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  card_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_en?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name_jp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_stock?: Prisma.IntFieldUpdateOperationsInput | number
+  hareruya_product_class?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hareruya_sale_flg?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_weekly_sales?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -1613,10 +2655,23 @@ export type productsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   condition_id?: boolean
   language_id?: boolean
   rarity_id?: boolean
+  owner_id?: boolean
+  hareruya_product_id?: boolean
+  card_name?: boolean
+  product_name_en?: boolean
+  product_name_jp?: boolean
+  is_foil?: boolean
+  hareruya_stock?: boolean
+  hareruya_product_class?: boolean
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: boolean
+  created_at?: boolean
+  updated_at?: boolean
   categories?: boolean | Prisma.categoriesDefaultArgs<ExtArgs>
   conditions?: boolean | Prisma.products$conditionsArgs<ExtArgs>
   languages?: boolean | Prisma.products$languagesArgs<ExtArgs>
   rarities?: boolean | Prisma.products$raritiesArgs<ExtArgs>
+  owner?: boolean | Prisma.usersDefaultArgs<ExtArgs>
   tags?: boolean | Prisma.products$tagsArgs<ExtArgs>
   stock?: boolean | Prisma.products$stockArgs<ExtArgs>
   cartItems?: boolean | Prisma.products$cartItemsArgs<ExtArgs>
@@ -1634,10 +2689,23 @@ export type productsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   condition_id?: boolean
   language_id?: boolean
   rarity_id?: boolean
+  owner_id?: boolean
+  hareruya_product_id?: boolean
+  card_name?: boolean
+  product_name_en?: boolean
+  product_name_jp?: boolean
+  is_foil?: boolean
+  hareruya_stock?: boolean
+  hareruya_product_class?: boolean
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: boolean
+  created_at?: boolean
+  updated_at?: boolean
   categories?: boolean | Prisma.categoriesDefaultArgs<ExtArgs>
   conditions?: boolean | Prisma.products$conditionsArgs<ExtArgs>
   languages?: boolean | Prisma.products$languagesArgs<ExtArgs>
   rarities?: boolean | Prisma.products$raritiesArgs<ExtArgs>
+  owner?: boolean | Prisma.usersDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["products"]>
 
 export type productsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1649,10 +2717,23 @@ export type productsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   condition_id?: boolean
   language_id?: boolean
   rarity_id?: boolean
+  owner_id?: boolean
+  hareruya_product_id?: boolean
+  card_name?: boolean
+  product_name_en?: boolean
+  product_name_jp?: boolean
+  is_foil?: boolean
+  hareruya_stock?: boolean
+  hareruya_product_class?: boolean
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: boolean
+  created_at?: boolean
+  updated_at?: boolean
   categories?: boolean | Prisma.categoriesDefaultArgs<ExtArgs>
   conditions?: boolean | Prisma.products$conditionsArgs<ExtArgs>
   languages?: boolean | Prisma.products$languagesArgs<ExtArgs>
   rarities?: boolean | Prisma.products$raritiesArgs<ExtArgs>
+  owner?: boolean | Prisma.usersDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["products"]>
 
 export type productsSelectScalar = {
@@ -1664,14 +2745,27 @@ export type productsSelectScalar = {
   condition_id?: boolean
   language_id?: boolean
   rarity_id?: boolean
+  owner_id?: boolean
+  hareruya_product_id?: boolean
+  card_name?: boolean
+  product_name_en?: boolean
+  product_name_jp?: boolean
+  is_foil?: boolean
+  hareruya_stock?: boolean
+  hareruya_product_class?: boolean
+  hareruya_sale_flg?: boolean
+  hareruya_weekly_sales?: boolean
+  created_at?: boolean
+  updated_at?: boolean
 }
 
-export type productsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "price" | "image_url" | "category_id" | "condition_id" | "language_id" | "rarity_id", ExtArgs["result"]["products"]>
+export type productsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "price" | "image_url" | "category_id" | "condition_id" | "language_id" | "rarity_id" | "owner_id" | "hareruya_product_id" | "card_name" | "product_name_en" | "product_name_jp" | "is_foil" | "hareruya_stock" | "hareruya_product_class" | "hareruya_sale_flg" | "hareruya_weekly_sales" | "created_at" | "updated_at", ExtArgs["result"]["products"]>
 export type productsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   categories?: boolean | Prisma.categoriesDefaultArgs<ExtArgs>
   conditions?: boolean | Prisma.products$conditionsArgs<ExtArgs>
   languages?: boolean | Prisma.products$languagesArgs<ExtArgs>
   rarities?: boolean | Prisma.products$raritiesArgs<ExtArgs>
+  owner?: boolean | Prisma.usersDefaultArgs<ExtArgs>
   tags?: boolean | Prisma.products$tagsArgs<ExtArgs>
   stock?: boolean | Prisma.products$stockArgs<ExtArgs>
   cartItems?: boolean | Prisma.products$cartItemsArgs<ExtArgs>
@@ -1684,12 +2778,14 @@ export type productsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   conditions?: boolean | Prisma.products$conditionsArgs<ExtArgs>
   languages?: boolean | Prisma.products$languagesArgs<ExtArgs>
   rarities?: boolean | Prisma.products$raritiesArgs<ExtArgs>
+  owner?: boolean | Prisma.usersDefaultArgs<ExtArgs>
 }
 export type productsIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   categories?: boolean | Prisma.categoriesDefaultArgs<ExtArgs>
   conditions?: boolean | Prisma.products$conditionsArgs<ExtArgs>
   languages?: boolean | Prisma.products$languagesArgs<ExtArgs>
   rarities?: boolean | Prisma.products$raritiesArgs<ExtArgs>
+  owner?: boolean | Prisma.usersDefaultArgs<ExtArgs>
 }
 
 export type $productsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1699,6 +2795,7 @@ export type $productsPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     conditions: Prisma.$conditionsPayload<ExtArgs> | null
     languages: Prisma.$languagesPayload<ExtArgs> | null
     rarities: Prisma.$raritiesPayload<ExtArgs> | null
+    owner: Prisma.$usersPayload<ExtArgs>
     tags: Prisma.$product_tagsPayload<ExtArgs>[]
     stock: Prisma.$stock_itemsPayload<ExtArgs>[]
     cartItems: Prisma.$cart_itemsPayload<ExtArgs>[]
@@ -1714,6 +2811,18 @@ export type $productsPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     condition_id: string | null
     language_id: string | null
     rarity_id: string | null
+    owner_id: string
+    hareruya_product_id: string | null
+    card_name: string | null
+    product_name_en: string | null
+    product_name_jp: string | null
+    is_foil: boolean
+    hareruya_stock: number
+    hareruya_product_class: string | null
+    hareruya_sale_flg: boolean
+    hareruya_weekly_sales: number
+    created_at: Date
+    updated_at: Date
   }, ExtArgs["result"]["products"]>
   composites: {}
 }
@@ -2112,6 +3221,7 @@ export interface Prisma__productsClient<T, Null = never, ExtArgs extends runtime
   conditions<T extends Prisma.products$conditionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.products$conditionsArgs<ExtArgs>>): Prisma.Prisma__conditionsClient<runtime.Types.Result.GetResult<Prisma.$conditionsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   languages<T extends Prisma.products$languagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.products$languagesArgs<ExtArgs>>): Prisma.Prisma__languagesClient<runtime.Types.Result.GetResult<Prisma.$languagesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   rarities<T extends Prisma.products$raritiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.products$raritiesArgs<ExtArgs>>): Prisma.Prisma__raritiesClient<runtime.Types.Result.GetResult<Prisma.$raritiesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  owner<T extends Prisma.usersDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.usersDefaultArgs<ExtArgs>>): Prisma.Prisma__usersClient<runtime.Types.Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   tags<T extends Prisma.products$tagsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.products$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$product_tagsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   stock<T extends Prisma.products$stockArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.products$stockArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$stock_itemsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   cartItems<T extends Prisma.products$cartItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.products$cartItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$cart_itemsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2154,6 +3264,18 @@ export interface productsFieldRefs {
   readonly condition_id: Prisma.FieldRef<"products", 'String'>
   readonly language_id: Prisma.FieldRef<"products", 'String'>
   readonly rarity_id: Prisma.FieldRef<"products", 'String'>
+  readonly owner_id: Prisma.FieldRef<"products", 'String'>
+  readonly hareruya_product_id: Prisma.FieldRef<"products", 'String'>
+  readonly card_name: Prisma.FieldRef<"products", 'String'>
+  readonly product_name_en: Prisma.FieldRef<"products", 'String'>
+  readonly product_name_jp: Prisma.FieldRef<"products", 'String'>
+  readonly is_foil: Prisma.FieldRef<"products", 'Boolean'>
+  readonly hareruya_stock: Prisma.FieldRef<"products", 'Int'>
+  readonly hareruya_product_class: Prisma.FieldRef<"products", 'String'>
+  readonly hareruya_sale_flg: Prisma.FieldRef<"products", 'Boolean'>
+  readonly hareruya_weekly_sales: Prisma.FieldRef<"products", 'Int'>
+  readonly created_at: Prisma.FieldRef<"products", 'DateTime'>
+  readonly updated_at: Prisma.FieldRef<"products", 'DateTime'>
 }
     
 

@@ -211,6 +211,7 @@ export type usersWhereInput = {
   carts?: Prisma.XOR<Prisma.CartsNullableScalarRelationFilter, Prisma.cartsWhereInput> | null
   orders?: Prisma.OrdersListRelationFilter
   listings?: Prisma.ListingsListRelationFilter
+  ownedProducts?: Prisma.ProductsListRelationFilter
 }
 
 export type usersOrderByWithRelationInput = {
@@ -227,6 +228,7 @@ export type usersOrderByWithRelationInput = {
   carts?: Prisma.cartsOrderByWithRelationInput
   orders?: Prisma.ordersOrderByRelationAggregateInput
   listings?: Prisma.listingsOrderByRelationAggregateInput
+  ownedProducts?: Prisma.productsOrderByRelationAggregateInput
 }
 
 export type usersWhereUniqueInput = Prisma.AtLeast<{
@@ -246,6 +248,7 @@ export type usersWhereUniqueInput = Prisma.AtLeast<{
   carts?: Prisma.XOR<Prisma.CartsNullableScalarRelationFilter, Prisma.cartsWhereInput> | null
   orders?: Prisma.OrdersListRelationFilter
   listings?: Prisma.ListingsListRelationFilter
+  ownedProducts?: Prisma.ProductsListRelationFilter
 }, "id" | "email" | "username">
 
 export type usersOrderByWithAggregationInput = {
@@ -289,6 +292,7 @@ export type usersCreateInput = {
   carts?: Prisma.cartsCreateNestedOneWithoutUsersInput
   orders?: Prisma.ordersCreateNestedManyWithoutUsersInput
   listings?: Prisma.listingsCreateNestedManyWithoutUsersInput
+  ownedProducts?: Prisma.productsCreateNestedManyWithoutOwnerInput
 }
 
 export type usersUncheckedCreateInput = {
@@ -304,6 +308,7 @@ export type usersUncheckedCreateInput = {
   carts?: Prisma.cartsUncheckedCreateNestedOneWithoutUsersInput
   orders?: Prisma.ordersUncheckedCreateNestedManyWithoutUsersInput
   listings?: Prisma.listingsUncheckedCreateNestedManyWithoutUsersInput
+  ownedProducts?: Prisma.productsUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type usersUpdateInput = {
@@ -319,6 +324,7 @@ export type usersUpdateInput = {
   carts?: Prisma.cartsUpdateOneWithoutUsersNestedInput
   orders?: Prisma.ordersUpdateManyWithoutUsersNestedInput
   listings?: Prisma.listingsUpdateManyWithoutUsersNestedInput
+  ownedProducts?: Prisma.productsUpdateManyWithoutOwnerNestedInput
 }
 
 export type usersUncheckedUpdateInput = {
@@ -334,6 +340,7 @@ export type usersUncheckedUpdateInput = {
   carts?: Prisma.cartsUncheckedUpdateOneWithoutUsersNestedInput
   orders?: Prisma.ordersUncheckedUpdateManyWithoutUsersNestedInput
   listings?: Prisma.listingsUncheckedUpdateManyWithoutUsersNestedInput
+  ownedProducts?: Prisma.productsUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type usersCreateManyInput = {
@@ -480,6 +487,20 @@ export type usersUpdateOneRequiredWithoutAddressesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.usersUpdateToOneWithWhereWithoutAddressesInput, Prisma.usersUpdateWithoutAddressesInput>, Prisma.usersUncheckedUpdateWithoutAddressesInput>
 }
 
+export type usersCreateNestedOneWithoutOwnedProductsInput = {
+  create?: Prisma.XOR<Prisma.usersCreateWithoutOwnedProductsInput, Prisma.usersUncheckedCreateWithoutOwnedProductsInput>
+  connectOrCreate?: Prisma.usersCreateOrConnectWithoutOwnedProductsInput
+  connect?: Prisma.usersWhereUniqueInput
+}
+
+export type usersUpdateOneRequiredWithoutOwnedProductsNestedInput = {
+  create?: Prisma.XOR<Prisma.usersCreateWithoutOwnedProductsInput, Prisma.usersUncheckedCreateWithoutOwnedProductsInput>
+  connectOrCreate?: Prisma.usersCreateOrConnectWithoutOwnedProductsInput
+  upsert?: Prisma.usersUpsertWithoutOwnedProductsInput
+  connect?: Prisma.usersWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.usersUpdateToOneWithWhereWithoutOwnedProductsInput, Prisma.usersUpdateWithoutOwnedProductsInput>, Prisma.usersUncheckedUpdateWithoutOwnedProductsInput>
+}
+
 export type usersCreateNestedOneWithoutCartsInput = {
   create?: Prisma.XOR<Prisma.usersCreateWithoutCartsInput, Prisma.usersUncheckedCreateWithoutCartsInput>
   connectOrCreate?: Prisma.usersCreateOrConnectWithoutCartsInput
@@ -534,6 +555,7 @@ export type usersCreateWithoutRolesInput = {
   carts?: Prisma.cartsCreateNestedOneWithoutUsersInput
   orders?: Prisma.ordersCreateNestedManyWithoutUsersInput
   listings?: Prisma.listingsCreateNestedManyWithoutUsersInput
+  ownedProducts?: Prisma.productsCreateNestedManyWithoutOwnerInput
 }
 
 export type usersUncheckedCreateWithoutRolesInput = {
@@ -548,6 +570,7 @@ export type usersUncheckedCreateWithoutRolesInput = {
   carts?: Prisma.cartsUncheckedCreateNestedOneWithoutUsersInput
   orders?: Prisma.ordersUncheckedCreateNestedManyWithoutUsersInput
   listings?: Prisma.listingsUncheckedCreateNestedManyWithoutUsersInput
+  ownedProducts?: Prisma.productsUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type usersCreateOrConnectWithoutRolesInput = {
@@ -602,6 +625,7 @@ export type usersCreateWithoutAddressesInput = {
   carts?: Prisma.cartsCreateNestedOneWithoutUsersInput
   orders?: Prisma.ordersCreateNestedManyWithoutUsersInput
   listings?: Prisma.listingsCreateNestedManyWithoutUsersInput
+  ownedProducts?: Prisma.productsCreateNestedManyWithoutOwnerInput
 }
 
 export type usersUncheckedCreateWithoutAddressesInput = {
@@ -616,6 +640,7 @@ export type usersUncheckedCreateWithoutAddressesInput = {
   carts?: Prisma.cartsUncheckedCreateNestedOneWithoutUsersInput
   orders?: Prisma.ordersUncheckedCreateNestedManyWithoutUsersInput
   listings?: Prisma.listingsUncheckedCreateNestedManyWithoutUsersInput
+  ownedProducts?: Prisma.productsUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type usersCreateOrConnectWithoutAddressesInput = {
@@ -646,6 +671,7 @@ export type usersUpdateWithoutAddressesInput = {
   carts?: Prisma.cartsUpdateOneWithoutUsersNestedInput
   orders?: Prisma.ordersUpdateManyWithoutUsersNestedInput
   listings?: Prisma.listingsUpdateManyWithoutUsersNestedInput
+  ownedProducts?: Prisma.productsUpdateManyWithoutOwnerNestedInput
 }
 
 export type usersUncheckedUpdateWithoutAddressesInput = {
@@ -657,6 +683,83 @@ export type usersUncheckedUpdateWithoutAddressesInput = {
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  carts?: Prisma.cartsUncheckedUpdateOneWithoutUsersNestedInput
+  orders?: Prisma.ordersUncheckedUpdateManyWithoutUsersNestedInput
+  listings?: Prisma.listingsUncheckedUpdateManyWithoutUsersNestedInput
+  ownedProducts?: Prisma.productsUncheckedUpdateManyWithoutOwnerNestedInput
+}
+
+export type usersCreateWithoutOwnedProductsInput = {
+  id?: string
+  email: string
+  username: string
+  password?: string | null
+  first_name: string
+  last_name: string
+  is_active?: boolean
+  roles: Prisma.rolesCreateNestedOneWithoutUsersInput
+  addresses?: Prisma.user_addressesCreateNestedManyWithoutUsersInput
+  carts?: Prisma.cartsCreateNestedOneWithoutUsersInput
+  orders?: Prisma.ordersCreateNestedManyWithoutUsersInput
+  listings?: Prisma.listingsCreateNestedManyWithoutUsersInput
+}
+
+export type usersUncheckedCreateWithoutOwnedProductsInput = {
+  id?: string
+  email: string
+  username: string
+  password?: string | null
+  role_id: string
+  first_name: string
+  last_name: string
+  is_active?: boolean
+  addresses?: Prisma.user_addressesUncheckedCreateNestedManyWithoutUsersInput
+  carts?: Prisma.cartsUncheckedCreateNestedOneWithoutUsersInput
+  orders?: Prisma.ordersUncheckedCreateNestedManyWithoutUsersInput
+  listings?: Prisma.listingsUncheckedCreateNestedManyWithoutUsersInput
+}
+
+export type usersCreateOrConnectWithoutOwnedProductsInput = {
+  where: Prisma.usersWhereUniqueInput
+  create: Prisma.XOR<Prisma.usersCreateWithoutOwnedProductsInput, Prisma.usersUncheckedCreateWithoutOwnedProductsInput>
+}
+
+export type usersUpsertWithoutOwnedProductsInput = {
+  update: Prisma.XOR<Prisma.usersUpdateWithoutOwnedProductsInput, Prisma.usersUncheckedUpdateWithoutOwnedProductsInput>
+  create: Prisma.XOR<Prisma.usersCreateWithoutOwnedProductsInput, Prisma.usersUncheckedCreateWithoutOwnedProductsInput>
+  where?: Prisma.usersWhereInput
+}
+
+export type usersUpdateToOneWithWhereWithoutOwnedProductsInput = {
+  where?: Prisma.usersWhereInput
+  data: Prisma.XOR<Prisma.usersUpdateWithoutOwnedProductsInput, Prisma.usersUncheckedUpdateWithoutOwnedProductsInput>
+}
+
+export type usersUpdateWithoutOwnedProductsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  first_name?: Prisma.StringFieldUpdateOperationsInput | string
+  last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  roles?: Prisma.rolesUpdateOneRequiredWithoutUsersNestedInput
+  addresses?: Prisma.user_addressesUpdateManyWithoutUsersNestedInput
+  carts?: Prisma.cartsUpdateOneWithoutUsersNestedInput
+  orders?: Prisma.ordersUpdateManyWithoutUsersNestedInput
+  listings?: Prisma.listingsUpdateManyWithoutUsersNestedInput
+}
+
+export type usersUncheckedUpdateWithoutOwnedProductsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role_id?: Prisma.StringFieldUpdateOperationsInput | string
+  first_name?: Prisma.StringFieldUpdateOperationsInput | string
+  last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  addresses?: Prisma.user_addressesUncheckedUpdateManyWithoutUsersNestedInput
   carts?: Prisma.cartsUncheckedUpdateOneWithoutUsersNestedInput
   orders?: Prisma.ordersUncheckedUpdateManyWithoutUsersNestedInput
   listings?: Prisma.listingsUncheckedUpdateManyWithoutUsersNestedInput
@@ -674,6 +777,7 @@ export type usersCreateWithoutCartsInput = {
   addresses?: Prisma.user_addressesCreateNestedManyWithoutUsersInput
   orders?: Prisma.ordersCreateNestedManyWithoutUsersInput
   listings?: Prisma.listingsCreateNestedManyWithoutUsersInput
+  ownedProducts?: Prisma.productsCreateNestedManyWithoutOwnerInput
 }
 
 export type usersUncheckedCreateWithoutCartsInput = {
@@ -688,6 +792,7 @@ export type usersUncheckedCreateWithoutCartsInput = {
   addresses?: Prisma.user_addressesUncheckedCreateNestedManyWithoutUsersInput
   orders?: Prisma.ordersUncheckedCreateNestedManyWithoutUsersInput
   listings?: Prisma.listingsUncheckedCreateNestedManyWithoutUsersInput
+  ownedProducts?: Prisma.productsUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type usersCreateOrConnectWithoutCartsInput = {
@@ -718,6 +823,7 @@ export type usersUpdateWithoutCartsInput = {
   addresses?: Prisma.user_addressesUpdateManyWithoutUsersNestedInput
   orders?: Prisma.ordersUpdateManyWithoutUsersNestedInput
   listings?: Prisma.listingsUpdateManyWithoutUsersNestedInput
+  ownedProducts?: Prisma.productsUpdateManyWithoutOwnerNestedInput
 }
 
 export type usersUncheckedUpdateWithoutCartsInput = {
@@ -732,6 +838,7 @@ export type usersUncheckedUpdateWithoutCartsInput = {
   addresses?: Prisma.user_addressesUncheckedUpdateManyWithoutUsersNestedInput
   orders?: Prisma.ordersUncheckedUpdateManyWithoutUsersNestedInput
   listings?: Prisma.listingsUncheckedUpdateManyWithoutUsersNestedInput
+  ownedProducts?: Prisma.productsUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type usersCreateWithoutOrdersInput = {
@@ -746,6 +853,7 @@ export type usersCreateWithoutOrdersInput = {
   addresses?: Prisma.user_addressesCreateNestedManyWithoutUsersInput
   carts?: Prisma.cartsCreateNestedOneWithoutUsersInput
   listings?: Prisma.listingsCreateNestedManyWithoutUsersInput
+  ownedProducts?: Prisma.productsCreateNestedManyWithoutOwnerInput
 }
 
 export type usersUncheckedCreateWithoutOrdersInput = {
@@ -760,6 +868,7 @@ export type usersUncheckedCreateWithoutOrdersInput = {
   addresses?: Prisma.user_addressesUncheckedCreateNestedManyWithoutUsersInput
   carts?: Prisma.cartsUncheckedCreateNestedOneWithoutUsersInput
   listings?: Prisma.listingsUncheckedCreateNestedManyWithoutUsersInput
+  ownedProducts?: Prisma.productsUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type usersCreateOrConnectWithoutOrdersInput = {
@@ -790,6 +899,7 @@ export type usersUpdateWithoutOrdersInput = {
   addresses?: Prisma.user_addressesUpdateManyWithoutUsersNestedInput
   carts?: Prisma.cartsUpdateOneWithoutUsersNestedInput
   listings?: Prisma.listingsUpdateManyWithoutUsersNestedInput
+  ownedProducts?: Prisma.productsUpdateManyWithoutOwnerNestedInput
 }
 
 export type usersUncheckedUpdateWithoutOrdersInput = {
@@ -804,6 +914,7 @@ export type usersUncheckedUpdateWithoutOrdersInput = {
   addresses?: Prisma.user_addressesUncheckedUpdateManyWithoutUsersNestedInput
   carts?: Prisma.cartsUncheckedUpdateOneWithoutUsersNestedInput
   listings?: Prisma.listingsUncheckedUpdateManyWithoutUsersNestedInput
+  ownedProducts?: Prisma.productsUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type usersCreateWithoutListingsInput = {
@@ -818,6 +929,7 @@ export type usersCreateWithoutListingsInput = {
   addresses?: Prisma.user_addressesCreateNestedManyWithoutUsersInput
   carts?: Prisma.cartsCreateNestedOneWithoutUsersInput
   orders?: Prisma.ordersCreateNestedManyWithoutUsersInput
+  ownedProducts?: Prisma.productsCreateNestedManyWithoutOwnerInput
 }
 
 export type usersUncheckedCreateWithoutListingsInput = {
@@ -832,6 +944,7 @@ export type usersUncheckedCreateWithoutListingsInput = {
   addresses?: Prisma.user_addressesUncheckedCreateNestedManyWithoutUsersInput
   carts?: Prisma.cartsUncheckedCreateNestedOneWithoutUsersInput
   orders?: Prisma.ordersUncheckedCreateNestedManyWithoutUsersInput
+  ownedProducts?: Prisma.productsUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type usersCreateOrConnectWithoutListingsInput = {
@@ -862,6 +975,7 @@ export type usersUpdateWithoutListingsInput = {
   addresses?: Prisma.user_addressesUpdateManyWithoutUsersNestedInput
   carts?: Prisma.cartsUpdateOneWithoutUsersNestedInput
   orders?: Prisma.ordersUpdateManyWithoutUsersNestedInput
+  ownedProducts?: Prisma.productsUpdateManyWithoutOwnerNestedInput
 }
 
 export type usersUncheckedUpdateWithoutListingsInput = {
@@ -876,6 +990,7 @@ export type usersUncheckedUpdateWithoutListingsInput = {
   addresses?: Prisma.user_addressesUncheckedUpdateManyWithoutUsersNestedInput
   carts?: Prisma.cartsUncheckedUpdateOneWithoutUsersNestedInput
   orders?: Prisma.ordersUncheckedUpdateManyWithoutUsersNestedInput
+  ownedProducts?: Prisma.productsUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type usersCreateManyRolesInput = {
@@ -900,6 +1015,7 @@ export type usersUpdateWithoutRolesInput = {
   carts?: Prisma.cartsUpdateOneWithoutUsersNestedInput
   orders?: Prisma.ordersUpdateManyWithoutUsersNestedInput
   listings?: Prisma.listingsUpdateManyWithoutUsersNestedInput
+  ownedProducts?: Prisma.productsUpdateManyWithoutOwnerNestedInput
 }
 
 export type usersUncheckedUpdateWithoutRolesInput = {
@@ -914,6 +1030,7 @@ export type usersUncheckedUpdateWithoutRolesInput = {
   carts?: Prisma.cartsUncheckedUpdateOneWithoutUsersNestedInput
   orders?: Prisma.ordersUncheckedUpdateManyWithoutUsersNestedInput
   listings?: Prisma.listingsUncheckedUpdateManyWithoutUsersNestedInput
+  ownedProducts?: Prisma.productsUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type usersUncheckedUpdateManyWithoutRolesInput = {
@@ -935,12 +1052,14 @@ export type UsersCountOutputType = {
   addresses: number
   orders: number
   listings: number
+  ownedProducts: number
 }
 
 export type UsersCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   addresses?: boolean | UsersCountOutputTypeCountAddressesArgs
   orders?: boolean | UsersCountOutputTypeCountOrdersArgs
   listings?: boolean | UsersCountOutputTypeCountListingsArgs
+  ownedProducts?: boolean | UsersCountOutputTypeCountOwnedProductsArgs
 }
 
 /**
@@ -974,6 +1093,13 @@ export type UsersCountOutputTypeCountListingsArgs<ExtArgs extends runtime.Types.
   where?: Prisma.listingsWhereInput
 }
 
+/**
+ * UsersCountOutputType without action
+ */
+export type UsersCountOutputTypeCountOwnedProductsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.productsWhereInput
+}
+
 
 export type usersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -989,6 +1115,7 @@ export type usersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   carts?: boolean | Prisma.users$cartsArgs<ExtArgs>
   orders?: boolean | Prisma.users$ordersArgs<ExtArgs>
   listings?: boolean | Prisma.users$listingsArgs<ExtArgs>
+  ownedProducts?: boolean | Prisma.users$ownedProductsArgs<ExtArgs>
   _count?: boolean | Prisma.UsersCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["users"]>
 
@@ -1034,6 +1161,7 @@ export type usersInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   carts?: boolean | Prisma.users$cartsArgs<ExtArgs>
   orders?: boolean | Prisma.users$ordersArgs<ExtArgs>
   listings?: boolean | Prisma.users$listingsArgs<ExtArgs>
+  ownedProducts?: boolean | Prisma.users$ownedProductsArgs<ExtArgs>
   _count?: boolean | Prisma.UsersCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type usersIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1051,6 +1179,7 @@ export type $usersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     carts: Prisma.$cartsPayload<ExtArgs> | null
     orders: Prisma.$ordersPayload<ExtArgs>[]
     listings: Prisma.$listingsPayload<ExtArgs>[]
+    ownedProducts: Prisma.$productsPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1460,6 +1589,7 @@ export interface Prisma__usersClient<T, Null = never, ExtArgs extends runtime.Ty
   carts<T extends Prisma.users$cartsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$cartsArgs<ExtArgs>>): Prisma.Prisma__cartsClient<runtime.Types.Result.GetResult<Prisma.$cartsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   orders<T extends Prisma.users$ordersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ordersPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   listings<T extends Prisma.users$listingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$listingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$listingsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  ownedProducts<T extends Prisma.users$ownedProductsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$ownedProductsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$productsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1981,6 +2111,30 @@ export type users$listingsArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.ListingsScalarFieldEnum | Prisma.ListingsScalarFieldEnum[]
+}
+
+/**
+ * users.ownedProducts
+ */
+export type users$ownedProductsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the products
+   */
+  select?: Prisma.productsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the products
+   */
+  omit?: Prisma.productsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.productsInclude<ExtArgs> | null
+  where?: Prisma.productsWhereInput
+  orderBy?: Prisma.productsOrderByWithRelationInput | Prisma.productsOrderByWithRelationInput[]
+  cursor?: Prisma.productsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProductsScalarFieldEnum | Prisma.ProductsScalarFieldEnum[]
 }
 
 /**
