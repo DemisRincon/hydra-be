@@ -96,6 +96,20 @@ export class ProductsController {
     return this.productsService.findAll(page, limit);
   }
 
+  @Get('local')
+  @Public()
+  @ApiOperation({ summary: 'Get all local inventory singles with pagination' })
+  @ApiResponse({
+    status: 200,
+    description: 'Local singles retrieved successfully',
+  })
+  async findLocal(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query('limit', new DefaultValuePipe(12), ParseIntPipe) limit: number,
+  ) {
+    return this.productsService.findLocal(page, limit);
+  }
+
   @Get('owner/:ownerId')
   @Public()
   @ApiOperation({ summary: 'Get all products owned by a specific user' })

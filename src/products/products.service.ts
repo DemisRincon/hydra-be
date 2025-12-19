@@ -357,6 +357,58 @@ export class ProductsService {
     };
   }
 
+  async findLocal(page: number = 1, limit: number = 12) {
+    const skip = (page - 1) * limit;
+
+    const [products, total] = await Promise.all([
+      this.prisma.singles.findMany({
+        where: {
+          isLocalInventory: true,
+        },
+        skip,
+        take: limit,
+        include: {
+          categories: {
+            select: {
+              id: true,
+              name: true,
+              display_name: true,
+              description: true,
+              is_active: true,
+              order: true,
+            },
+          },
+          conditions: true,
+          languages: true,
+          rarities: true,
+          owner: {
+            include: {
+              roles: true,
+            },
+          },
+        },
+        orderBy: {
+          created_at: 'desc',
+        },
+      }),
+      this.prisma.singles.count({
+        where: {
+          isLocalInventory: true,
+        },
+      }),
+    ]);
+
+    return {
+      data: products,
+      meta: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
+  }
+
   async findByOwner(ownerId: string, page: number = 1, limit: number = 20) {
     // Verify owner exists
     const owner = await this.prisma.users.findUnique({
