@@ -10,6 +10,7 @@ import { ListingsModule } from './listings/listings.module.js';
 import { SearchModule } from './search/search.module.js';
 import { ProductsModule } from './products/products.module.js';
 import { LanguagesModule } from './languages/languages.module.js';
+import { ConditionsModule } from './conditions/conditions.module.js';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { LanguagesModule } from './languages/languages.module.js';
     SearchModule,
     ProductsModule,
     LanguagesModule,
+    ConditionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

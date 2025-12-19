@@ -28,7 +28,7 @@ async function main() {
 
   // Seed roles
   console.log('Seeding roles...');
-  
+
   const roles = [
     {
       name: 'ADMIN' as const,
@@ -61,7 +61,7 @@ async function main() {
 
   // Seed languages
   console.log('Seeding languages...');
-  
+
   const languages = [
     {
       code: 'JP',
@@ -131,12 +131,66 @@ async function main() {
     });
 
     if (existingLanguage) {
-      console.log(`Language ${language.code} (${language.name}) already exists, skipping...`);
+      console.log(
+        `Language ${language.code} (${language.name}) already exists, skipping...`,
+      );
     } else {
       const created = await prisma.languages.create({
         data: language,
       });
-      console.log(`Created language: ${created.display_name} (${created.code})`);
+      console.log(
+        `Created language: ${created.display_name} (${created.code})`,
+      );
+    }
+  }
+
+  // Seed conditions
+  console.log('Seeding conditions...');
+
+  const conditions = [
+    {
+      code: 'NM',
+      name: 'Cerca de Mint',
+      display_name: 'Cerca de Mint',
+    },
+    {
+      code: 'SP',
+      name: 'Ligeramente Jugada',
+      display_name: 'Ligeramente Jugada',
+    },
+    {
+      code: 'MP',
+      name: 'Moderadamente Jugada',
+      display_name: 'Moderadamente Jugada',
+    },
+    {
+      code: 'HP',
+      name: 'Muy Jugada',
+      display_name: 'Muy Jugada',
+    },
+    {
+      code: 'DM',
+      name: 'Dañada',
+      display_name: 'Dañada',
+    },
+  ];
+
+  for (const condition of conditions) {
+    const existingCondition = await prisma.conditions.findUnique({
+      where: { code: condition.code },
+    });
+
+    if (existingCondition) {
+      console.log(
+        `Condition ${condition.code} (${condition.name}) already exists, skipping...`,
+      );
+    } else {
+      const created = await prisma.conditions.create({
+        data: condition,
+      });
+      console.log(
+        `Created condition: ${created.display_name} (${created.code})`,
+      );
     }
   }
 
@@ -151,4 +205,3 @@ main()
   .finally(async () => {
     await prisma.$disconnect();
   });
-

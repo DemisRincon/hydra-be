@@ -1840,7 +1840,9 @@ export type CategoriesScalarFieldEnum = (typeof CategoriesScalarFieldEnum)[keyof
 
 export const ConditionsScalarFieldEnum = {
   id: 'id',
-  name: 'name'
+  code: 'code',
+  name: 'name',
+  display_name: 'display_name'
 } as const
 
 export type ConditionsScalarFieldEnum = (typeof ConditionsScalarFieldEnum)[keyof typeof ConditionsScalarFieldEnum]

@@ -68,8 +68,10 @@ model categories {
 }
 
 model conditions {
-  id   String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
-  name String @unique
+  id          String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+  code        String @unique // Condition code (NM, SP, MP, HP, DM)
+  name        String @unique // Human-readable name in Spanish
+  display_name String // Display name for UI
 
   products products[]
 }

@@ -26,34 +26,46 @@ export type AggregateConditions = {
 
 export type ConditionsMinAggregateOutputType = {
   id: string | null
+  code: string | null
   name: string | null
+  display_name: string | null
 }
 
 export type ConditionsMaxAggregateOutputType = {
   id: string | null
+  code: string | null
   name: string | null
+  display_name: string | null
 }
 
 export type ConditionsCountAggregateOutputType = {
   id: number
+  code: number
   name: number
+  display_name: number
   _all: number
 }
 
 
 export type ConditionsMinAggregateInputType = {
   id?: true
+  code?: true
   name?: true
+  display_name?: true
 }
 
 export type ConditionsMaxAggregateInputType = {
   id?: true
+  code?: true
   name?: true
+  display_name?: true
 }
 
 export type ConditionsCountAggregateInputType = {
   id?: true
+  code?: true
   name?: true
+  display_name?: true
   _all?: true
 }
 
@@ -131,7 +143,9 @@ export type conditionsGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 
 export type ConditionsGroupByOutputType = {
   id: string
+  code: string
   name: string
+  display_name: string
   _count: ConditionsCountAggregateOutputType | null
   _min: ConditionsMinAggregateOutputType | null
   _max: ConditionsMaxAggregateOutputType | null
@@ -157,28 +171,36 @@ export type conditionsWhereInput = {
   OR?: Prisma.conditionsWhereInput[]
   NOT?: Prisma.conditionsWhereInput | Prisma.conditionsWhereInput[]
   id?: Prisma.UuidFilter<"conditions"> | string
+  code?: Prisma.StringFilter<"conditions"> | string
   name?: Prisma.StringFilter<"conditions"> | string
+  display_name?: Prisma.StringFilter<"conditions"> | string
   products?: Prisma.ProductsListRelationFilter
 }
 
 export type conditionsOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  code?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  display_name?: Prisma.SortOrder
   products?: Prisma.productsOrderByRelationAggregateInput
 }
 
 export type conditionsWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  code?: string
   name?: string
   AND?: Prisma.conditionsWhereInput | Prisma.conditionsWhereInput[]
   OR?: Prisma.conditionsWhereInput[]
   NOT?: Prisma.conditionsWhereInput | Prisma.conditionsWhereInput[]
+  display_name?: Prisma.StringFilter<"conditions"> | string
   products?: Prisma.ProductsListRelationFilter
-}, "id" | "name">
+}, "id" | "code" | "name">
 
 export type conditionsOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  code?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  display_name?: Prisma.SortOrder
   _count?: Prisma.conditionsCountOrderByAggregateInput
   _max?: Prisma.conditionsMaxOrderByAggregateInput
   _min?: Prisma.conditionsMinOrderByAggregateInput
@@ -189,61 +211,83 @@ export type conditionsScalarWhereWithAggregatesInput = {
   OR?: Prisma.conditionsScalarWhereWithAggregatesInput[]
   NOT?: Prisma.conditionsScalarWhereWithAggregatesInput | Prisma.conditionsScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"conditions"> | string
+  code?: Prisma.StringWithAggregatesFilter<"conditions"> | string
   name?: Prisma.StringWithAggregatesFilter<"conditions"> | string
+  display_name?: Prisma.StringWithAggregatesFilter<"conditions"> | string
 }
 
 export type conditionsCreateInput = {
   id?: string
+  code: string
   name: string
+  display_name: string
   products?: Prisma.productsCreateNestedManyWithoutConditionsInput
 }
 
 export type conditionsUncheckedCreateInput = {
   id?: string
+  code: string
   name: string
+  display_name: string
   products?: Prisma.productsUncheckedCreateNestedManyWithoutConditionsInput
 }
 
 export type conditionsUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  display_name?: Prisma.StringFieldUpdateOperationsInput | string
   products?: Prisma.productsUpdateManyWithoutConditionsNestedInput
 }
 
 export type conditionsUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  display_name?: Prisma.StringFieldUpdateOperationsInput | string
   products?: Prisma.productsUncheckedUpdateManyWithoutConditionsNestedInput
 }
 
 export type conditionsCreateManyInput = {
   id?: string
+  code: string
   name: string
+  display_name: string
 }
 
 export type conditionsUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  display_name?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type conditionsUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  display_name?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type conditionsCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  code?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  display_name?: Prisma.SortOrder
 }
 
 export type conditionsMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  code?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  display_name?: Prisma.SortOrder
 }
 
 export type conditionsMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  code?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  display_name?: Prisma.SortOrder
 }
 
 export type ConditionsNullableScalarRelationFilter = {
@@ -269,12 +313,16 @@ export type conditionsUpdateOneWithoutProductsNestedInput = {
 
 export type conditionsCreateWithoutProductsInput = {
   id?: string
+  code: string
   name: string
+  display_name: string
 }
 
 export type conditionsUncheckedCreateWithoutProductsInput = {
   id?: string
+  code: string
   name: string
+  display_name: string
 }
 
 export type conditionsCreateOrConnectWithoutProductsInput = {
@@ -295,12 +343,16 @@ export type conditionsUpdateToOneWithWhereWithoutProductsInput = {
 
 export type conditionsUpdateWithoutProductsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  display_name?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type conditionsUncheckedUpdateWithoutProductsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  display_name?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -336,27 +388,35 @@ export type ConditionsCountOutputTypeCountProductsArgs<ExtArgs extends runtime.T
 
 export type conditionsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  code?: boolean
   name?: boolean
+  display_name?: boolean
   products?: boolean | Prisma.conditions$productsArgs<ExtArgs>
   _count?: boolean | Prisma.ConditionsCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["conditions"]>
 
 export type conditionsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  code?: boolean
   name?: boolean
+  display_name?: boolean
 }, ExtArgs["result"]["conditions"]>
 
 export type conditionsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  code?: boolean
   name?: boolean
+  display_name?: boolean
 }, ExtArgs["result"]["conditions"]>
 
 export type conditionsSelectScalar = {
   id?: boolean
+  code?: boolean
   name?: boolean
+  display_name?: boolean
 }
 
-export type conditionsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name", ExtArgs["result"]["conditions"]>
+export type conditionsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "display_name", ExtArgs["result"]["conditions"]>
 export type conditionsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   products?: boolean | Prisma.conditions$productsArgs<ExtArgs>
   _count?: boolean | Prisma.ConditionsCountOutputTypeDefaultArgs<ExtArgs>
@@ -371,7 +431,9 @@ export type $conditionsPayload<ExtArgs extends runtime.Types.Extensions.Internal
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    code: string
     name: string
+    display_name: string
   }, ExtArgs["result"]["conditions"]>
   composites: {}
 }
@@ -797,7 +859,9 @@ export interface Prisma__conditionsClient<T, Null = never, ExtArgs extends runti
  */
 export interface conditionsFieldRefs {
   readonly id: Prisma.FieldRef<"conditions", 'String'>
+  readonly code: Prisma.FieldRef<"conditions", 'String'>
   readonly name: Prisma.FieldRef<"conditions", 'String'>
+  readonly display_name: Prisma.FieldRef<"conditions", 'String'>
 }
     
 

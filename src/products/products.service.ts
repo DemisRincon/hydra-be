@@ -94,21 +94,26 @@ export class ProductsService {
       });
     }
 
-    // Get or create condition (assuming 1 = Near Mint)
-    const conditionMap: Record<string, string> = {
-      '1': 'Near Mint',
-      '2': 'Lightly Played',
-      '3': 'Moderately Played',
-      '4': 'Heavily Played',
-      '5': 'Damaged',
+    // Get or create condition based on Hareruya condition code
+    const conditionMap: Record<string, { code: string; name: string; display_name: string }> = {
+      '1': { code: 'NM', name: 'Cerca de Mint', display_name: 'Cerca de Mint' },
+      '2': { code: 'SP', name: 'Ligeramente Jugada', display_name: 'Ligeramente Jugada' },
+      '3': { code: 'MP', name: 'Moderadamente Jugada', display_name: 'Moderadamente Jugada' },
+      '4': { code: 'HP', name: 'Muy Jugada', display_name: 'Muy Jugada' },
+      '5': { code: 'DM', name: 'Dañada', display_name: 'Dañada' },
     };
-    const conditionName = conditionMap[hareruyaProduct.card_condition] || 'Near Mint';
+
+    const conditionData = conditionMap[hareruyaProduct.card_condition] || conditionMap['1']; // Default to Near Mint
     let condition = await this.prisma.conditions.findUnique({
-      where: { name: conditionName },
+      where: { code: conditionData.code },
     });
     if (!condition) {
       condition = await this.prisma.conditions.create({
-        data: { name: conditionName },
+        data: {
+          code: conditionData.code,
+          name: conditionData.name,
+          display_name: conditionData.display_name,
+        },
       });
     }
 
@@ -170,6 +175,59 @@ export class ProductsService {
       throw new NotFoundException(`Product with ID ${productId} not found`);
     }
 
+    // Get or create language based on Hareruya language code
+    const languageMap: Record<string, { code: string; name: string; display_name: string }> = {
+      '1': { code: 'JP', name: 'Japonés', display_name: 'Japonés' },
+      '2': { code: 'EN', name: 'Inglés', display_name: 'Inglés' },
+      '3': { code: 'CS', name: 'Chino Simplificado', display_name: 'Chino Simplificado' },
+      '4': { code: 'CT', name: 'Chino Tradicional', display_name: 'Chino Tradicional' },
+      '5': { code: 'FR', name: 'Francés', display_name: 'Francés' },
+      '6': { code: 'DE', name: 'Alemán', display_name: 'Alemán' },
+      '7': { code: 'IT', name: 'Italiano', display_name: 'Italiano' },
+      '8': { code: 'KO', name: 'Coreano', display_name: 'Coreano' },
+      '9': { code: 'PT', name: 'Portugués', display_name: 'Portugués' },
+      '10': { code: 'RU', name: 'Ruso', display_name: 'Ruso' },
+      '11': { code: 'ES', name: 'Español', display_name: 'Español' },
+      '12': { code: 'AG', name: 'Antiguo', display_name: 'Antiguo' },
+    };
+
+    const languageData = languageMap[hareruyaProduct.language] || languageMap['2']; // Default to English
+    let language = await this.prisma.languages.findUnique({
+      where: { code: languageData.code },
+    });
+    if (!language) {
+      language = await this.prisma.languages.create({
+        data: {
+          code: languageData.code,
+          name: languageData.name,
+          display_name: languageData.display_name,
+        },
+      });
+    }
+
+    // Get or create condition based on Hareruya condition code
+    const conditionMap: Record<string, { code: string; name: string; display_name: string }> = {
+      '1': { code: 'NM', name: 'Cerca de Mint', display_name: 'Cerca de Mint' },
+      '2': { code: 'SP', name: 'Ligeramente Jugada', display_name: 'Ligeramente Jugada' },
+      '3': { code: 'MP', name: 'Moderadamente Jugada', display_name: 'Moderadamente Jugada' },
+      '4': { code: 'HP', name: 'Muy Jugada', display_name: 'Muy Jugada' },
+      '5': { code: 'DM', name: 'Dañada', display_name: 'Dañada' },
+    };
+
+    const conditionData = conditionMap[hareruyaProduct.card_condition] || conditionMap['1']; // Default to Near Mint
+    let condition = await this.prisma.conditions.findUnique({
+      where: { code: conditionData.code },
+    });
+    if (!condition) {
+      condition = await this.prisma.conditions.create({
+        data: {
+          code: conditionData.code,
+          name: conditionData.name,
+          display_name: conditionData.display_name,
+        },
+      });
+    }
+
     // Parse price
     const price = parseFloat(hareruyaProduct.price) || 0;
 
@@ -180,6 +238,8 @@ export class ProductsService {
         name: hareruyaProduct.product_name_en || hareruyaProduct.card_name,
         price: price,
         image_url: hareruyaProduct.image_url,
+        condition_id: condition.id,
+        language_id: language.id,
         // Update Hareruya-specific fields
         card_name: hareruyaProduct.card_name,
         product_name_en: hareruyaProduct.product_name_en,
