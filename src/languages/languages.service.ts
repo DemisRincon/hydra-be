@@ -59,35 +59,43 @@ export class LanguagesService {
   async findOne(id: string) {
     const language = await this.prisma.languages.findUnique({
       where: { id },
-      include: {
-        _count: {
-          select: { singles: true },
-        },
-      },
     });
 
     if (!language) {
       throw new NotFoundException(`Language with ID ${id} not found`);
     }
 
-    return language;
+    const singlesCount = await this.prisma.singles.count({
+      where: { language_id: id },
+    });
+
+    return {
+      ...language,
+      _count: {
+        singles: singlesCount,
+      },
+    };
   }
 
   async findByCode(code: string) {
     const language = await this.prisma.languages.findUnique({
       where: { code },
-      include: {
-        _count: {
-          select: { singles: true },
-        },
-      },
     });
 
     if (!language) {
       throw new NotFoundException(`Language with code '${code}' not found`);
     }
 
-    return language;
+    const singlesCount = await this.prisma.singles.count({
+      where: { language_id: language.id },
+    });
+
+    return {
+      ...language,
+      _count: {
+        singles: singlesCount,
+      },
+    };
   }
 
   async update(id: string, updateLanguageDto: UpdateLanguageDto) {
@@ -148,11 +156,6 @@ export class LanguagesService {
     // Check if language exists
     const language = await this.prisma.languages.findUnique({
       where: { id },
-      include: {
-        _count: {
-          select: { singles: true },
-        },
-      },
     });
 
     if (!language) {
@@ -160,9 +163,13 @@ export class LanguagesService {
     }
 
     // Check if language has products assigned
-    if (language._count.products > 0) {
+    const singlesCount = await this.prisma.singles.count({
+      where: { language_id: id },
+    });
+
+    if (singlesCount > 0) {
       throw new BadRequestException(
-        `Cannot delete language with ID ${id} because it has ${language._count.products} product(s) assigned to it`,
+        `Cannot delete language with ID ${id} because it has ${singlesCount} product(s) assigned to it`,
       );
     }
 

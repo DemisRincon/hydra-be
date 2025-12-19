@@ -7,19 +7,21 @@ datasource db {
   provider = "postgresql"
 }
 
-/* =========================
-   USERS & ROLES
-========================= */
+/**
+ * =========================
+ * USERS & ROLES
+ * =========================
+ */
 
 model roles {
-  id           String    @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name         role_type @unique
   display_name String
   users        users[]
 }
 
 model users {
-  id         String  @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+  id         String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   email      String  @unique
   username   String  @unique
   password   String?
@@ -28,22 +30,24 @@ model users {
   last_name  String
   is_active  Boolean @default(true)
 
-  roles      roles   @relation(fields: [role_id], references: [id])
+  roles roles @relation(fields: [role_id], references: [id])
 
-  addresses  user_addresses[]
-  carts      carts?
-  orders     orders[]
-  listings   listings[]
+  addresses    user_addresses[]
+  carts        carts?
+  orders       orders[]
+  listings     listings[]
   ownedSingles singles[]
 }
 
-/* =========================
-   ADDRESSES
-========================= */
+/**
+ * =========================
+ * ADDRESSES
+ * =========================
+ */
 
 model user_addresses {
-  id         String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
-  user_id    String @db.Uuid
+  id         String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id    String  @db.Uuid
   street     String
   city       String
   state      String
@@ -51,86 +55,95 @@ model user_addresses {
   country    String
   is_default Boolean @default(false)
 
-  users         users           @relation(fields: [user_id], references: [id])
+  users         users            @relation(fields: [user_id], references: [id])
   orderShipping order_shipping[]
 }
 
-/* =========================
-   CATALOG
-========================= */
+/**
+ * =========================
+ * CATALOG
+ * =========================
+ */
 
 model categories {
-  id    String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
-  name  String @unique
-  order Int
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name         String   @unique // Category code (SINGLES, BOOSTER, BOOSTER_BOX, etc.)
+  display_name String // User-friendly display name (Singles, Booster, etc.)
+  description  String? // Description in Spanish or English
+  is_active    Boolean  @default(true)
+  order        Int // Display order
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
 
   singles singles[]
 }
 
 model conditions {
-  id          String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
-  code        String @unique // Condition code (NM, SP, MP, HP, DM)
-  name        String @unique // Human-readable name in Spanish
+  id           String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  code         String @unique // Condition code (NM, SP, MP, HP, DM)
+  name         String @unique // Human-readable name in Spanish
   display_name String // Display name for UI
 
   singles singles[]
 }
 
 model languages {
-  id          String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
-  code        String @unique // Language code (JP, EN, CS, CT, FR, DE, IT, KO, PT, RU, ES, AG)
-  name        String @unique // Human-readable name in Spanish (Japonés, Inglés, etc.)
+  id           String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  code         String @unique // Language code (JP, EN, CS, CT, FR, DE, IT, KO, PT, RU, ES, AG)
+  name         String @unique // Human-readable name in Spanish (Japonés, Inglés, etc.)
   display_name String // Display name for UI
 
   singles singles[]
 }
 
 model rarities {
-  id   String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+  id   String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name String @unique
 
   singles singles[]
 }
 
-/* =========================
-   SINGLES
-========================= */
+/**
+ * =========================
+ * SINGLES
+ * =========================
+ */
 
 model singles {
-  id           String   @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+  id           String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name         String
-  price        Decimal  @db.Decimal(10,2)
-  category_id  String   @db.Uuid
-  condition_id String?  @db.Uuid
-  language_id  String?  @db.Uuid
-  rarity_id    String?  @db.Uuid
-  owner_id     String   @db.Uuid
+  price        Decimal @db.Decimal(10, 2)
+  category_id  String  @db.Uuid
+  condition_id String? @db.Uuid
+  language_id  String? @db.Uuid
+  rarity_id    String? @db.Uuid
+  owner_id     String  @db.Uuid
 
   // Single product structure fields (matching HareruyaSearchResult JSON structure)
-  borderless              Boolean  @default(false)
-  cardName                String?  @map("card_name")
-  cardNumber              String?
-  expansion               String?
-  extendedArt             Boolean  @default(false)
-  finalPrice              Decimal? @db.Decimal(10,2) @map("final_price")
-  foil                    Boolean  @default(false) @map("is_foil")
-  hareruyaId              String?  @unique @map("hareruya_product_id")
-  img                     String   @map("image_url")
-  isLocalInventory        Boolean  @default(false) @map("is_local_inventory")
-  link                    String?  @map("hareruya_link")
-  metadata                String[] @default([])
-  prerelease              Boolean  @default(false)
-  premierPlay             Boolean  @default(false) @map("premier_play")
-  showImportacionBadge    Boolean  @default(false) @map("show_importacion_badge")
-  source                  String?  // 'hareruya' or other sources
-  stock                   Int      @default(0) // Direct stock count
-  surgeFoil               Boolean  @default(false) @map("surge_foil")
-  variant                 String?  // Set name from brackets [SET NAME]
-  
-  created_at              DateTime @default(now())
-  updated_at              DateTime @updatedAt
+  borderless           Boolean  @default(false)
+  cardName             String?  @map("card_name")
+  cardNumber           String?
+  expansion            String?
+  extendedArt          Boolean  @default(false)
+  finalPrice           Decimal? @map("final_price") @db.Decimal(10, 2)
+  foil                 Boolean  @default(false) @map("is_foil")
+  hareruyaId           String?  @unique @map("hareruya_product_id")
+  img                  String   @map("image_url")
+  isLocalInventory     Boolean  @default(false) @map("is_local_inventory")
+  link                 String?  @map("hareruya_link")
+  metadata             String[] @default([])
+  prerelease           Boolean  @default(false)
+  premierPlay          Boolean  @default(false) @map("premier_play")
+  showImportacionBadge Boolean  @default(false) @map("show_importacion_badge")
+  source               String? // 'hareruya' or other sources
+  stock                Int      @default(0) // Direct stock count
+  surgeFoil            Boolean  @default(false) @map("surge_foil")
+  variant              String? // Set name from brackets [SET NAME]
 
-  categories categories @relation(fields: [category_id], references: [id])
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  categories categories  @relation(fields: [category_id], references: [id])
   conditions conditions? @relation(fields: [condition_id], references: [id])
   languages  languages?  @relation(fields: [language_id], references: [id])
   rarities   rarities?   @relation(fields: [rarity_id], references: [id])
@@ -143,12 +156,14 @@ model singles {
   listings   listings[]
 }
 
-/* =========================
-   TAGS (M:N)
-========================= */
+/**
+ * =========================
+ * TAGS (M:N)
+ * =========================
+ */
 
 model tags {
-  id   String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+  id   String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name String @unique
 
   singles single_tags[]
@@ -156,87 +171,95 @@ model tags {
 
 model single_tags {
   single_id String @db.Uuid
-  tag_id     String @db.Uuid
+  tag_id    String @db.Uuid
 
   singles singles @relation(fields: [single_id], references: [id])
-  tags     tags     @relation(fields: [tag_id], references: [id])
+  tags    tags    @relation(fields: [tag_id], references: [id])
 
   @@id([single_id, tag_id])
 }
 
-/* =========================
-   INVENTORY
-========================= */
+/**
+ * =========================
+ * INVENTORY
+ * =========================
+ */
 
 model stock_items {
-  id         String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+  id        String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   single_id String @db.Uuid
-  quantity   Int
+  quantity  Int
 
   singles singles @relation(fields: [single_id], references: [id])
 }
 
-/* =========================
-   CART
-========================= */
+/**
+ * =========================
+ * CART
+ * =========================
+ */
 
 model carts {
-  id      String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+  id      String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   user_id String @unique @db.Uuid
 
-  users users @relation(fields: [user_id], references: [id])
+  users users        @relation(fields: [user_id], references: [id])
   items cart_items[]
 }
 
 model cart_items {
-  id         String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
-  cart_id    String @db.Uuid
+  id        String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  cart_id   String @db.Uuid
   single_id String @db.Uuid
-  quantity   Int
+  quantity  Int
 
-  carts    carts    @relation(fields: [cart_id], references: [id])
+  carts   carts   @relation(fields: [cart_id], references: [id])
   singles singles @relation(fields: [single_id], references: [id])
 }
 
-/* =========================
-   ORDERS
-========================= */
+/**
+ * =========================
+ * ORDERS
+ * =========================
+ */
 
 model orders {
-  id         String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
-  user_id    String @db.Uuid
+  id         String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id    String            @db.Uuid
   status     order_status_enum
-  created_at DateTime @default(now())
+  created_at DateTime          @default(now())
 
-  users users @relation(fields: [user_id], references: [id])
-  items order_items[]
+  users    users           @relation(fields: [user_id], references: [id])
+  items    order_items[]
   shipping order_shipping?
 }
 
 model order_items {
-  id         String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
-  order_id  String @db.Uuid
-  single_id String @db.Uuid
+  id         String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  order_id   String  @db.Uuid
+  single_id  String  @db.Uuid
   quantity   Int
-  unit_price Decimal @db.Decimal(10,2)
+  unit_price Decimal @db.Decimal(10, 2)
 
-  orders   orders   @relation(fields: [order_id], references: [id])
+  orders  orders  @relation(fields: [order_id], references: [id])
   singles singles @relation(fields: [single_id], references: [id])
 }
 
-/* =========================
-   SHIPPING
-========================= */
+/**
+ * =========================
+ * SHIPPING
+ * =========================
+ */
 
 model shipping_methods {
-  id   String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+  id   String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name String @unique
 
   orders order_shipping[]
 }
 
 model order_shipping {
-  id                 String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+  id                 String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   order_id           String @unique @db.Uuid
   shipping_method_id String @db.Uuid
   address_id         String @db.Uuid
@@ -246,23 +269,27 @@ model order_shipping {
   user_addresses   user_addresses   @relation(fields: [address_id], references: [id])
 }
 
-/* =========================
-   LISTINGS (SELLERS)
-========================= */
+/**
+ * =========================
+ * LISTINGS (SELLERS)
+ * =========================
+ */
 
 model listings {
-  id         String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
-  user_id    String @db.Uuid
-  single_id String @db.Uuid
-  status     listing_status_enum
+  id        String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id   String              @db.Uuid
+  single_id String              @db.Uuid
+  status    listing_status_enum
 
-  users    users    @relation(fields: [user_id], references: [id])
+  users   users   @relation(fields: [user_id], references: [id])
   singles singles @relation(fields: [single_id], references: [id])
 }
 
-/* =========================
-   ENUMS
-========================= */
+/**
+ * =========================
+ * ENUMS
+ * =========================
+ */
 
 enum role_type {
   ADMIN

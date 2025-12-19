@@ -127,7 +127,12 @@ export type User_addressesScalarFieldEnum = (typeof User_addressesScalarFieldEnu
 export const CategoriesScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  order: 'order'
+  display_name: 'display_name',
+  description: 'description',
+  is_active: 'is_active',
+  order: 'order',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
 export type CategoriesScalarFieldEnum = (typeof CategoriesScalarFieldEnum)[keyof typeof CategoriesScalarFieldEnum]

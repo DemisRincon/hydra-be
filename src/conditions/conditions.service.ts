@@ -59,35 +59,43 @@ export class ConditionsService {
   async findOne(id: string) {
     const condition = await this.prisma.conditions.findUnique({
       where: { id },
-      include: {
-        _count: {
-          select: { singles: true },
-        },
-      },
     });
 
     if (!condition) {
       throw new NotFoundException(`Condition with ID ${id} not found`);
     }
 
-    return condition;
+    const singlesCount = await this.prisma.singles.count({
+      where: { condition_id: id },
+    });
+
+    return {
+      ...condition,
+      _count: {
+        singles: singlesCount,
+      },
+    };
   }
 
   async findByCode(code: string) {
     const condition = await this.prisma.conditions.findUnique({
       where: { code },
-      include: {
-        _count: {
-          select: { singles: true },
-        },
-      },
     });
 
     if (!condition) {
       throw new NotFoundException(`Condition with code '${code}' not found`);
     }
 
-    return condition;
+    const singlesCount = await this.prisma.singles.count({
+      where: { condition_id: condition.id },
+    });
+
+    return {
+      ...condition,
+      _count: {
+        singles: singlesCount,
+      },
+    };
   }
 
   async update(id: string, updateConditionDto: UpdateConditionDto) {
@@ -148,11 +156,6 @@ export class ConditionsService {
     // Check if condition exists
     const condition = await this.prisma.conditions.findUnique({
       where: { id },
-      include: {
-        _count: {
-          select: { singles: true },
-        },
-      },
     });
 
     if (!condition) {
@@ -160,9 +163,13 @@ export class ConditionsService {
     }
 
     // Check if condition has products assigned
-    if (condition._count.products > 0) {
+    const singlesCount = await this.prisma.singles.count({
+      where: { condition_id: id },
+    });
+
+    if (singlesCount > 0) {
       throw new BadRequestException(
-        `Cannot delete condition with ID ${id} because it has ${condition._count.products} product(s) assigned to it`,
+        `Cannot delete condition with ID ${id} because it has ${singlesCount} product(s) assigned to it`,
       );
     }
 

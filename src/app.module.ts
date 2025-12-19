@@ -11,6 +11,7 @@ import { SearchModule } from './search/search.module.js';
 import { ProductsModule } from './products/products.module.js';
 import { LanguagesModule } from './languages/languages.module.js';
 import { ConditionsModule } from './conditions/conditions.module.js';
+import { CategoriesModule } from './categories/categories.module.js';
 import { HareruyaModule } from './hareruya/hareruya.module.js';
 
 @Module({
@@ -28,6 +29,7 @@ import { HareruyaModule } from './hareruya/hareruya.module.js';
     ProductsModule,
     LanguagesModule,
     ConditionsModule,
+    CategoriesModule,
     HareruyaModule,
   ],
   controllers: [AppController],

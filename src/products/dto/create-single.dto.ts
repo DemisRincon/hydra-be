@@ -5,11 +5,10 @@ import {
   IsBoolean,
   IsNumber,
   IsArray,
-  ValidateNested,
+  IsUUID,
 } from 'class-validator';
-import { Type } from 'class-transformer';
 
-export class HareruyaSearchResultDto {
+export class CreateSingleDto {
   @ApiProperty({ description: 'Borderless flag', example: false })
   @IsBoolean()
   borderless: boolean;
@@ -22,13 +21,13 @@ export class HareruyaSearchResultDto {
   @IsString()
   cardNumber: string;
 
-  @ApiProperty({ description: 'Category', example: 'SINGLES' })
-  @IsString()
-  category: string;
+  @ApiProperty({ description: 'Category ID (UUID)', example: 'uuid-here' })
+  @IsUUID()
+  category_id: string;
 
-  @ApiProperty({ description: 'Condition', example: 'Near Mint' })
-  @IsString()
-  condition: string;
+  @ApiProperty({ description: 'Condition ID (UUID)', example: 'uuid-here' })
+  @IsUUID()
+  condition_id: string;
 
   @ApiProperty({ description: 'Expansion code', example: 'WAR' })
   @IsString()
@@ -61,9 +60,9 @@ export class HareruyaSearchResultDto {
   @IsBoolean()
   isLocalInventory: boolean;
 
-  @ApiProperty({ description: 'Language', example: 'Inglés' })
-  @IsString()
-  language: string;
+  @ApiProperty({ description: 'Language ID (UUID)', example: 'uuid-here' })
+  @IsUUID()
+  language_id: string;
 
   @ApiProperty({
     description: 'Hareruya link',
@@ -72,10 +71,15 @@ export class HareruyaSearchResultDto {
   @IsString()
   link: string;
 
-  @ApiProperty({ description: 'Metadata array', type: [String], example: [] })
+  @ApiPropertyOptional({ description: 'Metadata array', type: [String], example: [] })
+  @IsOptional()
   @IsArray()
   @IsString({ each: true })
-  metadata: string[];
+  metadata?: string[];
+
+  @ApiProperty({ description: 'Owner user ID (UUID)', example: 'uuid-here' })
+  @IsUUID()
+  owner_id: string;
 
   @ApiProperty({ description: 'Prerelease flag', example: false })
   @IsBoolean()
@@ -105,10 +109,11 @@ export class HareruyaSearchResultDto {
   @IsBoolean()
   surgeFoil: boolean;
 
-  @ApiProperty({ description: 'Tags array', type: [String], example: [] })
+  @ApiPropertyOptional({ description: 'Tags array', type: [String], example: [] })
+  @IsOptional()
   @IsArray()
   @IsString({ each: true })
-  tags: string[];
+  tags?: string[];
 
   @ApiPropertyOptional({
     description: 'Variant (set name)',
@@ -119,26 +124,3 @@ export class HareruyaSearchResultDto {
   @IsString()
   variant?: string | null;
 }
-
-export class CreateSingleDto {
-  @ApiProperty({
-    description: 'Product data from Hareruya search result',
-    type: HareruyaSearchResultDto,
-  })
-  @ValidateNested()
-  @Type(() => HareruyaSearchResultDto)
-  hareruyaProduct: HareruyaSearchResultDto;
-
-  @ApiProperty({ description: 'Owner user ID', example: 'uuid-here' })
-  @IsString()
-  owner_id: string;
-
-  @ApiPropertyOptional({
-    description: 'Category ID (if not provided, will use default)',
-    example: 'uuid-here',
-  })
-  @IsOptional()
-  @IsString()
-  category_id?: string;
-}
-

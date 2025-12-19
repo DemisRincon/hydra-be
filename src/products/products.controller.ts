@@ -9,16 +9,21 @@ import {
   HttpStatus,
   ParseIntPipe,
   DefaultValuePipe,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiTags,
   ApiOperation,
   ApiResponse,
   ApiBody,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { ProductsService } from './products.service.js';
 import { CreateSingleDto } from './dto/create-single.dto.js';
 import { Public } from '../auth/guards/jwt-auth.guard.js';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard.js';
+import { RolesGuard } from '../auth/guards/roles.guard.js';
+import { Roles } from '../auth/decorators/roles.decorator.js';
 
 @ApiTags('singles')
 @Controller('singles')
@@ -26,16 +31,20 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Post()
-  @Public()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('ADMIN', 'SELLER')
+  @ApiBearerAuth('JWT-auth')
   @HttpCode(HttpStatus.CREATED)
-  @ApiOperation({ summary: 'Create single product from Hareruya data' })
+  @ApiOperation({ summary: 'Create single product from Hareruya data (ADMIN, SELLER only)' })
   @ApiBody({ type: CreateSingleDto })
   @ApiResponse({
     status: 201,
     description: 'Single product created successfully',
   })
   @ApiResponse({ status: 400, description: 'Invalid product data' })
-  @ApiResponse({ status: 404, description: 'Owner user not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden - Admin or Seller role required' })
+  @ApiResponse({ status: 404, description: 'Owner user, category, condition, or language not found' })
   @ApiResponse({ status: 409, description: 'Product already exists' })
   async create(@Body() createDto: CreateSingleDto) {
     return this.productsService.create(createDto);

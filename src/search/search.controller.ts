@@ -85,5 +85,26 @@ export class SearchController {
       cardNames: dto.cardNames,
     });
   }
+
+  @Get('autocomplete')
+  @Public()
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Get card name autocomplete suggestions from Scryfall',
+    description: 'Returns card name suggestions using Scryfall API autocomplete endpoint',
+  })
+  @ApiQuery({ name: 'query', required: true, description: 'Search query (minimum 2 characters)' })
+  @ApiResponse({
+    status: 200,
+    description: 'Array of card name suggestions',
+    type: [String],
+  })
+  @ApiResponse({ status: 400, description: 'Invalid query parameter' })
+  async autocomplete(@Query('query') query: string) {
+    if (!query || query.trim().length < 2) {
+      return [];
+    }
+    return this.searchService.autocomplete(query.trim());
+  }
 }
 

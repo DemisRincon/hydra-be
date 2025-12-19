@@ -1186,10 +1186,6 @@ export type singlesUpdatemetadataInput = {
   push?: string | string[]
 }
 
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
-}
-
 export type singlesCreateNestedOneWithoutTagsInput = {
   create?: Prisma.XOR<Prisma.singlesCreateWithoutTagsInput, Prisma.singlesUncheckedCreateWithoutTagsInput>
   connectOrCreate?: Prisma.singlesCreateOrConnectWithoutTagsInput

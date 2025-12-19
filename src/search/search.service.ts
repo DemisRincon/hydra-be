@@ -5,6 +5,7 @@ import { HareruyaService } from '../hareruya/hareruya.service.js';
 @Injectable()
 export class SearchService {
   private readonly logger = new Logger(SearchService.name);
+  private readonly scryfallBaseUrl = 'https://api.scryfall.com';
 
   constructor(private readonly hareruyaService: HareruyaService) {}
 
@@ -35,6 +36,45 @@ export class SearchService {
       throw new BadRequestException(
         `Failed to search Hareruya API: ${error instanceof Error ? error.message : 'Unknown error'}`,
       );
+    }
+  }
+
+  /**
+   * Autocomplete card names using Scryfall API
+   * Returns array of card name suggestions
+   */
+  async autocomplete(query: string): Promise<string[]> {
+    if (!query || query.length < 2) {
+      return [];
+    }
+
+    try {
+      const url = `${this.scryfallBaseUrl}/cards/autocomplete?q=${encodeURIComponent(query)}`;
+      this.logger.debug(`Scryfall autocomplete query: ${query}`);
+
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'User-Agent': 'Hydra-BE/1.0',
+          Accept: 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        if (response.status === 404) {
+          return [];
+        }
+        throw new Error(`Scryfall API error: ${response.status}`);
+      }
+
+      const data = (await response.json()) as { data?: string[] };
+      // Scryfall returns { data: ["Card Name 1", "Card Name 2", ...] }
+      return data.data || [];
+    } catch (error) {
+      this.logger.error(
+        `Error fetching autocomplete from Scryfall: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      );
+      return [];
     }
   }
 }

@@ -145,6 +145,80 @@ async function main() {
     }
   }
 
+  // Seed categories
+  console.log('Seeding categories...');
+
+  const categories = [
+    {
+      name: 'SINGLES',
+      display_name: 'Singles',
+      description: 'Una carta individual',
+      is_active: true,
+      order: 1,
+    },
+    {
+      name: 'BUNDLE',
+      display_name: 'Bundle',
+      description: 'Paquete/Bundle',
+      is_active: true,
+      order: 2,
+    },
+    {
+      name: 'BOOSTER_BOX',
+      display_name: 'Booster Box',
+      description: 'Caja de sobres',
+      is_active: true,
+      order: 3,
+    },
+    {
+      name: 'MICAS',
+      display_name: 'Micas',
+      description: 'Micas/Sleeves',
+      is_active: true,
+      order: 4,
+    },
+    {
+      name: 'BOOSTER',
+      display_name: 'Booster',
+      description: 'Sobre individual',
+      is_active: true,
+      order: 5,
+    },
+    {
+      name: 'CONSTRUCTED_DECK',
+      display_name: 'Constructed Deck',
+      description: 'Mazo construido',
+      is_active: true,
+      order: 6,
+    },
+    {
+      name: 'PRECON_DECK',
+      display_name: 'Precon Deck',
+      description: 'Mazo preconstruido',
+      is_active: true,
+      order: 7,
+    },
+  ];
+
+  for (const category of categories) {
+    const existingCategory = await prisma.categories.findUnique({
+      where: { name: category.name },
+    });
+
+    if (existingCategory) {
+      console.log(
+        `Category ${category.name} (${category.display_name}) already exists, skipping...`,
+      );
+    } else {
+      await prisma.categories.create({
+        data: category,
+      });
+      console.log(
+        `Created category: ${category.display_name} (${category.name})`,
+      );
+    }
+  }
+
   // Seed conditions
   console.log('Seeding conditions...');
 
