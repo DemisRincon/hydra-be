@@ -34,7 +34,7 @@ model users {
   carts      carts?
   orders     orders[]
   listings   listings[]
-  ownedProducts products[]
+  ownedSingles singles[]
 }
 
 /* =========================
@@ -64,7 +64,7 @@ model categories {
   name  String @unique
   order Int
 
-  products products[]
+  singles singles[]
 }
 
 model conditions {
@@ -73,7 +73,7 @@ model conditions {
   name        String @unique // Human-readable name in Spanish
   display_name String // Display name for UI
 
-  products products[]
+  singles singles[]
 }
 
 model languages {
@@ -82,41 +82,51 @@ model languages {
   name        String @unique // Human-readable name in Spanish (Japonés, Inglés, etc.)
   display_name String // Display name for UI
 
-  products products[]
+  singles singles[]
 }
 
 model rarities {
   id   String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
   name String @unique
 
-  products products[]
+  singles singles[]
 }
 
 /* =========================
-   PRODUCTS
+   SINGLES
 ========================= */
 
-model products {
+model singles {
   id           String   @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
   name         String
   price        Decimal  @db.Decimal(10,2)
-  image_url    String
   category_id  String   @db.Uuid
   condition_id String?  @db.Uuid
   language_id  String?  @db.Uuid
   rarity_id    String?  @db.Uuid
   owner_id     String   @db.Uuid
 
-  // Hareruya-specific fields
-  hareruya_product_id     String?  @unique
-  card_name               String?
-  product_name_en         String?
-  product_name_jp         String?
-  is_foil                 Boolean  @default(false)
-  hareruya_stock          Int      @default(0)
-  hareruya_product_class  String?
-  hareruya_sale_flg       Boolean  @default(false)
-  hareruya_weekly_sales   Int      @default(0)
+  // Single product structure fields (matching HareruyaSearchResult JSON structure)
+  borderless              Boolean  @default(false)
+  cardName                String?  @map("card_name")
+  cardNumber              String?
+  expansion               String?
+  extendedArt             Boolean  @default(false)
+  finalPrice              Decimal? @db.Decimal(10,2) @map("final_price")
+  foil                    Boolean  @default(false) @map("is_foil")
+  hareruyaId              String?  @unique @map("hareruya_product_id")
+  img                     String   @map("image_url")
+  isLocalInventory        Boolean  @default(false) @map("is_local_inventory")
+  link                    String?  @map("hareruya_link")
+  metadata                String[] @default([])
+  prerelease              Boolean  @default(false)
+  premierPlay             Boolean  @default(false) @map("premier_play")
+  showImportacionBadge    Boolean  @default(false) @map("show_importacion_badge")
+  source                  String?  // 'hareruya' or other sources
+  stock                   Int      @default(0) // Direct stock count
+  surgeFoil               Boolean  @default(false) @map("surge_foil")
+  variant                 String?  // Set name from brackets [SET NAME]
+  
   created_at              DateTime @default(now())
   updated_at              DateTime @updatedAt
 
@@ -126,8 +136,8 @@ model products {
   rarities   rarities?   @relation(fields: [rarity_id], references: [id])
   owner      users       @relation(fields: [owner_id], references: [id])
 
-  tags       product_tags[]
-  stock      stock_items[]
+  tags       single_tags[]
+  stockItems stock_items[]
   cartItems  cart_items[]
   orderItems order_items[]
   listings   listings[]
@@ -141,17 +151,17 @@ model tags {
   id   String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
   name String @unique
 
-  products product_tags[]
+  singles single_tags[]
 }
 
-model product_tags {
-  product_id String @db.Uuid
+model single_tags {
+  single_id String @db.Uuid
   tag_id     String @db.Uuid
 
-  products products @relation(fields: [product_id], references: [id])
+  singles singles @relation(fields: [single_id], references: [id])
   tags     tags     @relation(fields: [tag_id], references: [id])
 
-  @@id([product_id, tag_id])
+  @@id([single_id, tag_id])
 }
 
 /* =========================
@@ -160,10 +170,10 @@ model product_tags {
 
 model stock_items {
   id         String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
-  product_id String @db.Uuid
+  single_id String @db.Uuid
   quantity   Int
 
-  products products @relation(fields: [product_id], references: [id])
+  singles singles @relation(fields: [single_id], references: [id])
 }
 
 /* =========================
@@ -181,11 +191,11 @@ model carts {
 model cart_items {
   id         String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
   cart_id    String @db.Uuid
-  product_id String @db.Uuid
+  single_id String @db.Uuid
   quantity   Int
 
   carts    carts    @relation(fields: [cart_id], references: [id])
-  products products @relation(fields: [product_id], references: [id])
+  singles singles @relation(fields: [single_id], references: [id])
 }
 
 /* =========================
@@ -206,12 +216,12 @@ model orders {
 model order_items {
   id         String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
   order_id  String @db.Uuid
-  product_id String @db.Uuid
+  single_id String @db.Uuid
   quantity   Int
   unit_price Decimal @db.Decimal(10,2)
 
   orders   orders   @relation(fields: [order_id], references: [id])
-  products products @relation(fields: [product_id], references: [id])
+  singles singles @relation(fields: [single_id], references: [id])
 }
 
 /* =========================
@@ -243,11 +253,11 @@ model order_shipping {
 model listings {
   id         String @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
   user_id    String @db.Uuid
-  product_id String @db.Uuid
+  single_id String @db.Uuid
   status     listing_status_enum
 
   users    users    @relation(fields: [user_id], references: [id])
-  products products @relation(fields: [product_id], references: [id])
+  singles singles @relation(fields: [single_id], references: [id])
 }
 
 /* =========================

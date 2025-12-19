@@ -5,13 +5,13 @@ import {
   ConflictException,
 } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service.js';
-import { CreateProductFromHareruyaDto } from './dto/create-product-from-hareruya.dto.js';
+import { CreateSingleDto } from './dto/create-single.dto.js';
 
 @Injectable()
 export class ProductsService {
   constructor(private prisma: PrismaService) {}
 
-  async createFromHareruya(createDto: CreateProductFromHareruyaDto) {
+  async create(createDto: CreateSingleDto) {
     const { hareruyaProduct, category_id, owner_id } = createDto;
 
     // Verify owner exists
@@ -24,29 +24,30 @@ export class ProductsService {
     }
 
     // Check if product already exists by Hareruya product ID
-    if (hareruyaProduct.product) {
-      const existing = await this.prisma.products.findUnique({
-        where: { hareruya_product_id: hareruyaProduct.product },
+    if (hareruyaProduct.hareruyaId) {
+      const existing = await this.prisma.singles.findUnique({
+        where: { hareruyaId: hareruyaProduct.hareruyaId },
       });
 
       if (existing) {
-        // Update existing product
-        return this.updateFromHareruya(existing.id, createDto);
+        throw new ConflictException('Product with this Hareruya ID already exists');
       }
     }
 
-    // Get or create default category if not provided
+    // Get or create category
     let categoryId = category_id;
     if (!categoryId) {
+      // Map category string to category name
+      const categoryName = hareruyaProduct.category === 'SINGLES' ? 'Single' : hareruyaProduct.category || 'Single';
       const defaultCategory = await this.prisma.categories.findFirst({
-        where: { name: 'Single' },
+        where: { name: categoryName },
       });
 
       if (!defaultCategory) {
-        // Create default category
+        // Create category
         const newCategory = await this.prisma.categories.create({
           data: {
-            name: 'Single',
+            name: categoryName,
             order: 1,
           },
         });
@@ -64,23 +65,23 @@ export class ProductsService {
       }
     }
 
-    // Get or create language based on Hareruya language code
-    const languageMap: Record<string, { code: string; name: string; display_name: string }> = {
-      '1': { code: 'JP', name: 'Japonés', display_name: 'Japonés' },
-      '2': { code: 'EN', name: 'Inglés', display_name: 'Inglés' },
-      '3': { code: 'CS', name: 'Chino Simplificado', display_name: 'Chino Simplificado' },
-      '4': { code: 'CT', name: 'Chino Tradicional', display_name: 'Chino Tradicional' },
-      '5': { code: 'FR', name: 'Francés', display_name: 'Francés' },
-      '6': { code: 'DE', name: 'Alemán', display_name: 'Alemán' },
-      '7': { code: 'IT', name: 'Italiano', display_name: 'Italiano' },
-      '8': { code: 'KO', name: 'Coreano', display_name: 'Coreano' },
-      '9': { code: 'PT', name: 'Portugués', display_name: 'Portugués' },
-      '10': { code: 'RU', name: 'Ruso', display_name: 'Ruso' },
-      '11': { code: 'ES', name: 'Español', display_name: 'Español' },
-      '12': { code: 'AG', name: 'Antiguo', display_name: 'Antiguo' },
+    // Get or create language based on language string (e.g., "Inglés", "Japonés")
+    const languageNameMap: Record<string, { code: string; name: string; display_name: string }> = {
+      'Inglés': { code: 'EN', name: 'Inglés', display_name: 'Inglés' },
+      'Japonés': { code: 'JP', name: 'Japonés', display_name: 'Japonés' },
+      'Chino Simplificado': { code: 'CS', name: 'Chino Simplificado', display_name: 'Chino Simplificado' },
+      'Chino Tradicional': { code: 'CT', name: 'Chino Tradicional', display_name: 'Chino Tradicional' },
+      'Francés': { code: 'FR', name: 'Francés', display_name: 'Francés' },
+      'Alemán': { code: 'DE', name: 'Alemán', display_name: 'Alemán' },
+      'Italiano': { code: 'IT', name: 'Italiano', display_name: 'Italiano' },
+      'Coreano': { code: 'KO', name: 'Coreano', display_name: 'Coreano' },
+      'Portugués': { code: 'PT', name: 'Portugués', display_name: 'Portugués' },
+      'Ruso': { code: 'RU', name: 'Ruso', display_name: 'Ruso' },
+      'Español': { code: 'ES', name: 'Español', display_name: 'Español' },
+      'Antiguo': { code: 'AG', name: 'Antiguo', display_name: 'Antiguo' },
     };
 
-    const languageData = languageMap[hareruyaProduct.language] || languageMap['2']; // Default to English
+    const languageData = languageNameMap[hareruyaProduct.language] || languageNameMap['Inglés'];
     let language = await this.prisma.languages.findUnique({
       where: { code: languageData.code },
     });
@@ -94,16 +95,21 @@ export class ProductsService {
       });
     }
 
-    // Get or create condition based on Hareruya condition code
-    const conditionMap: Record<string, { code: string; name: string; display_name: string }> = {
-      '1': { code: 'NM', name: 'Cerca de Mint', display_name: 'Cerca de Mint' },
-      '2': { code: 'SP', name: 'Ligeramente Jugada', display_name: 'Ligeramente Jugada' },
-      '3': { code: 'MP', name: 'Moderadamente Jugada', display_name: 'Moderadamente Jugada' },
-      '4': { code: 'HP', name: 'Muy Jugada', display_name: 'Muy Jugada' },
-      '5': { code: 'DM', name: 'Dañada', display_name: 'Dañada' },
+    // Get or create condition based on condition string (e.g., "Near Mint")
+    const conditionNameMap: Record<string, { code: string; name: string; display_name: string }> = {
+      'Near Mint': { code: 'NM', name: 'Cerca de Mint', display_name: 'Cerca de Mint' },
+      'Slightly Played': { code: 'SP', name: 'Ligeramente Jugada', display_name: 'Ligeramente Jugada' },
+      'Moderately Played': { code: 'MP', name: 'Moderadamente Jugada', display_name: 'Moderadamente Jugada' },
+      'Heavily Played': { code: 'HP', name: 'Muy Jugada', display_name: 'Muy Jugada' },
+      'Damaged': { code: 'DM', name: 'Dañada', display_name: 'Dañada' },
+      'Cerca de Mint': { code: 'NM', name: 'Cerca de Mint', display_name: 'Cerca de Mint' },
+      'Ligeramente Jugada': { code: 'SP', name: 'Ligeramente Jugada', display_name: 'Ligeramente Jugada' },
+      'Moderadamente Jugada': { code: 'MP', name: 'Moderadamente Jugada', display_name: 'Moderadamente Jugada' },
+      'Muy Jugada': { code: 'HP', name: 'Muy Jugada', display_name: 'Muy Jugada' },
+      'Dañada': { code: 'DM', name: 'Dañada', display_name: 'Dañada' },
     };
 
-    const conditionData = conditionMap[hareruyaProduct.card_condition] || conditionMap['1']; // Default to Near Mint
+    const conditionData = conditionNameMap[hareruyaProduct.condition] || conditionNameMap['Near Mint'];
     let condition = await this.prisma.conditions.findUnique({
       where: { code: conditionData.code },
     });
@@ -117,30 +123,39 @@ export class ProductsService {
       });
     }
 
-    // Parse price (Hareruya prices are in JPY, stored as string)
-    const price = parseFloat(hareruyaProduct.price) || 0;
+    // Use finalPrice for the price (already in MXN)
+    const price = hareruyaProduct.finalPrice || 0;
 
-    // Create product
+    // Create product with new schema structure
     try {
-      const product = await this.prisma.products.create({
+      const product = await this.prisma.singles.create({
         data: {
-          name: hareruyaProduct.product_name_en || hareruyaProduct.card_name,
+          name: hareruyaProduct.cardName,
           price: price,
-          image_url: hareruyaProduct.image_url,
           category_id: categoryId,
           condition_id: condition.id,
           language_id: language.id,
           owner_id: owner_id,
-          // Hareruya-specific fields
-          hareruya_product_id: hareruyaProduct.product,
-          card_name: hareruyaProduct.card_name,
-          product_name_en: hareruyaProduct.product_name_en,
-          product_name_jp: hareruyaProduct.product_name,
-          is_foil: hareruyaProduct.foil_flg === '1',
-          hareruya_stock: parseInt(hareruyaProduct.stock) || 0,
-          hareruya_product_class: hareruyaProduct.product_class,
-          hareruya_sale_flg: hareruyaProduct.sale_flg === '1',
-          hareruya_weekly_sales: parseInt(hareruyaProduct.weekly_sales) || 0,
+          // New schema fields (camelCase)
+          borderless: hareruyaProduct.borderless,
+          cardName: hareruyaProduct.cardName,
+          cardNumber: hareruyaProduct.cardNumber,
+          expansion: hareruyaProduct.expansion,
+          extendedArt: hareruyaProduct.extendedArt,
+          finalPrice: price,
+          foil: hareruyaProduct.foil,
+          hareruyaId: hareruyaProduct.hareruyaId,
+          img: hareruyaProduct.img,
+          isLocalInventory: hareruyaProduct.isLocalInventory,
+          link: hareruyaProduct.link,
+          metadata: hareruyaProduct.metadata || [],
+          prerelease: hareruyaProduct.prerelease,
+          premierPlay: hareruyaProduct.premierPlay,
+          showImportacionBadge: hareruyaProduct.showImportacionBadge,
+          source: hareruyaProduct.source || 'hareruya',
+          stock: hareruyaProduct.stock || 0,
+          surgeFoil: hareruyaProduct.surgeFoil,
+          variant: hareruyaProduct.variant || null,
         },
         include: {
           categories: true,
@@ -163,11 +178,11 @@ export class ProductsService {
     }
   }
 
-  async updateFromHareruya(productId: string, updateDto: CreateProductFromHareruyaDto) {
+  async updateFromHareruya(productId: string, updateDto: CreateSingleDto) {
     const { hareruyaProduct } = updateDto;
 
     // Verify product exists
-    const existing = await this.prisma.products.findUnique({
+    const existing = await this.prisma.singles.findUnique({
       where: { id: productId },
     });
 
@@ -175,23 +190,23 @@ export class ProductsService {
       throw new NotFoundException(`Product with ID ${productId} not found`);
     }
 
-    // Get or create language based on Hareruya language code
-    const languageMap: Record<string, { code: string; name: string; display_name: string }> = {
-      '1': { code: 'JP', name: 'Japonés', display_name: 'Japonés' },
-      '2': { code: 'EN', name: 'Inglés', display_name: 'Inglés' },
-      '3': { code: 'CS', name: 'Chino Simplificado', display_name: 'Chino Simplificado' },
-      '4': { code: 'CT', name: 'Chino Tradicional', display_name: 'Chino Tradicional' },
-      '5': { code: 'FR', name: 'Francés', display_name: 'Francés' },
-      '6': { code: 'DE', name: 'Alemán', display_name: 'Alemán' },
-      '7': { code: 'IT', name: 'Italiano', display_name: 'Italiano' },
-      '8': { code: 'KO', name: 'Coreano', display_name: 'Coreano' },
-      '9': { code: 'PT', name: 'Portugués', display_name: 'Portugués' },
-      '10': { code: 'RU', name: 'Ruso', display_name: 'Ruso' },
-      '11': { code: 'ES', name: 'Español', display_name: 'Español' },
-      '12': { code: 'AG', name: 'Antiguo', display_name: 'Antiguo' },
+    // Get or create language based on language string
+    const languageNameMap: Record<string, { code: string; name: string; display_name: string }> = {
+      'Inglés': { code: 'EN', name: 'Inglés', display_name: 'Inglés' },
+      'Japonés': { code: 'JP', name: 'Japonés', display_name: 'Japonés' },
+      'Chino Simplificado': { code: 'CS', name: 'Chino Simplificado', display_name: 'Chino Simplificado' },
+      'Chino Tradicional': { code: 'CT', name: 'Chino Tradicional', display_name: 'Chino Tradicional' },
+      'Francés': { code: 'FR', name: 'Francés', display_name: 'Francés' },
+      'Alemán': { code: 'DE', name: 'Alemán', display_name: 'Alemán' },
+      'Italiano': { code: 'IT', name: 'Italiano', display_name: 'Italiano' },
+      'Coreano': { code: 'KO', name: 'Coreano', display_name: 'Coreano' },
+      'Portugués': { code: 'PT', name: 'Portugués', display_name: 'Portugués' },
+      'Ruso': { code: 'RU', name: 'Ruso', display_name: 'Ruso' },
+      'Español': { code: 'ES', name: 'Español', display_name: 'Español' },
+      'Antiguo': { code: 'AG', name: 'Antiguo', display_name: 'Antiguo' },
     };
 
-    const languageData = languageMap[hareruyaProduct.language] || languageMap['2']; // Default to English
+    const languageData = languageNameMap[hareruyaProduct.language] || languageNameMap['Inglés'];
     let language = await this.prisma.languages.findUnique({
       where: { code: languageData.code },
     });
@@ -205,16 +220,21 @@ export class ProductsService {
       });
     }
 
-    // Get or create condition based on Hareruya condition code
-    const conditionMap: Record<string, { code: string; name: string; display_name: string }> = {
-      '1': { code: 'NM', name: 'Cerca de Mint', display_name: 'Cerca de Mint' },
-      '2': { code: 'SP', name: 'Ligeramente Jugada', display_name: 'Ligeramente Jugada' },
-      '3': { code: 'MP', name: 'Moderadamente Jugada', display_name: 'Moderadamente Jugada' },
-      '4': { code: 'HP', name: 'Muy Jugada', display_name: 'Muy Jugada' },
-      '5': { code: 'DM', name: 'Dañada', display_name: 'Dañada' },
+    // Get or create condition based on condition string
+    const conditionNameMap: Record<string, { code: string; name: string; display_name: string }> = {
+      'Near Mint': { code: 'NM', name: 'Cerca de Mint', display_name: 'Cerca de Mint' },
+      'Slightly Played': { code: 'SP', name: 'Ligeramente Jugada', display_name: 'Ligeramente Jugada' },
+      'Moderately Played': { code: 'MP', name: 'Moderadamente Jugada', display_name: 'Moderadamente Jugada' },
+      'Heavily Played': { code: 'HP', name: 'Muy Jugada', display_name: 'Muy Jugada' },
+      'Damaged': { code: 'DM', name: 'Dañada', display_name: 'Dañada' },
+      'Cerca de Mint': { code: 'NM', name: 'Cerca de Mint', display_name: 'Cerca de Mint' },
+      'Ligeramente Jugada': { code: 'SP', name: 'Ligeramente Jugada', display_name: 'Ligeramente Jugada' },
+      'Moderadamente Jugada': { code: 'MP', name: 'Moderadamente Jugada', display_name: 'Moderadamente Jugada' },
+      'Muy Jugada': { code: 'HP', name: 'Muy Jugada', display_name: 'Muy Jugada' },
+      'Dañada': { code: 'DM', name: 'Dañada', display_name: 'Dañada' },
     };
 
-    const conditionData = conditionMap[hareruyaProduct.card_condition] || conditionMap['1']; // Default to Near Mint
+    const conditionData = conditionNameMap[hareruyaProduct.condition] || conditionNameMap['Near Mint'];
     let condition = await this.prisma.conditions.findUnique({
       where: { code: conditionData.code },
     });
@@ -228,27 +248,36 @@ export class ProductsService {
       });
     }
 
-    // Parse price
-    const price = parseFloat(hareruyaProduct.price) || 0;
+    // Use finalPrice for the price
+    const price = hareruyaProduct.finalPrice || 0;
 
-    // Update product
-    const product = await this.prisma.products.update({
+    // Update product with new schema structure
+    const product = await this.prisma.singles.update({
       where: { id: productId },
       data: {
-        name: hareruyaProduct.product_name_en || hareruyaProduct.card_name,
+        name: hareruyaProduct.cardName,
         price: price,
-        image_url: hareruyaProduct.image_url,
         condition_id: condition.id,
         language_id: language.id,
-        // Update Hareruya-specific fields
-        card_name: hareruyaProduct.card_name,
-        product_name_en: hareruyaProduct.product_name_en,
-        product_name_jp: hareruyaProduct.product_name,
-        is_foil: hareruyaProduct.foil_flg === '1',
-        hareruya_stock: parseInt(hareruyaProduct.stock) || 0,
-        hareruya_product_class: hareruyaProduct.product_class,
-        hareruya_sale_flg: hareruyaProduct.sale_flg === '1',
-        hareruya_weekly_sales: parseInt(hareruyaProduct.weekly_sales) || 0,
+        // Update new schema fields (camelCase)
+        borderless: hareruyaProduct.borderless,
+        cardName: hareruyaProduct.cardName,
+        cardNumber: hareruyaProduct.cardNumber,
+        expansion: hareruyaProduct.expansion,
+        extendedArt: hareruyaProduct.extendedArt,
+        finalPrice: price,
+        foil: hareruyaProduct.foil,
+        img: hareruyaProduct.img,
+        isLocalInventory: hareruyaProduct.isLocalInventory,
+        link: hareruyaProduct.link,
+        metadata: hareruyaProduct.metadata || [],
+        prerelease: hareruyaProduct.prerelease,
+        premierPlay: hareruyaProduct.premierPlay,
+        showImportacionBadge: hareruyaProduct.showImportacionBadge,
+        source: hareruyaProduct.source || 'hareruya',
+        stock: hareruyaProduct.stock || 0,
+        surgeFoil: hareruyaProduct.surgeFoil,
+        variant: hareruyaProduct.variant || null,
       },
       include: {
         categories: true,
@@ -266,8 +295,8 @@ export class ProductsService {
   }
 
   async findByHareruyaId(hareruyaProductId: string) {
-    const product = await this.prisma.products.findUnique({
-      where: { hareruya_product_id: hareruyaProductId },
+    const product = await this.prisma.singles.findUnique({
+      where: { hareruyaId: hareruyaProductId },
       include: {
         categories: true,
         conditions: true,
@@ -292,7 +321,7 @@ export class ProductsService {
     const skip = (page - 1) * limit;
 
     const [products, total] = await Promise.all([
-      this.prisma.products.findMany({
+      this.prisma.singles.findMany({
         skip,
         take: limit,
         include: {
@@ -310,7 +339,7 @@ export class ProductsService {
           created_at: 'desc',
         },
       }),
-      this.prisma.products.count(),
+      this.prisma.singles.count(),
     ]);
 
     return {
@@ -337,7 +366,7 @@ export class ProductsService {
     const skip = (page - 1) * limit;
 
     const [products, total] = await Promise.all([
-      this.prisma.products.findMany({
+      this.prisma.singles.findMany({
         where: { owner_id: ownerId },
         skip,
         take: limit,
@@ -356,7 +385,7 @@ export class ProductsService {
           created_at: 'desc',
         },
       }),
-      this.prisma.products.count({
+      this.prisma.singles.count({
         where: { owner_id: ownerId },
       }),
     ]);

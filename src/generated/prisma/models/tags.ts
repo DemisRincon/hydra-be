@@ -158,13 +158,13 @@ export type tagsWhereInput = {
   NOT?: Prisma.tagsWhereInput | Prisma.tagsWhereInput[]
   id?: Prisma.UuidFilter<"tags"> | string
   name?: Prisma.StringFilter<"tags"> | string
-  products?: Prisma.Product_tagsListRelationFilter
+  singles?: Prisma.Single_tagsListRelationFilter
 }
 
 export type tagsOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  products?: Prisma.product_tagsOrderByRelationAggregateInput
+  singles?: Prisma.single_tagsOrderByRelationAggregateInput
 }
 
 export type tagsWhereUniqueInput = Prisma.AtLeast<{
@@ -173,7 +173,7 @@ export type tagsWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.tagsWhereInput | Prisma.tagsWhereInput[]
   OR?: Prisma.tagsWhereInput[]
   NOT?: Prisma.tagsWhereInput | Prisma.tagsWhereInput[]
-  products?: Prisma.Product_tagsListRelationFilter
+  singles?: Prisma.Single_tagsListRelationFilter
 }, "id" | "name">
 
 export type tagsOrderByWithAggregationInput = {
@@ -195,25 +195,25 @@ export type tagsScalarWhereWithAggregatesInput = {
 export type tagsCreateInput = {
   id?: string
   name: string
-  products?: Prisma.product_tagsCreateNestedManyWithoutTagsInput
+  singles?: Prisma.single_tagsCreateNestedManyWithoutTagsInput
 }
 
 export type tagsUncheckedCreateInput = {
   id?: string
   name: string
-  products?: Prisma.product_tagsUncheckedCreateNestedManyWithoutTagsInput
+  singles?: Prisma.single_tagsUncheckedCreateNestedManyWithoutTagsInput
 }
 
 export type tagsUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  products?: Prisma.product_tagsUpdateManyWithoutTagsNestedInput
+  singles?: Prisma.single_tagsUpdateManyWithoutTagsNestedInput
 }
 
 export type tagsUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  products?: Prisma.product_tagsUncheckedUpdateManyWithoutTagsNestedInput
+  singles?: Prisma.single_tagsUncheckedUpdateManyWithoutTagsNestedInput
 }
 
 export type tagsCreateManyInput = {
@@ -251,52 +251,52 @@ export type TagsScalarRelationFilter = {
   isNot?: Prisma.tagsWhereInput
 }
 
-export type tagsCreateNestedOneWithoutProductsInput = {
-  create?: Prisma.XOR<Prisma.tagsCreateWithoutProductsInput, Prisma.tagsUncheckedCreateWithoutProductsInput>
-  connectOrCreate?: Prisma.tagsCreateOrConnectWithoutProductsInput
+export type tagsCreateNestedOneWithoutSinglesInput = {
+  create?: Prisma.XOR<Prisma.tagsCreateWithoutSinglesInput, Prisma.tagsUncheckedCreateWithoutSinglesInput>
+  connectOrCreate?: Prisma.tagsCreateOrConnectWithoutSinglesInput
   connect?: Prisma.tagsWhereUniqueInput
 }
 
-export type tagsUpdateOneRequiredWithoutProductsNestedInput = {
-  create?: Prisma.XOR<Prisma.tagsCreateWithoutProductsInput, Prisma.tagsUncheckedCreateWithoutProductsInput>
-  connectOrCreate?: Prisma.tagsCreateOrConnectWithoutProductsInput
-  upsert?: Prisma.tagsUpsertWithoutProductsInput
+export type tagsUpdateOneRequiredWithoutSinglesNestedInput = {
+  create?: Prisma.XOR<Prisma.tagsCreateWithoutSinglesInput, Prisma.tagsUncheckedCreateWithoutSinglesInput>
+  connectOrCreate?: Prisma.tagsCreateOrConnectWithoutSinglesInput
+  upsert?: Prisma.tagsUpsertWithoutSinglesInput
   connect?: Prisma.tagsWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.tagsUpdateToOneWithWhereWithoutProductsInput, Prisma.tagsUpdateWithoutProductsInput>, Prisma.tagsUncheckedUpdateWithoutProductsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.tagsUpdateToOneWithWhereWithoutSinglesInput, Prisma.tagsUpdateWithoutSinglesInput>, Prisma.tagsUncheckedUpdateWithoutSinglesInput>
 }
 
-export type tagsCreateWithoutProductsInput = {
+export type tagsCreateWithoutSinglesInput = {
   id?: string
   name: string
 }
 
-export type tagsUncheckedCreateWithoutProductsInput = {
+export type tagsUncheckedCreateWithoutSinglesInput = {
   id?: string
   name: string
 }
 
-export type tagsCreateOrConnectWithoutProductsInput = {
+export type tagsCreateOrConnectWithoutSinglesInput = {
   where: Prisma.tagsWhereUniqueInput
-  create: Prisma.XOR<Prisma.tagsCreateWithoutProductsInput, Prisma.tagsUncheckedCreateWithoutProductsInput>
+  create: Prisma.XOR<Prisma.tagsCreateWithoutSinglesInput, Prisma.tagsUncheckedCreateWithoutSinglesInput>
 }
 
-export type tagsUpsertWithoutProductsInput = {
-  update: Prisma.XOR<Prisma.tagsUpdateWithoutProductsInput, Prisma.tagsUncheckedUpdateWithoutProductsInput>
-  create: Prisma.XOR<Prisma.tagsCreateWithoutProductsInput, Prisma.tagsUncheckedCreateWithoutProductsInput>
+export type tagsUpsertWithoutSinglesInput = {
+  update: Prisma.XOR<Prisma.tagsUpdateWithoutSinglesInput, Prisma.tagsUncheckedUpdateWithoutSinglesInput>
+  create: Prisma.XOR<Prisma.tagsCreateWithoutSinglesInput, Prisma.tagsUncheckedCreateWithoutSinglesInput>
   where?: Prisma.tagsWhereInput
 }
 
-export type tagsUpdateToOneWithWhereWithoutProductsInput = {
+export type tagsUpdateToOneWithWhereWithoutSinglesInput = {
   where?: Prisma.tagsWhereInput
-  data: Prisma.XOR<Prisma.tagsUpdateWithoutProductsInput, Prisma.tagsUncheckedUpdateWithoutProductsInput>
+  data: Prisma.XOR<Prisma.tagsUpdateWithoutSinglesInput, Prisma.tagsUncheckedUpdateWithoutSinglesInput>
 }
 
-export type tagsUpdateWithoutProductsInput = {
+export type tagsUpdateWithoutSinglesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type tagsUncheckedUpdateWithoutProductsInput = {
+export type tagsUncheckedUpdateWithoutSinglesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -307,11 +307,11 @@ export type tagsUncheckedUpdateWithoutProductsInput = {
  */
 
 export type TagsCountOutputType = {
-  products: number
+  singles: number
 }
 
 export type TagsCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  products?: boolean | TagsCountOutputTypeCountProductsArgs
+  singles?: boolean | TagsCountOutputTypeCountSinglesArgs
 }
 
 /**
@@ -327,15 +327,15 @@ export type TagsCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
 /**
  * TagsCountOutputType without action
  */
-export type TagsCountOutputTypeCountProductsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.product_tagsWhereInput
+export type TagsCountOutputTypeCountSinglesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.single_tagsWhereInput
 }
 
 
 export type tagsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
-  products?: boolean | Prisma.tags$productsArgs<ExtArgs>
+  singles?: boolean | Prisma.tags$singlesArgs<ExtArgs>
   _count?: boolean | Prisma.TagsCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tags"]>
 
@@ -356,7 +356,7 @@ export type tagsSelectScalar = {
 
 export type tagsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name", ExtArgs["result"]["tags"]>
 export type tagsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  products?: boolean | Prisma.tags$productsArgs<ExtArgs>
+  singles?: boolean | Prisma.tags$singlesArgs<ExtArgs>
   _count?: boolean | Prisma.TagsCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type tagsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -365,7 +365,7 @@ export type tagsIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $tagsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "tags"
   objects: {
-    products: Prisma.$product_tagsPayload<ExtArgs>[]
+    singles: Prisma.$single_tagsPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -764,7 +764,7 @@ readonly fields: tagsFieldRefs;
  */
 export interface Prisma__tagsClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  products<T extends Prisma.tags$productsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.tags$productsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$product_tagsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  singles<T extends Prisma.tags$singlesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.tags$singlesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$single_tagsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1184,27 +1184,27 @@ export type tagsDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * tags.products
+ * tags.singles
  */
-export type tags$productsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type tags$singlesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the product_tags
+   * Select specific fields to fetch from the single_tags
    */
-  select?: Prisma.product_tagsSelect<ExtArgs> | null
+  select?: Prisma.single_tagsSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the product_tags
+   * Omit specific fields from the single_tags
    */
-  omit?: Prisma.product_tagsOmit<ExtArgs> | null
+  omit?: Prisma.single_tagsOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.product_tagsInclude<ExtArgs> | null
-  where?: Prisma.product_tagsWhereInput
-  orderBy?: Prisma.product_tagsOrderByWithRelationInput | Prisma.product_tagsOrderByWithRelationInput[]
-  cursor?: Prisma.product_tagsWhereUniqueInput
+  include?: Prisma.single_tagsInclude<ExtArgs> | null
+  where?: Prisma.single_tagsWhereInput
+  orderBy?: Prisma.single_tagsOrderByWithRelationInput | Prisma.single_tagsOrderByWithRelationInput[]
+  cursor?: Prisma.single_tagsWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.Product_tagsScalarFieldEnum | Prisma.Product_tagsScalarFieldEnum[]
+  distinct?: Prisma.Single_tagsScalarFieldEnum | Prisma.Single_tagsScalarFieldEnum[]
 }
 
 /**

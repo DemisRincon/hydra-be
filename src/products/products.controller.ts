@@ -17,28 +17,28 @@ import {
   ApiBody,
 } from '@nestjs/swagger';
 import { ProductsService } from './products.service.js';
-import { CreateProductFromHareruyaDto } from './dto/create-product-from-hareruya.dto.js';
+import { CreateSingleDto } from './dto/create-single.dto.js';
 import { Public } from '../auth/guards/jwt-auth.guard.js';
 
-@ApiTags('products')
-@Controller('products')
+@ApiTags('singles')
+@Controller('singles')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
-  @Post('hareruya')
+  @Post()
   @Public()
   @HttpCode(HttpStatus.CREATED)
-  @ApiOperation({ summary: 'Create or update product from Hareruya data' })
-  @ApiBody({ type: CreateProductFromHareruyaDto })
+  @ApiOperation({ summary: 'Create single product from Hareruya data' })
+  @ApiBody({ type: CreateSingleDto })
   @ApiResponse({
     status: 201,
-    description: 'Product created successfully',
+    description: 'Single product created successfully',
   })
   @ApiResponse({ status: 400, description: 'Invalid product data' })
   @ApiResponse({ status: 404, description: 'Owner user not found' })
   @ApiResponse({ status: 409, description: 'Product already exists' })
-  async createFromHareruya(@Body() createDto: CreateProductFromHareruyaDto) {
-    return this.productsService.createFromHareruya(createDto);
+  async create(@Body() createDto: CreateSingleDto) {
+    return this.productsService.create(createDto);
   }
 
   @Get('hareruya/:hareruyaId')

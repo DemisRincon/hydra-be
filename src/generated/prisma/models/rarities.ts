@@ -158,13 +158,13 @@ export type raritiesWhereInput = {
   NOT?: Prisma.raritiesWhereInput | Prisma.raritiesWhereInput[]
   id?: Prisma.UuidFilter<"rarities"> | string
   name?: Prisma.StringFilter<"rarities"> | string
-  products?: Prisma.ProductsListRelationFilter
+  singles?: Prisma.SinglesListRelationFilter
 }
 
 export type raritiesOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  products?: Prisma.productsOrderByRelationAggregateInput
+  singles?: Prisma.singlesOrderByRelationAggregateInput
 }
 
 export type raritiesWhereUniqueInput = Prisma.AtLeast<{
@@ -173,7 +173,7 @@ export type raritiesWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.raritiesWhereInput | Prisma.raritiesWhereInput[]
   OR?: Prisma.raritiesWhereInput[]
   NOT?: Prisma.raritiesWhereInput | Prisma.raritiesWhereInput[]
-  products?: Prisma.ProductsListRelationFilter
+  singles?: Prisma.SinglesListRelationFilter
 }, "id" | "name">
 
 export type raritiesOrderByWithAggregationInput = {
@@ -195,25 +195,25 @@ export type raritiesScalarWhereWithAggregatesInput = {
 export type raritiesCreateInput = {
   id?: string
   name: string
-  products?: Prisma.productsCreateNestedManyWithoutRaritiesInput
+  singles?: Prisma.singlesCreateNestedManyWithoutRaritiesInput
 }
 
 export type raritiesUncheckedCreateInput = {
   id?: string
   name: string
-  products?: Prisma.productsUncheckedCreateNestedManyWithoutRaritiesInput
+  singles?: Prisma.singlesUncheckedCreateNestedManyWithoutRaritiesInput
 }
 
 export type raritiesUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  products?: Prisma.productsUpdateManyWithoutRaritiesNestedInput
+  singles?: Prisma.singlesUpdateManyWithoutRaritiesNestedInput
 }
 
 export type raritiesUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  products?: Prisma.productsUncheckedUpdateManyWithoutRaritiesNestedInput
+  singles?: Prisma.singlesUncheckedUpdateManyWithoutRaritiesNestedInput
 }
 
 export type raritiesCreateManyInput = {
@@ -251,54 +251,54 @@ export type RaritiesNullableScalarRelationFilter = {
   isNot?: Prisma.raritiesWhereInput | null
 }
 
-export type raritiesCreateNestedOneWithoutProductsInput = {
-  create?: Prisma.XOR<Prisma.raritiesCreateWithoutProductsInput, Prisma.raritiesUncheckedCreateWithoutProductsInput>
-  connectOrCreate?: Prisma.raritiesCreateOrConnectWithoutProductsInput
+export type raritiesCreateNestedOneWithoutSinglesInput = {
+  create?: Prisma.XOR<Prisma.raritiesCreateWithoutSinglesInput, Prisma.raritiesUncheckedCreateWithoutSinglesInput>
+  connectOrCreate?: Prisma.raritiesCreateOrConnectWithoutSinglesInput
   connect?: Prisma.raritiesWhereUniqueInput
 }
 
-export type raritiesUpdateOneWithoutProductsNestedInput = {
-  create?: Prisma.XOR<Prisma.raritiesCreateWithoutProductsInput, Prisma.raritiesUncheckedCreateWithoutProductsInput>
-  connectOrCreate?: Prisma.raritiesCreateOrConnectWithoutProductsInput
-  upsert?: Prisma.raritiesUpsertWithoutProductsInput
+export type raritiesUpdateOneWithoutSinglesNestedInput = {
+  create?: Prisma.XOR<Prisma.raritiesCreateWithoutSinglesInput, Prisma.raritiesUncheckedCreateWithoutSinglesInput>
+  connectOrCreate?: Prisma.raritiesCreateOrConnectWithoutSinglesInput
+  upsert?: Prisma.raritiesUpsertWithoutSinglesInput
   disconnect?: Prisma.raritiesWhereInput | boolean
   delete?: Prisma.raritiesWhereInput | boolean
   connect?: Prisma.raritiesWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.raritiesUpdateToOneWithWhereWithoutProductsInput, Prisma.raritiesUpdateWithoutProductsInput>, Prisma.raritiesUncheckedUpdateWithoutProductsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.raritiesUpdateToOneWithWhereWithoutSinglesInput, Prisma.raritiesUpdateWithoutSinglesInput>, Prisma.raritiesUncheckedUpdateWithoutSinglesInput>
 }
 
-export type raritiesCreateWithoutProductsInput = {
+export type raritiesCreateWithoutSinglesInput = {
   id?: string
   name: string
 }
 
-export type raritiesUncheckedCreateWithoutProductsInput = {
+export type raritiesUncheckedCreateWithoutSinglesInput = {
   id?: string
   name: string
 }
 
-export type raritiesCreateOrConnectWithoutProductsInput = {
+export type raritiesCreateOrConnectWithoutSinglesInput = {
   where: Prisma.raritiesWhereUniqueInput
-  create: Prisma.XOR<Prisma.raritiesCreateWithoutProductsInput, Prisma.raritiesUncheckedCreateWithoutProductsInput>
+  create: Prisma.XOR<Prisma.raritiesCreateWithoutSinglesInput, Prisma.raritiesUncheckedCreateWithoutSinglesInput>
 }
 
-export type raritiesUpsertWithoutProductsInput = {
-  update: Prisma.XOR<Prisma.raritiesUpdateWithoutProductsInput, Prisma.raritiesUncheckedUpdateWithoutProductsInput>
-  create: Prisma.XOR<Prisma.raritiesCreateWithoutProductsInput, Prisma.raritiesUncheckedCreateWithoutProductsInput>
+export type raritiesUpsertWithoutSinglesInput = {
+  update: Prisma.XOR<Prisma.raritiesUpdateWithoutSinglesInput, Prisma.raritiesUncheckedUpdateWithoutSinglesInput>
+  create: Prisma.XOR<Prisma.raritiesCreateWithoutSinglesInput, Prisma.raritiesUncheckedCreateWithoutSinglesInput>
   where?: Prisma.raritiesWhereInput
 }
 
-export type raritiesUpdateToOneWithWhereWithoutProductsInput = {
+export type raritiesUpdateToOneWithWhereWithoutSinglesInput = {
   where?: Prisma.raritiesWhereInput
-  data: Prisma.XOR<Prisma.raritiesUpdateWithoutProductsInput, Prisma.raritiesUncheckedUpdateWithoutProductsInput>
+  data: Prisma.XOR<Prisma.raritiesUpdateWithoutSinglesInput, Prisma.raritiesUncheckedUpdateWithoutSinglesInput>
 }
 
-export type raritiesUpdateWithoutProductsInput = {
+export type raritiesUpdateWithoutSinglesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type raritiesUncheckedUpdateWithoutProductsInput = {
+export type raritiesUncheckedUpdateWithoutSinglesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -309,11 +309,11 @@ export type raritiesUncheckedUpdateWithoutProductsInput = {
  */
 
 export type RaritiesCountOutputType = {
-  products: number
+  singles: number
 }
 
 export type RaritiesCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  products?: boolean | RaritiesCountOutputTypeCountProductsArgs
+  singles?: boolean | RaritiesCountOutputTypeCountSinglesArgs
 }
 
 /**
@@ -329,15 +329,15 @@ export type RaritiesCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ext
 /**
  * RaritiesCountOutputType without action
  */
-export type RaritiesCountOutputTypeCountProductsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.productsWhereInput
+export type RaritiesCountOutputTypeCountSinglesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.singlesWhereInput
 }
 
 
 export type raritiesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
-  products?: boolean | Prisma.rarities$productsArgs<ExtArgs>
+  singles?: boolean | Prisma.rarities$singlesArgs<ExtArgs>
   _count?: boolean | Prisma.RaritiesCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["rarities"]>
 
@@ -358,7 +358,7 @@ export type raritiesSelectScalar = {
 
 export type raritiesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name", ExtArgs["result"]["rarities"]>
 export type raritiesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  products?: boolean | Prisma.rarities$productsArgs<ExtArgs>
+  singles?: boolean | Prisma.rarities$singlesArgs<ExtArgs>
   _count?: boolean | Prisma.RaritiesCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type raritiesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -367,7 +367,7 @@ export type raritiesIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
 export type $raritiesPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "rarities"
   objects: {
-    products: Prisma.$productsPayload<ExtArgs>[]
+    singles: Prisma.$singlesPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -766,7 +766,7 @@ readonly fields: raritiesFieldRefs;
  */
 export interface Prisma__raritiesClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  products<T extends Prisma.rarities$productsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.rarities$productsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$productsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  singles<T extends Prisma.rarities$singlesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.rarities$singlesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$singlesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1186,27 +1186,27 @@ export type raritiesDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
- * rarities.products
+ * rarities.singles
  */
-export type rarities$productsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type rarities$singlesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the products
+   * Select specific fields to fetch from the singles
    */
-  select?: Prisma.productsSelect<ExtArgs> | null
+  select?: Prisma.singlesSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the products
+   * Omit specific fields from the singles
    */
-  omit?: Prisma.productsOmit<ExtArgs> | null
+  omit?: Prisma.singlesOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.productsInclude<ExtArgs> | null
-  where?: Prisma.productsWhereInput
-  orderBy?: Prisma.productsOrderByWithRelationInput | Prisma.productsOrderByWithRelationInput[]
-  cursor?: Prisma.productsWhereUniqueInput
+  include?: Prisma.singlesInclude<ExtArgs> | null
+  where?: Prisma.singlesWhereInput
+  orderBy?: Prisma.singlesOrderByWithRelationInput | Prisma.singlesOrderByWithRelationInput[]
+  cursor?: Prisma.singlesWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.ProductsScalarFieldEnum | Prisma.ProductsScalarFieldEnum[]
+  distinct?: Prisma.SinglesScalarFieldEnum | Prisma.SinglesScalarFieldEnum[]
 }
 
 /**

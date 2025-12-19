@@ -75,20 +75,20 @@ export type languages = Prisma.languagesModel
  */
 export type rarities = Prisma.raritiesModel
 /**
- * Model products
+ * Model singles
  * 
  */
-export type products = Prisma.productsModel
+export type singles = Prisma.singlesModel
 /**
  * Model tags
  * 
  */
 export type tags = Prisma.tagsModel
 /**
- * Model product_tags
+ * Model single_tags
  * 
  */
-export type product_tags = Prisma.product_tagsModel
+export type single_tags = Prisma.single_tagsModel
 /**
  * Model stock_items
  * 

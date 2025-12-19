@@ -200,14 +200,14 @@ export type categoriesWhereInput = {
   id?: Prisma.UuidFilter<"categories"> | string
   name?: Prisma.StringFilter<"categories"> | string
   order?: Prisma.IntFilter<"categories"> | number
-  products?: Prisma.ProductsListRelationFilter
+  singles?: Prisma.SinglesListRelationFilter
 }
 
 export type categoriesOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   order?: Prisma.SortOrder
-  products?: Prisma.productsOrderByRelationAggregateInput
+  singles?: Prisma.singlesOrderByRelationAggregateInput
 }
 
 export type categoriesWhereUniqueInput = Prisma.AtLeast<{
@@ -217,7 +217,7 @@ export type categoriesWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.categoriesWhereInput[]
   NOT?: Prisma.categoriesWhereInput | Prisma.categoriesWhereInput[]
   order?: Prisma.IntFilter<"categories"> | number
-  products?: Prisma.ProductsListRelationFilter
+  singles?: Prisma.SinglesListRelationFilter
 }, "id" | "name">
 
 export type categoriesOrderByWithAggregationInput = {
@@ -244,28 +244,28 @@ export type categoriesCreateInput = {
   id?: string
   name: string
   order: number
-  products?: Prisma.productsCreateNestedManyWithoutCategoriesInput
+  singles?: Prisma.singlesCreateNestedManyWithoutCategoriesInput
 }
 
 export type categoriesUncheckedCreateInput = {
   id?: string
   name: string
   order: number
-  products?: Prisma.productsUncheckedCreateNestedManyWithoutCategoriesInput
+  singles?: Prisma.singlesUncheckedCreateNestedManyWithoutCategoriesInput
 }
 
 export type categoriesUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
-  products?: Prisma.productsUpdateManyWithoutCategoriesNestedInput
+  singles?: Prisma.singlesUpdateManyWithoutCategoriesNestedInput
 }
 
 export type categoriesUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
-  products?: Prisma.productsUncheckedUpdateManyWithoutCategoriesNestedInput
+  singles?: Prisma.singlesUncheckedUpdateManyWithoutCategoriesNestedInput
 }
 
 export type categoriesCreateManyInput = {
@@ -325,55 +325,55 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type categoriesCreateNestedOneWithoutProductsInput = {
-  create?: Prisma.XOR<Prisma.categoriesCreateWithoutProductsInput, Prisma.categoriesUncheckedCreateWithoutProductsInput>
-  connectOrCreate?: Prisma.categoriesCreateOrConnectWithoutProductsInput
+export type categoriesCreateNestedOneWithoutSinglesInput = {
+  create?: Prisma.XOR<Prisma.categoriesCreateWithoutSinglesInput, Prisma.categoriesUncheckedCreateWithoutSinglesInput>
+  connectOrCreate?: Prisma.categoriesCreateOrConnectWithoutSinglesInput
   connect?: Prisma.categoriesWhereUniqueInput
 }
 
-export type categoriesUpdateOneRequiredWithoutProductsNestedInput = {
-  create?: Prisma.XOR<Prisma.categoriesCreateWithoutProductsInput, Prisma.categoriesUncheckedCreateWithoutProductsInput>
-  connectOrCreate?: Prisma.categoriesCreateOrConnectWithoutProductsInput
-  upsert?: Prisma.categoriesUpsertWithoutProductsInput
+export type categoriesUpdateOneRequiredWithoutSinglesNestedInput = {
+  create?: Prisma.XOR<Prisma.categoriesCreateWithoutSinglesInput, Prisma.categoriesUncheckedCreateWithoutSinglesInput>
+  connectOrCreate?: Prisma.categoriesCreateOrConnectWithoutSinglesInput
+  upsert?: Prisma.categoriesUpsertWithoutSinglesInput
   connect?: Prisma.categoriesWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.categoriesUpdateToOneWithWhereWithoutProductsInput, Prisma.categoriesUpdateWithoutProductsInput>, Prisma.categoriesUncheckedUpdateWithoutProductsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.categoriesUpdateToOneWithWhereWithoutSinglesInput, Prisma.categoriesUpdateWithoutSinglesInput>, Prisma.categoriesUncheckedUpdateWithoutSinglesInput>
 }
 
-export type categoriesCreateWithoutProductsInput = {
+export type categoriesCreateWithoutSinglesInput = {
   id?: string
   name: string
   order: number
 }
 
-export type categoriesUncheckedCreateWithoutProductsInput = {
+export type categoriesUncheckedCreateWithoutSinglesInput = {
   id?: string
   name: string
   order: number
 }
 
-export type categoriesCreateOrConnectWithoutProductsInput = {
+export type categoriesCreateOrConnectWithoutSinglesInput = {
   where: Prisma.categoriesWhereUniqueInput
-  create: Prisma.XOR<Prisma.categoriesCreateWithoutProductsInput, Prisma.categoriesUncheckedCreateWithoutProductsInput>
+  create: Prisma.XOR<Prisma.categoriesCreateWithoutSinglesInput, Prisma.categoriesUncheckedCreateWithoutSinglesInput>
 }
 
-export type categoriesUpsertWithoutProductsInput = {
-  update: Prisma.XOR<Prisma.categoriesUpdateWithoutProductsInput, Prisma.categoriesUncheckedUpdateWithoutProductsInput>
-  create: Prisma.XOR<Prisma.categoriesCreateWithoutProductsInput, Prisma.categoriesUncheckedCreateWithoutProductsInput>
+export type categoriesUpsertWithoutSinglesInput = {
+  update: Prisma.XOR<Prisma.categoriesUpdateWithoutSinglesInput, Prisma.categoriesUncheckedUpdateWithoutSinglesInput>
+  create: Prisma.XOR<Prisma.categoriesCreateWithoutSinglesInput, Prisma.categoriesUncheckedCreateWithoutSinglesInput>
   where?: Prisma.categoriesWhereInput
 }
 
-export type categoriesUpdateToOneWithWhereWithoutProductsInput = {
+export type categoriesUpdateToOneWithWhereWithoutSinglesInput = {
   where?: Prisma.categoriesWhereInput
-  data: Prisma.XOR<Prisma.categoriesUpdateWithoutProductsInput, Prisma.categoriesUncheckedUpdateWithoutProductsInput>
+  data: Prisma.XOR<Prisma.categoriesUpdateWithoutSinglesInput, Prisma.categoriesUncheckedUpdateWithoutSinglesInput>
 }
 
-export type categoriesUpdateWithoutProductsInput = {
+export type categoriesUpdateWithoutSinglesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
-export type categoriesUncheckedUpdateWithoutProductsInput = {
+export type categoriesUncheckedUpdateWithoutSinglesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -385,11 +385,11 @@ export type categoriesUncheckedUpdateWithoutProductsInput = {
  */
 
 export type CategoriesCountOutputType = {
-  products: number
+  singles: number
 }
 
 export type CategoriesCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  products?: boolean | CategoriesCountOutputTypeCountProductsArgs
+  singles?: boolean | CategoriesCountOutputTypeCountSinglesArgs
 }
 
 /**
@@ -405,8 +405,8 @@ export type CategoriesCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.E
 /**
  * CategoriesCountOutputType without action
  */
-export type CategoriesCountOutputTypeCountProductsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.productsWhereInput
+export type CategoriesCountOutputTypeCountSinglesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.singlesWhereInput
 }
 
 
@@ -414,7 +414,7 @@ export type categoriesSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   id?: boolean
   name?: boolean
   order?: boolean
-  products?: boolean | Prisma.categories$productsArgs<ExtArgs>
+  singles?: boolean | Prisma.categories$singlesArgs<ExtArgs>
   _count?: boolean | Prisma.CategoriesCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["categories"]>
 
@@ -438,7 +438,7 @@ export type categoriesSelectScalar = {
 
 export type categoriesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "order", ExtArgs["result"]["categories"]>
 export type categoriesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  products?: boolean | Prisma.categories$productsArgs<ExtArgs>
+  singles?: boolean | Prisma.categories$singlesArgs<ExtArgs>
   _count?: boolean | Prisma.CategoriesCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type categoriesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -447,7 +447,7 @@ export type categoriesIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.E
 export type $categoriesPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "categories"
   objects: {
-    products: Prisma.$productsPayload<ExtArgs>[]
+    singles: Prisma.$singlesPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -847,7 +847,7 @@ readonly fields: categoriesFieldRefs;
  */
 export interface Prisma__categoriesClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  products<T extends Prisma.categories$productsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.categories$productsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$productsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  singles<T extends Prisma.categories$singlesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.categories$singlesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$singlesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1268,27 +1268,27 @@ export type categoriesDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
 }
 
 /**
- * categories.products
+ * categories.singles
  */
-export type categories$productsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type categories$singlesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the products
+   * Select specific fields to fetch from the singles
    */
-  select?: Prisma.productsSelect<ExtArgs> | null
+  select?: Prisma.singlesSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the products
+   * Omit specific fields from the singles
    */
-  omit?: Prisma.productsOmit<ExtArgs> | null
+  omit?: Prisma.singlesOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.productsInclude<ExtArgs> | null
-  where?: Prisma.productsWhereInput
-  orderBy?: Prisma.productsOrderByWithRelationInput | Prisma.productsOrderByWithRelationInput[]
-  cursor?: Prisma.productsWhereUniqueInput
+  include?: Prisma.singlesInclude<ExtArgs> | null
+  where?: Prisma.singlesWhereInput
+  orderBy?: Prisma.singlesOrderByWithRelationInput | Prisma.singlesOrderByWithRelationInput[]
+  cursor?: Prisma.singlesWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.ProductsScalarFieldEnum | Prisma.ProductsScalarFieldEnum[]
+  distinct?: Prisma.SinglesScalarFieldEnum | Prisma.SinglesScalarFieldEnum[]
 }
 
 /**

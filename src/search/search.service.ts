@@ -1,56 +1,40 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException, Logger } from '@nestjs/common';
 import { SearchHareruyaDto } from './dto/search-hareruya.dto.js';
-
-const HARERUYA_API_BASE_URL = 'https://www.hareruyamtg.com/en/products/search/unisearch_api';
+import { HareruyaService } from '../hareruya/hareruya.service.js';
 
 @Injectable()
 export class SearchService {
+  private readonly logger = new Logger(SearchService.name);
+
+  constructor(private readonly hareruyaService: HareruyaService) {}
+
+  /**
+   * Search Hareruya API - Returns transformed data with MXN prices, language mapping, and metadata
+   * Uses HareruyaService for data transformation
+   */
   async searchHareruya(searchDto: SearchHareruyaDto) {
     try {
-      // Build query parameters
-      const params = new URLSearchParams();
-      params.append('kw', searchDto.kw);
-      
-      if (searchDto.rows) {
-        params.append('rows', searchDto.rows.toString());
-      }
-      
-      if (searchDto.page) {
-        params.append('page', searchDto.page.toString());
-      }
-      
-      if (searchDto.priceFilter) {
-        params.append('fq.price', searchDto.priceFilter);
-      }
+      this.logger.log(
+        `Searching Hareruya for: ${searchDto.kw}, page: ${searchDto.page || 1}`,
+      );
 
-      // Make request to Hareruya API
-      const url = `${HARERUYA_API_BASE_URL}?${params.toString()}`;
-      
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'User-Agent': 'Hydra-BE/1.0',
-        },
+      // Use the transformed search from HareruyaService
+      const result = await this.hareruyaService.searchCards({
+        query: searchDto.kw,
+        page: searchDto.page || 1,
+        rows: searchDto.rows,
+        priceFilter: searchDto.priceFilter,
       });
 
-      if (!response.ok) {
-        throw new BadRequestException(
-          `Hareruya API returned status ${response.status}: ${response.statusText}`
-        );
-      }
+      this.logger.log(`Found ${result.data.length} transformed results`);
 
-      const data = await response.json();
-      return data;
+      // Return transformed data in the same format as /cards endpoint
+      return result;
     } catch (error) {
-      if (error instanceof BadRequestException) {
-        throw error;
-      }
-      
+      this.logger.error('Error searching Hareruya API:', error);
       throw new BadRequestException(
-        `Failed to search Hareruya API: ${error instanceof Error ? error.message : 'Unknown error'}`
+        `Failed to search Hareruya API: ${error instanceof Error ? error.message : 'Unknown error'}`,
       );
     }
   }
 }
-

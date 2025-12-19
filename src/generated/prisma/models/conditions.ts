@@ -174,7 +174,7 @@ export type conditionsWhereInput = {
   code?: Prisma.StringFilter<"conditions"> | string
   name?: Prisma.StringFilter<"conditions"> | string
   display_name?: Prisma.StringFilter<"conditions"> | string
-  products?: Prisma.ProductsListRelationFilter
+  singles?: Prisma.SinglesListRelationFilter
 }
 
 export type conditionsOrderByWithRelationInput = {
@@ -182,7 +182,7 @@ export type conditionsOrderByWithRelationInput = {
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
   display_name?: Prisma.SortOrder
-  products?: Prisma.productsOrderByRelationAggregateInput
+  singles?: Prisma.singlesOrderByRelationAggregateInput
 }
 
 export type conditionsWhereUniqueInput = Prisma.AtLeast<{
@@ -193,7 +193,7 @@ export type conditionsWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.conditionsWhereInput[]
   NOT?: Prisma.conditionsWhereInput | Prisma.conditionsWhereInput[]
   display_name?: Prisma.StringFilter<"conditions"> | string
-  products?: Prisma.ProductsListRelationFilter
+  singles?: Prisma.SinglesListRelationFilter
 }, "id" | "code" | "name">
 
 export type conditionsOrderByWithAggregationInput = {
@@ -221,7 +221,7 @@ export type conditionsCreateInput = {
   code: string
   name: string
   display_name: string
-  products?: Prisma.productsCreateNestedManyWithoutConditionsInput
+  singles?: Prisma.singlesCreateNestedManyWithoutConditionsInput
 }
 
 export type conditionsUncheckedCreateInput = {
@@ -229,7 +229,7 @@ export type conditionsUncheckedCreateInput = {
   code: string
   name: string
   display_name: string
-  products?: Prisma.productsUncheckedCreateNestedManyWithoutConditionsInput
+  singles?: Prisma.singlesUncheckedCreateNestedManyWithoutConditionsInput
 }
 
 export type conditionsUpdateInput = {
@@ -237,7 +237,7 @@ export type conditionsUpdateInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
-  products?: Prisma.productsUpdateManyWithoutConditionsNestedInput
+  singles?: Prisma.singlesUpdateManyWithoutConditionsNestedInput
 }
 
 export type conditionsUncheckedUpdateInput = {
@@ -245,7 +245,7 @@ export type conditionsUncheckedUpdateInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
-  products?: Prisma.productsUncheckedUpdateManyWithoutConditionsNestedInput
+  singles?: Prisma.singlesUncheckedUpdateManyWithoutConditionsNestedInput
 }
 
 export type conditionsCreateManyInput = {
@@ -295,60 +295,60 @@ export type ConditionsNullableScalarRelationFilter = {
   isNot?: Prisma.conditionsWhereInput | null
 }
 
-export type conditionsCreateNestedOneWithoutProductsInput = {
-  create?: Prisma.XOR<Prisma.conditionsCreateWithoutProductsInput, Prisma.conditionsUncheckedCreateWithoutProductsInput>
-  connectOrCreate?: Prisma.conditionsCreateOrConnectWithoutProductsInput
+export type conditionsCreateNestedOneWithoutSinglesInput = {
+  create?: Prisma.XOR<Prisma.conditionsCreateWithoutSinglesInput, Prisma.conditionsUncheckedCreateWithoutSinglesInput>
+  connectOrCreate?: Prisma.conditionsCreateOrConnectWithoutSinglesInput
   connect?: Prisma.conditionsWhereUniqueInput
 }
 
-export type conditionsUpdateOneWithoutProductsNestedInput = {
-  create?: Prisma.XOR<Prisma.conditionsCreateWithoutProductsInput, Prisma.conditionsUncheckedCreateWithoutProductsInput>
-  connectOrCreate?: Prisma.conditionsCreateOrConnectWithoutProductsInput
-  upsert?: Prisma.conditionsUpsertWithoutProductsInput
+export type conditionsUpdateOneWithoutSinglesNestedInput = {
+  create?: Prisma.XOR<Prisma.conditionsCreateWithoutSinglesInput, Prisma.conditionsUncheckedCreateWithoutSinglesInput>
+  connectOrCreate?: Prisma.conditionsCreateOrConnectWithoutSinglesInput
+  upsert?: Prisma.conditionsUpsertWithoutSinglesInput
   disconnect?: Prisma.conditionsWhereInput | boolean
   delete?: Prisma.conditionsWhereInput | boolean
   connect?: Prisma.conditionsWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.conditionsUpdateToOneWithWhereWithoutProductsInput, Prisma.conditionsUpdateWithoutProductsInput>, Prisma.conditionsUncheckedUpdateWithoutProductsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.conditionsUpdateToOneWithWhereWithoutSinglesInput, Prisma.conditionsUpdateWithoutSinglesInput>, Prisma.conditionsUncheckedUpdateWithoutSinglesInput>
 }
 
-export type conditionsCreateWithoutProductsInput = {
+export type conditionsCreateWithoutSinglesInput = {
   id?: string
   code: string
   name: string
   display_name: string
 }
 
-export type conditionsUncheckedCreateWithoutProductsInput = {
+export type conditionsUncheckedCreateWithoutSinglesInput = {
   id?: string
   code: string
   name: string
   display_name: string
 }
 
-export type conditionsCreateOrConnectWithoutProductsInput = {
+export type conditionsCreateOrConnectWithoutSinglesInput = {
   where: Prisma.conditionsWhereUniqueInput
-  create: Prisma.XOR<Prisma.conditionsCreateWithoutProductsInput, Prisma.conditionsUncheckedCreateWithoutProductsInput>
+  create: Prisma.XOR<Prisma.conditionsCreateWithoutSinglesInput, Prisma.conditionsUncheckedCreateWithoutSinglesInput>
 }
 
-export type conditionsUpsertWithoutProductsInput = {
-  update: Prisma.XOR<Prisma.conditionsUpdateWithoutProductsInput, Prisma.conditionsUncheckedUpdateWithoutProductsInput>
-  create: Prisma.XOR<Prisma.conditionsCreateWithoutProductsInput, Prisma.conditionsUncheckedCreateWithoutProductsInput>
+export type conditionsUpsertWithoutSinglesInput = {
+  update: Prisma.XOR<Prisma.conditionsUpdateWithoutSinglesInput, Prisma.conditionsUncheckedUpdateWithoutSinglesInput>
+  create: Prisma.XOR<Prisma.conditionsCreateWithoutSinglesInput, Prisma.conditionsUncheckedCreateWithoutSinglesInput>
   where?: Prisma.conditionsWhereInput
 }
 
-export type conditionsUpdateToOneWithWhereWithoutProductsInput = {
+export type conditionsUpdateToOneWithWhereWithoutSinglesInput = {
   where?: Prisma.conditionsWhereInput
-  data: Prisma.XOR<Prisma.conditionsUpdateWithoutProductsInput, Prisma.conditionsUncheckedUpdateWithoutProductsInput>
+  data: Prisma.XOR<Prisma.conditionsUpdateWithoutSinglesInput, Prisma.conditionsUncheckedUpdateWithoutSinglesInput>
 }
 
-export type conditionsUpdateWithoutProductsInput = {
+export type conditionsUpdateWithoutSinglesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type conditionsUncheckedUpdateWithoutProductsInput = {
+export type conditionsUncheckedUpdateWithoutSinglesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -361,11 +361,11 @@ export type conditionsUncheckedUpdateWithoutProductsInput = {
  */
 
 export type ConditionsCountOutputType = {
-  products: number
+  singles: number
 }
 
 export type ConditionsCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  products?: boolean | ConditionsCountOutputTypeCountProductsArgs
+  singles?: boolean | ConditionsCountOutputTypeCountSinglesArgs
 }
 
 /**
@@ -381,8 +381,8 @@ export type ConditionsCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.E
 /**
  * ConditionsCountOutputType without action
  */
-export type ConditionsCountOutputTypeCountProductsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.productsWhereInput
+export type ConditionsCountOutputTypeCountSinglesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.singlesWhereInput
 }
 
 
@@ -391,7 +391,7 @@ export type conditionsSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   code?: boolean
   name?: boolean
   display_name?: boolean
-  products?: boolean | Prisma.conditions$productsArgs<ExtArgs>
+  singles?: boolean | Prisma.conditions$singlesArgs<ExtArgs>
   _count?: boolean | Prisma.ConditionsCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["conditions"]>
 
@@ -418,7 +418,7 @@ export type conditionsSelectScalar = {
 
 export type conditionsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "display_name", ExtArgs["result"]["conditions"]>
 export type conditionsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  products?: boolean | Prisma.conditions$productsArgs<ExtArgs>
+  singles?: boolean | Prisma.conditions$singlesArgs<ExtArgs>
   _count?: boolean | Prisma.ConditionsCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type conditionsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -427,7 +427,7 @@ export type conditionsIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.E
 export type $conditionsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "conditions"
   objects: {
-    products: Prisma.$productsPayload<ExtArgs>[]
+    singles: Prisma.$singlesPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -828,7 +828,7 @@ readonly fields: conditionsFieldRefs;
  */
 export interface Prisma__conditionsClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  products<T extends Prisma.conditions$productsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.conditions$productsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$productsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  singles<T extends Prisma.conditions$singlesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.conditions$singlesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$singlesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1250,27 +1250,27 @@ export type conditionsDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
 }
 
 /**
- * conditions.products
+ * conditions.singles
  */
-export type conditions$productsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type conditions$singlesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the products
+   * Select specific fields to fetch from the singles
    */
-  select?: Prisma.productsSelect<ExtArgs> | null
+  select?: Prisma.singlesSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the products
+   * Omit specific fields from the singles
    */
-  omit?: Prisma.productsOmit<ExtArgs> | null
+  omit?: Prisma.singlesOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.productsInclude<ExtArgs> | null
-  where?: Prisma.productsWhereInput
-  orderBy?: Prisma.productsOrderByWithRelationInput | Prisma.productsOrderByWithRelationInput[]
-  cursor?: Prisma.productsWhereUniqueInput
+  include?: Prisma.singlesInclude<ExtArgs> | null
+  where?: Prisma.singlesWhereInput
+  orderBy?: Prisma.singlesOrderByWithRelationInput | Prisma.singlesOrderByWithRelationInput[]
+  cursor?: Prisma.singlesWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.ProductsScalarFieldEnum | Prisma.ProductsScalarFieldEnum[]
+  distinct?: Prisma.SinglesScalarFieldEnum | Prisma.SinglesScalarFieldEnum[]
 }
 
 /**

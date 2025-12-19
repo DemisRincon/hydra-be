@@ -61,7 +61,7 @@ export class LanguagesService {
       where: { id },
       include: {
         _count: {
-          select: { products: true },
+          select: { singles: true },
         },
       },
     });
@@ -78,7 +78,7 @@ export class LanguagesService {
       where: { code },
       include: {
         _count: {
-          select: { products: true },
+          select: { singles: true },
         },
       },
     });
@@ -150,7 +150,7 @@ export class LanguagesService {
       where: { id },
       include: {
         _count: {
-          select: { products: true },
+          select: { singles: true },
         },
       },
     });

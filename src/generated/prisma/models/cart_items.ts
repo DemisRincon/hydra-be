@@ -37,21 +37,21 @@ export type Cart_itemsSumAggregateOutputType = {
 export type Cart_itemsMinAggregateOutputType = {
   id: string | null
   cart_id: string | null
-  product_id: string | null
+  single_id: string | null
   quantity: number | null
 }
 
 export type Cart_itemsMaxAggregateOutputType = {
   id: string | null
   cart_id: string | null
-  product_id: string | null
+  single_id: string | null
   quantity: number | null
 }
 
 export type Cart_itemsCountAggregateOutputType = {
   id: number
   cart_id: number
-  product_id: number
+  single_id: number
   quantity: number
   _all: number
 }
@@ -68,21 +68,21 @@ export type Cart_itemsSumAggregateInputType = {
 export type Cart_itemsMinAggregateInputType = {
   id?: true
   cart_id?: true
-  product_id?: true
+  single_id?: true
   quantity?: true
 }
 
 export type Cart_itemsMaxAggregateInputType = {
   id?: true
   cart_id?: true
-  product_id?: true
+  single_id?: true
   quantity?: true
 }
 
 export type Cart_itemsCountAggregateInputType = {
   id?: true
   cart_id?: true
-  product_id?: true
+  single_id?: true
   quantity?: true
   _all?: true
 }
@@ -176,7 +176,7 @@ export type cart_itemsGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 export type Cart_itemsGroupByOutputType = {
   id: string
   cart_id: string
-  product_id: string
+  single_id: string
   quantity: number
   _count: Cart_itemsCountAggregateOutputType | null
   _avg: Cart_itemsAvgAggregateOutputType | null
@@ -206,19 +206,19 @@ export type cart_itemsWhereInput = {
   NOT?: Prisma.cart_itemsWhereInput | Prisma.cart_itemsWhereInput[]
   id?: Prisma.UuidFilter<"cart_items"> | string
   cart_id?: Prisma.UuidFilter<"cart_items"> | string
-  product_id?: Prisma.UuidFilter<"cart_items"> | string
+  single_id?: Prisma.UuidFilter<"cart_items"> | string
   quantity?: Prisma.IntFilter<"cart_items"> | number
   carts?: Prisma.XOR<Prisma.CartsScalarRelationFilter, Prisma.cartsWhereInput>
-  products?: Prisma.XOR<Prisma.ProductsScalarRelationFilter, Prisma.productsWhereInput>
+  singles?: Prisma.XOR<Prisma.SinglesScalarRelationFilter, Prisma.singlesWhereInput>
 }
 
 export type cart_itemsOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   cart_id?: Prisma.SortOrder
-  product_id?: Prisma.SortOrder
+  single_id?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   carts?: Prisma.cartsOrderByWithRelationInput
-  products?: Prisma.productsOrderByWithRelationInput
+  singles?: Prisma.singlesOrderByWithRelationInput
 }
 
 export type cart_itemsWhereUniqueInput = Prisma.AtLeast<{
@@ -227,16 +227,16 @@ export type cart_itemsWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.cart_itemsWhereInput[]
   NOT?: Prisma.cart_itemsWhereInput | Prisma.cart_itemsWhereInput[]
   cart_id?: Prisma.UuidFilter<"cart_items"> | string
-  product_id?: Prisma.UuidFilter<"cart_items"> | string
+  single_id?: Prisma.UuidFilter<"cart_items"> | string
   quantity?: Prisma.IntFilter<"cart_items"> | number
   carts?: Prisma.XOR<Prisma.CartsScalarRelationFilter, Prisma.cartsWhereInput>
-  products?: Prisma.XOR<Prisma.ProductsScalarRelationFilter, Prisma.productsWhereInput>
+  singles?: Prisma.XOR<Prisma.SinglesScalarRelationFilter, Prisma.singlesWhereInput>
 }, "id">
 
 export type cart_itemsOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   cart_id?: Prisma.SortOrder
-  product_id?: Prisma.SortOrder
+  single_id?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   _count?: Prisma.cart_itemsCountOrderByAggregateInput
   _avg?: Prisma.cart_itemsAvgOrderByAggregateInput
@@ -251,7 +251,7 @@ export type cart_itemsScalarWhereWithAggregatesInput = {
   NOT?: Prisma.cart_itemsScalarWhereWithAggregatesInput | Prisma.cart_itemsScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"cart_items"> | string
   cart_id?: Prisma.UuidWithAggregatesFilter<"cart_items"> | string
-  product_id?: Prisma.UuidWithAggregatesFilter<"cart_items"> | string
+  single_id?: Prisma.UuidWithAggregatesFilter<"cart_items"> | string
   quantity?: Prisma.IntWithAggregatesFilter<"cart_items"> | number
 }
 
@@ -259,13 +259,13 @@ export type cart_itemsCreateInput = {
   id?: string
   quantity: number
   carts: Prisma.cartsCreateNestedOneWithoutItemsInput
-  products: Prisma.productsCreateNestedOneWithoutCartItemsInput
+  singles: Prisma.singlesCreateNestedOneWithoutCartItemsInput
 }
 
 export type cart_itemsUncheckedCreateInput = {
   id?: string
   cart_id: string
-  product_id: string
+  single_id: string
   quantity: number
 }
 
@@ -273,20 +273,20 @@ export type cart_itemsUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   carts?: Prisma.cartsUpdateOneRequiredWithoutItemsNestedInput
-  products?: Prisma.productsUpdateOneRequiredWithoutCartItemsNestedInput
+  singles?: Prisma.singlesUpdateOneRequiredWithoutCartItemsNestedInput
 }
 
 export type cart_itemsUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   cart_id?: Prisma.StringFieldUpdateOperationsInput | string
-  product_id?: Prisma.StringFieldUpdateOperationsInput | string
+  single_id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type cart_itemsCreateManyInput = {
   id?: string
   cart_id: string
-  product_id: string
+  single_id: string
   quantity: number
 }
 
@@ -298,7 +298,7 @@ export type cart_itemsUpdateManyMutationInput = {
 export type cart_itemsUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   cart_id?: Prisma.StringFieldUpdateOperationsInput | string
-  product_id?: Prisma.StringFieldUpdateOperationsInput | string
+  single_id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -315,7 +315,7 @@ export type cart_itemsOrderByRelationAggregateInput = {
 export type cart_itemsCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   cart_id?: Prisma.SortOrder
-  product_id?: Prisma.SortOrder
+  single_id?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
 }
 
@@ -326,14 +326,14 @@ export type cart_itemsAvgOrderByAggregateInput = {
 export type cart_itemsMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   cart_id?: Prisma.SortOrder
-  product_id?: Prisma.SortOrder
+  single_id?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
 }
 
 export type cart_itemsMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   cart_id?: Prisma.SortOrder
-  product_id?: Prisma.SortOrder
+  single_id?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
 }
 
@@ -341,45 +341,45 @@ export type cart_itemsSumOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
 }
 
-export type cart_itemsCreateNestedManyWithoutProductsInput = {
-  create?: Prisma.XOR<Prisma.cart_itemsCreateWithoutProductsInput, Prisma.cart_itemsUncheckedCreateWithoutProductsInput> | Prisma.cart_itemsCreateWithoutProductsInput[] | Prisma.cart_itemsUncheckedCreateWithoutProductsInput[]
-  connectOrCreate?: Prisma.cart_itemsCreateOrConnectWithoutProductsInput | Prisma.cart_itemsCreateOrConnectWithoutProductsInput[]
-  createMany?: Prisma.cart_itemsCreateManyProductsInputEnvelope
+export type cart_itemsCreateNestedManyWithoutSinglesInput = {
+  create?: Prisma.XOR<Prisma.cart_itemsCreateWithoutSinglesInput, Prisma.cart_itemsUncheckedCreateWithoutSinglesInput> | Prisma.cart_itemsCreateWithoutSinglesInput[] | Prisma.cart_itemsUncheckedCreateWithoutSinglesInput[]
+  connectOrCreate?: Prisma.cart_itemsCreateOrConnectWithoutSinglesInput | Prisma.cart_itemsCreateOrConnectWithoutSinglesInput[]
+  createMany?: Prisma.cart_itemsCreateManySinglesInputEnvelope
   connect?: Prisma.cart_itemsWhereUniqueInput | Prisma.cart_itemsWhereUniqueInput[]
 }
 
-export type cart_itemsUncheckedCreateNestedManyWithoutProductsInput = {
-  create?: Prisma.XOR<Prisma.cart_itemsCreateWithoutProductsInput, Prisma.cart_itemsUncheckedCreateWithoutProductsInput> | Prisma.cart_itemsCreateWithoutProductsInput[] | Prisma.cart_itemsUncheckedCreateWithoutProductsInput[]
-  connectOrCreate?: Prisma.cart_itemsCreateOrConnectWithoutProductsInput | Prisma.cart_itemsCreateOrConnectWithoutProductsInput[]
-  createMany?: Prisma.cart_itemsCreateManyProductsInputEnvelope
+export type cart_itemsUncheckedCreateNestedManyWithoutSinglesInput = {
+  create?: Prisma.XOR<Prisma.cart_itemsCreateWithoutSinglesInput, Prisma.cart_itemsUncheckedCreateWithoutSinglesInput> | Prisma.cart_itemsCreateWithoutSinglesInput[] | Prisma.cart_itemsUncheckedCreateWithoutSinglesInput[]
+  connectOrCreate?: Prisma.cart_itemsCreateOrConnectWithoutSinglesInput | Prisma.cart_itemsCreateOrConnectWithoutSinglesInput[]
+  createMany?: Prisma.cart_itemsCreateManySinglesInputEnvelope
   connect?: Prisma.cart_itemsWhereUniqueInput | Prisma.cart_itemsWhereUniqueInput[]
 }
 
-export type cart_itemsUpdateManyWithoutProductsNestedInput = {
-  create?: Prisma.XOR<Prisma.cart_itemsCreateWithoutProductsInput, Prisma.cart_itemsUncheckedCreateWithoutProductsInput> | Prisma.cart_itemsCreateWithoutProductsInput[] | Prisma.cart_itemsUncheckedCreateWithoutProductsInput[]
-  connectOrCreate?: Prisma.cart_itemsCreateOrConnectWithoutProductsInput | Prisma.cart_itemsCreateOrConnectWithoutProductsInput[]
-  upsert?: Prisma.cart_itemsUpsertWithWhereUniqueWithoutProductsInput | Prisma.cart_itemsUpsertWithWhereUniqueWithoutProductsInput[]
-  createMany?: Prisma.cart_itemsCreateManyProductsInputEnvelope
+export type cart_itemsUpdateManyWithoutSinglesNestedInput = {
+  create?: Prisma.XOR<Prisma.cart_itemsCreateWithoutSinglesInput, Prisma.cart_itemsUncheckedCreateWithoutSinglesInput> | Prisma.cart_itemsCreateWithoutSinglesInput[] | Prisma.cart_itemsUncheckedCreateWithoutSinglesInput[]
+  connectOrCreate?: Prisma.cart_itemsCreateOrConnectWithoutSinglesInput | Prisma.cart_itemsCreateOrConnectWithoutSinglesInput[]
+  upsert?: Prisma.cart_itemsUpsertWithWhereUniqueWithoutSinglesInput | Prisma.cart_itemsUpsertWithWhereUniqueWithoutSinglesInput[]
+  createMany?: Prisma.cart_itemsCreateManySinglesInputEnvelope
   set?: Prisma.cart_itemsWhereUniqueInput | Prisma.cart_itemsWhereUniqueInput[]
   disconnect?: Prisma.cart_itemsWhereUniqueInput | Prisma.cart_itemsWhereUniqueInput[]
   delete?: Prisma.cart_itemsWhereUniqueInput | Prisma.cart_itemsWhereUniqueInput[]
   connect?: Prisma.cart_itemsWhereUniqueInput | Prisma.cart_itemsWhereUniqueInput[]
-  update?: Prisma.cart_itemsUpdateWithWhereUniqueWithoutProductsInput | Prisma.cart_itemsUpdateWithWhereUniqueWithoutProductsInput[]
-  updateMany?: Prisma.cart_itemsUpdateManyWithWhereWithoutProductsInput | Prisma.cart_itemsUpdateManyWithWhereWithoutProductsInput[]
+  update?: Prisma.cart_itemsUpdateWithWhereUniqueWithoutSinglesInput | Prisma.cart_itemsUpdateWithWhereUniqueWithoutSinglesInput[]
+  updateMany?: Prisma.cart_itemsUpdateManyWithWhereWithoutSinglesInput | Prisma.cart_itemsUpdateManyWithWhereWithoutSinglesInput[]
   deleteMany?: Prisma.cart_itemsScalarWhereInput | Prisma.cart_itemsScalarWhereInput[]
 }
 
-export type cart_itemsUncheckedUpdateManyWithoutProductsNestedInput = {
-  create?: Prisma.XOR<Prisma.cart_itemsCreateWithoutProductsInput, Prisma.cart_itemsUncheckedCreateWithoutProductsInput> | Prisma.cart_itemsCreateWithoutProductsInput[] | Prisma.cart_itemsUncheckedCreateWithoutProductsInput[]
-  connectOrCreate?: Prisma.cart_itemsCreateOrConnectWithoutProductsInput | Prisma.cart_itemsCreateOrConnectWithoutProductsInput[]
-  upsert?: Prisma.cart_itemsUpsertWithWhereUniqueWithoutProductsInput | Prisma.cart_itemsUpsertWithWhereUniqueWithoutProductsInput[]
-  createMany?: Prisma.cart_itemsCreateManyProductsInputEnvelope
+export type cart_itemsUncheckedUpdateManyWithoutSinglesNestedInput = {
+  create?: Prisma.XOR<Prisma.cart_itemsCreateWithoutSinglesInput, Prisma.cart_itemsUncheckedCreateWithoutSinglesInput> | Prisma.cart_itemsCreateWithoutSinglesInput[] | Prisma.cart_itemsUncheckedCreateWithoutSinglesInput[]
+  connectOrCreate?: Prisma.cart_itemsCreateOrConnectWithoutSinglesInput | Prisma.cart_itemsCreateOrConnectWithoutSinglesInput[]
+  upsert?: Prisma.cart_itemsUpsertWithWhereUniqueWithoutSinglesInput | Prisma.cart_itemsUpsertWithWhereUniqueWithoutSinglesInput[]
+  createMany?: Prisma.cart_itemsCreateManySinglesInputEnvelope
   set?: Prisma.cart_itemsWhereUniqueInput | Prisma.cart_itemsWhereUniqueInput[]
   disconnect?: Prisma.cart_itemsWhereUniqueInput | Prisma.cart_itemsWhereUniqueInput[]
   delete?: Prisma.cart_itemsWhereUniqueInput | Prisma.cart_itemsWhereUniqueInput[]
   connect?: Prisma.cart_itemsWhereUniqueInput | Prisma.cart_itemsWhereUniqueInput[]
-  update?: Prisma.cart_itemsUpdateWithWhereUniqueWithoutProductsInput | Prisma.cart_itemsUpdateWithWhereUniqueWithoutProductsInput[]
-  updateMany?: Prisma.cart_itemsUpdateManyWithWhereWithoutProductsInput | Prisma.cart_itemsUpdateManyWithWhereWithoutProductsInput[]
+  update?: Prisma.cart_itemsUpdateWithWhereUniqueWithoutSinglesInput | Prisma.cart_itemsUpdateWithWhereUniqueWithoutSinglesInput[]
+  updateMany?: Prisma.cart_itemsUpdateManyWithWhereWithoutSinglesInput | Prisma.cart_itemsUpdateManyWithWhereWithoutSinglesInput[]
   deleteMany?: Prisma.cart_itemsScalarWhereInput | Prisma.cart_itemsScalarWhereInput[]
 }
 
@@ -425,42 +425,42 @@ export type cart_itemsUncheckedUpdateManyWithoutCartsNestedInput = {
   deleteMany?: Prisma.cart_itemsScalarWhereInput | Prisma.cart_itemsScalarWhereInput[]
 }
 
-export type cart_itemsCreateWithoutProductsInput = {
+export type cart_itemsCreateWithoutSinglesInput = {
   id?: string
   quantity: number
   carts: Prisma.cartsCreateNestedOneWithoutItemsInput
 }
 
-export type cart_itemsUncheckedCreateWithoutProductsInput = {
+export type cart_itemsUncheckedCreateWithoutSinglesInput = {
   id?: string
   cart_id: string
   quantity: number
 }
 
-export type cart_itemsCreateOrConnectWithoutProductsInput = {
+export type cart_itemsCreateOrConnectWithoutSinglesInput = {
   where: Prisma.cart_itemsWhereUniqueInput
-  create: Prisma.XOR<Prisma.cart_itemsCreateWithoutProductsInput, Prisma.cart_itemsUncheckedCreateWithoutProductsInput>
+  create: Prisma.XOR<Prisma.cart_itemsCreateWithoutSinglesInput, Prisma.cart_itemsUncheckedCreateWithoutSinglesInput>
 }
 
-export type cart_itemsCreateManyProductsInputEnvelope = {
-  data: Prisma.cart_itemsCreateManyProductsInput | Prisma.cart_itemsCreateManyProductsInput[]
+export type cart_itemsCreateManySinglesInputEnvelope = {
+  data: Prisma.cart_itemsCreateManySinglesInput | Prisma.cart_itemsCreateManySinglesInput[]
   skipDuplicates?: boolean
 }
 
-export type cart_itemsUpsertWithWhereUniqueWithoutProductsInput = {
+export type cart_itemsUpsertWithWhereUniqueWithoutSinglesInput = {
   where: Prisma.cart_itemsWhereUniqueInput
-  update: Prisma.XOR<Prisma.cart_itemsUpdateWithoutProductsInput, Prisma.cart_itemsUncheckedUpdateWithoutProductsInput>
-  create: Prisma.XOR<Prisma.cart_itemsCreateWithoutProductsInput, Prisma.cart_itemsUncheckedCreateWithoutProductsInput>
+  update: Prisma.XOR<Prisma.cart_itemsUpdateWithoutSinglesInput, Prisma.cart_itemsUncheckedUpdateWithoutSinglesInput>
+  create: Prisma.XOR<Prisma.cart_itemsCreateWithoutSinglesInput, Prisma.cart_itemsUncheckedCreateWithoutSinglesInput>
 }
 
-export type cart_itemsUpdateWithWhereUniqueWithoutProductsInput = {
+export type cart_itemsUpdateWithWhereUniqueWithoutSinglesInput = {
   where: Prisma.cart_itemsWhereUniqueInput
-  data: Prisma.XOR<Prisma.cart_itemsUpdateWithoutProductsInput, Prisma.cart_itemsUncheckedUpdateWithoutProductsInput>
+  data: Prisma.XOR<Prisma.cart_itemsUpdateWithoutSinglesInput, Prisma.cart_itemsUncheckedUpdateWithoutSinglesInput>
 }
 
-export type cart_itemsUpdateManyWithWhereWithoutProductsInput = {
+export type cart_itemsUpdateManyWithWhereWithoutSinglesInput = {
   where: Prisma.cart_itemsScalarWhereInput
-  data: Prisma.XOR<Prisma.cart_itemsUpdateManyMutationInput, Prisma.cart_itemsUncheckedUpdateManyWithoutProductsInput>
+  data: Prisma.XOR<Prisma.cart_itemsUpdateManyMutationInput, Prisma.cart_itemsUncheckedUpdateManyWithoutSinglesInput>
 }
 
 export type cart_itemsScalarWhereInput = {
@@ -469,19 +469,19 @@ export type cart_itemsScalarWhereInput = {
   NOT?: Prisma.cart_itemsScalarWhereInput | Prisma.cart_itemsScalarWhereInput[]
   id?: Prisma.UuidFilter<"cart_items"> | string
   cart_id?: Prisma.UuidFilter<"cart_items"> | string
-  product_id?: Prisma.UuidFilter<"cart_items"> | string
+  single_id?: Prisma.UuidFilter<"cart_items"> | string
   quantity?: Prisma.IntFilter<"cart_items"> | number
 }
 
 export type cart_itemsCreateWithoutCartsInput = {
   id?: string
   quantity: number
-  products: Prisma.productsCreateNestedOneWithoutCartItemsInput
+  singles: Prisma.singlesCreateNestedOneWithoutCartItemsInput
 }
 
 export type cart_itemsUncheckedCreateWithoutCartsInput = {
   id?: string
-  product_id: string
+  single_id: string
   quantity: number
 }
 
@@ -511,25 +511,25 @@ export type cart_itemsUpdateManyWithWhereWithoutCartsInput = {
   data: Prisma.XOR<Prisma.cart_itemsUpdateManyMutationInput, Prisma.cart_itemsUncheckedUpdateManyWithoutCartsInput>
 }
 
-export type cart_itemsCreateManyProductsInput = {
+export type cart_itemsCreateManySinglesInput = {
   id?: string
   cart_id: string
   quantity: number
 }
 
-export type cart_itemsUpdateWithoutProductsInput = {
+export type cart_itemsUpdateWithoutSinglesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   carts?: Prisma.cartsUpdateOneRequiredWithoutItemsNestedInput
 }
 
-export type cart_itemsUncheckedUpdateWithoutProductsInput = {
+export type cart_itemsUncheckedUpdateWithoutSinglesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   cart_id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
-export type cart_itemsUncheckedUpdateManyWithoutProductsInput = {
+export type cart_itemsUncheckedUpdateManyWithoutSinglesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   cart_id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
@@ -537,25 +537,25 @@ export type cart_itemsUncheckedUpdateManyWithoutProductsInput = {
 
 export type cart_itemsCreateManyCartsInput = {
   id?: string
-  product_id: string
+  single_id: string
   quantity: number
 }
 
 export type cart_itemsUpdateWithoutCartsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  products?: Prisma.productsUpdateOneRequiredWithoutCartItemsNestedInput
+  singles?: Prisma.singlesUpdateOneRequiredWithoutCartItemsNestedInput
 }
 
 export type cart_itemsUncheckedUpdateWithoutCartsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  product_id?: Prisma.StringFieldUpdateOperationsInput | string
+  single_id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type cart_itemsUncheckedUpdateManyWithoutCartsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  product_id?: Prisma.StringFieldUpdateOperationsInput | string
+  single_id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -564,61 +564,61 @@ export type cart_itemsUncheckedUpdateManyWithoutCartsInput = {
 export type cart_itemsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   cart_id?: boolean
-  product_id?: boolean
+  single_id?: boolean
   quantity?: boolean
   carts?: boolean | Prisma.cartsDefaultArgs<ExtArgs>
-  products?: boolean | Prisma.productsDefaultArgs<ExtArgs>
+  singles?: boolean | Prisma.singlesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["cart_items"]>
 
 export type cart_itemsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   cart_id?: boolean
-  product_id?: boolean
+  single_id?: boolean
   quantity?: boolean
   carts?: boolean | Prisma.cartsDefaultArgs<ExtArgs>
-  products?: boolean | Prisma.productsDefaultArgs<ExtArgs>
+  singles?: boolean | Prisma.singlesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["cart_items"]>
 
 export type cart_itemsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   cart_id?: boolean
-  product_id?: boolean
+  single_id?: boolean
   quantity?: boolean
   carts?: boolean | Prisma.cartsDefaultArgs<ExtArgs>
-  products?: boolean | Prisma.productsDefaultArgs<ExtArgs>
+  singles?: boolean | Prisma.singlesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["cart_items"]>
 
 export type cart_itemsSelectScalar = {
   id?: boolean
   cart_id?: boolean
-  product_id?: boolean
+  single_id?: boolean
   quantity?: boolean
 }
 
-export type cart_itemsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "cart_id" | "product_id" | "quantity", ExtArgs["result"]["cart_items"]>
+export type cart_itemsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "cart_id" | "single_id" | "quantity", ExtArgs["result"]["cart_items"]>
 export type cart_itemsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   carts?: boolean | Prisma.cartsDefaultArgs<ExtArgs>
-  products?: boolean | Prisma.productsDefaultArgs<ExtArgs>
+  singles?: boolean | Prisma.singlesDefaultArgs<ExtArgs>
 }
 export type cart_itemsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   carts?: boolean | Prisma.cartsDefaultArgs<ExtArgs>
-  products?: boolean | Prisma.productsDefaultArgs<ExtArgs>
+  singles?: boolean | Prisma.singlesDefaultArgs<ExtArgs>
 }
 export type cart_itemsIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   carts?: boolean | Prisma.cartsDefaultArgs<ExtArgs>
-  products?: boolean | Prisma.productsDefaultArgs<ExtArgs>
+  singles?: boolean | Prisma.singlesDefaultArgs<ExtArgs>
 }
 
 export type $cart_itemsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "cart_items"
   objects: {
     carts: Prisma.$cartsPayload<ExtArgs>
-    products: Prisma.$productsPayload<ExtArgs>
+    singles: Prisma.$singlesPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     cart_id: string
-    product_id: string
+    single_id: string
     quantity: number
   }, ExtArgs["result"]["cart_items"]>
   composites: {}
@@ -1015,7 +1015,7 @@ readonly fields: cart_itemsFieldRefs;
 export interface Prisma__cart_itemsClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   carts<T extends Prisma.cartsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.cartsDefaultArgs<ExtArgs>>): Prisma.Prisma__cartsClient<runtime.Types.Result.GetResult<Prisma.$cartsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  products<T extends Prisma.productsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.productsDefaultArgs<ExtArgs>>): Prisma.Prisma__productsClient<runtime.Types.Result.GetResult<Prisma.$productsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  singles<T extends Prisma.singlesDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.singlesDefaultArgs<ExtArgs>>): Prisma.Prisma__singlesClient<runtime.Types.Result.GetResult<Prisma.$singlesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1047,7 +1047,7 @@ export interface Prisma__cart_itemsClient<T, Null = never, ExtArgs extends runti
 export interface cart_itemsFieldRefs {
   readonly id: Prisma.FieldRef<"cart_items", 'String'>
   readonly cart_id: Prisma.FieldRef<"cart_items", 'String'>
-  readonly product_id: Prisma.FieldRef<"cart_items", 'String'>
+  readonly single_id: Prisma.FieldRef<"cart_items", 'String'>
   readonly quantity: Prisma.FieldRef<"cart_items", 'Int'>
 }
     

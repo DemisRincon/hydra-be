@@ -11,6 +11,7 @@ import { SearchModule } from './search/search.module.js';
 import { ProductsModule } from './products/products.module.js';
 import { LanguagesModule } from './languages/languages.module.js';
 import { ConditionsModule } from './conditions/conditions.module.js';
+import { HareruyaModule } from './hareruya/hareruya.module.js';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { ConditionsModule } from './conditions/conditions.module.js';
     ProductsModule,
     LanguagesModule,
     ConditionsModule,
+    HareruyaModule,
   ],
   controllers: [AppController],
   providers: [AppService],

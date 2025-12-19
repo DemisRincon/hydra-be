@@ -20,8 +20,8 @@ export class ListingsService {
     }
 
     // Verify product exists
-    const product = await this.prisma.products.findUnique({
-      where: { id: createListingDto.product_id },
+    const product = await this.prisma.singles.findUnique({
+      where: { id: createListingDto.single_id },
     });
 
     if (!product) {
@@ -32,11 +32,11 @@ export class ListingsService {
       const listing = await this.prisma.listings.create({
         data: {
           user_id: user.id,
-          product_id: createListingDto.product_id,
+          single_id: createListingDto.single_id,
           status: createListingDto.status || 'ACTIVE',
         },
         include: {
-          products: true,
+          singles: true,
           users: {
             include: {
               roles: true,
@@ -65,7 +65,7 @@ export class ListingsService {
         take: limit,
         orderBy: { id: 'desc' },
         include: {
-          products: {
+          singles: {
             include: {
               categories: true,
               conditions: true,
@@ -105,7 +105,7 @@ export class ListingsService {
     const listing = await this.prisma.listings.findUnique({
       where: { id },
       include: {
-        products: {
+        singles: {
           include: {
             categories: true,
             conditions: true,
@@ -160,7 +160,7 @@ export class ListingsService {
           ...(updateListingDto.status && { status: updateListingDto.status }),
         },
         include: {
-          products: {
+          singles: {
             include: {
               categories: true,
               conditions: true,
@@ -228,7 +228,7 @@ export class ListingsService {
         take: limit,
         orderBy: { id: 'desc' },
         include: {
-          products: {
+          singles: {
             include: {
               categories: true,
               conditions: true,

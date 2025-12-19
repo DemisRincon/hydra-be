@@ -27,21 +27,21 @@ export type AggregateListings = {
 export type ListingsMinAggregateOutputType = {
   id: string | null
   user_id: string | null
-  product_id: string | null
+  single_id: string | null
   status: $Enums.listing_status_enum | null
 }
 
 export type ListingsMaxAggregateOutputType = {
   id: string | null
   user_id: string | null
-  product_id: string | null
+  single_id: string | null
   status: $Enums.listing_status_enum | null
 }
 
 export type ListingsCountAggregateOutputType = {
   id: number
   user_id: number
-  product_id: number
+  single_id: number
   status: number
   _all: number
 }
@@ -50,21 +50,21 @@ export type ListingsCountAggregateOutputType = {
 export type ListingsMinAggregateInputType = {
   id?: true
   user_id?: true
-  product_id?: true
+  single_id?: true
   status?: true
 }
 
 export type ListingsMaxAggregateInputType = {
   id?: true
   user_id?: true
-  product_id?: true
+  single_id?: true
   status?: true
 }
 
 export type ListingsCountAggregateInputType = {
   id?: true
   user_id?: true
-  product_id?: true
+  single_id?: true
   status?: true
   _all?: true
 }
@@ -144,7 +144,7 @@ export type listingsGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 export type ListingsGroupByOutputType = {
   id: string
   user_id: string
-  product_id: string
+  single_id: string
   status: $Enums.listing_status_enum
   _count: ListingsCountAggregateOutputType | null
   _min: ListingsMinAggregateOutputType | null
@@ -172,19 +172,19 @@ export type listingsWhereInput = {
   NOT?: Prisma.listingsWhereInput | Prisma.listingsWhereInput[]
   id?: Prisma.UuidFilter<"listings"> | string
   user_id?: Prisma.UuidFilter<"listings"> | string
-  product_id?: Prisma.UuidFilter<"listings"> | string
+  single_id?: Prisma.UuidFilter<"listings"> | string
   status?: Prisma.Enumlisting_status_enumFilter<"listings"> | $Enums.listing_status_enum
   users?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
-  products?: Prisma.XOR<Prisma.ProductsScalarRelationFilter, Prisma.productsWhereInput>
+  singles?: Prisma.XOR<Prisma.SinglesScalarRelationFilter, Prisma.singlesWhereInput>
 }
 
 export type listingsOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
-  product_id?: Prisma.SortOrder
+  single_id?: Prisma.SortOrder
   status?: Prisma.SortOrder
   users?: Prisma.usersOrderByWithRelationInput
-  products?: Prisma.productsOrderByWithRelationInput
+  singles?: Prisma.singlesOrderByWithRelationInput
 }
 
 export type listingsWhereUniqueInput = Prisma.AtLeast<{
@@ -193,16 +193,16 @@ export type listingsWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.listingsWhereInput[]
   NOT?: Prisma.listingsWhereInput | Prisma.listingsWhereInput[]
   user_id?: Prisma.UuidFilter<"listings"> | string
-  product_id?: Prisma.UuidFilter<"listings"> | string
+  single_id?: Prisma.UuidFilter<"listings"> | string
   status?: Prisma.Enumlisting_status_enumFilter<"listings"> | $Enums.listing_status_enum
   users?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
-  products?: Prisma.XOR<Prisma.ProductsScalarRelationFilter, Prisma.productsWhereInput>
+  singles?: Prisma.XOR<Prisma.SinglesScalarRelationFilter, Prisma.singlesWhereInput>
 }, "id">
 
 export type listingsOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
-  product_id?: Prisma.SortOrder
+  single_id?: Prisma.SortOrder
   status?: Prisma.SortOrder
   _count?: Prisma.listingsCountOrderByAggregateInput
   _max?: Prisma.listingsMaxOrderByAggregateInput
@@ -215,7 +215,7 @@ export type listingsScalarWhereWithAggregatesInput = {
   NOT?: Prisma.listingsScalarWhereWithAggregatesInput | Prisma.listingsScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"listings"> | string
   user_id?: Prisma.UuidWithAggregatesFilter<"listings"> | string
-  product_id?: Prisma.UuidWithAggregatesFilter<"listings"> | string
+  single_id?: Prisma.UuidWithAggregatesFilter<"listings"> | string
   status?: Prisma.Enumlisting_status_enumWithAggregatesFilter<"listings"> | $Enums.listing_status_enum
 }
 
@@ -223,13 +223,13 @@ export type listingsCreateInput = {
   id?: string
   status: $Enums.listing_status_enum
   users: Prisma.usersCreateNestedOneWithoutListingsInput
-  products: Prisma.productsCreateNestedOneWithoutListingsInput
+  singles: Prisma.singlesCreateNestedOneWithoutListingsInput
 }
 
 export type listingsUncheckedCreateInput = {
   id?: string
   user_id: string
-  product_id: string
+  single_id: string
   status: $Enums.listing_status_enum
 }
 
@@ -237,20 +237,20 @@ export type listingsUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.Enumlisting_status_enumFieldUpdateOperationsInput | $Enums.listing_status_enum
   users?: Prisma.usersUpdateOneRequiredWithoutListingsNestedInput
-  products?: Prisma.productsUpdateOneRequiredWithoutListingsNestedInput
+  singles?: Prisma.singlesUpdateOneRequiredWithoutListingsNestedInput
 }
 
 export type listingsUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
-  product_id?: Prisma.StringFieldUpdateOperationsInput | string
+  single_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.Enumlisting_status_enumFieldUpdateOperationsInput | $Enums.listing_status_enum
 }
 
 export type listingsCreateManyInput = {
   id?: string
   user_id: string
-  product_id: string
+  single_id: string
   status: $Enums.listing_status_enum
 }
 
@@ -262,7 +262,7 @@ export type listingsUpdateManyMutationInput = {
 export type listingsUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
-  product_id?: Prisma.StringFieldUpdateOperationsInput | string
+  single_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.Enumlisting_status_enumFieldUpdateOperationsInput | $Enums.listing_status_enum
 }
 
@@ -279,21 +279,21 @@ export type listingsOrderByRelationAggregateInput = {
 export type listingsCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
-  product_id?: Prisma.SortOrder
+  single_id?: Prisma.SortOrder
   status?: Prisma.SortOrder
 }
 
 export type listingsMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
-  product_id?: Prisma.SortOrder
+  single_id?: Prisma.SortOrder
   status?: Prisma.SortOrder
 }
 
 export type listingsMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
-  product_id?: Prisma.SortOrder
+  single_id?: Prisma.SortOrder
   status?: Prisma.SortOrder
 }
 
@@ -339,45 +339,45 @@ export type listingsUncheckedUpdateManyWithoutUsersNestedInput = {
   deleteMany?: Prisma.listingsScalarWhereInput | Prisma.listingsScalarWhereInput[]
 }
 
-export type listingsCreateNestedManyWithoutProductsInput = {
-  create?: Prisma.XOR<Prisma.listingsCreateWithoutProductsInput, Prisma.listingsUncheckedCreateWithoutProductsInput> | Prisma.listingsCreateWithoutProductsInput[] | Prisma.listingsUncheckedCreateWithoutProductsInput[]
-  connectOrCreate?: Prisma.listingsCreateOrConnectWithoutProductsInput | Prisma.listingsCreateOrConnectWithoutProductsInput[]
-  createMany?: Prisma.listingsCreateManyProductsInputEnvelope
+export type listingsCreateNestedManyWithoutSinglesInput = {
+  create?: Prisma.XOR<Prisma.listingsCreateWithoutSinglesInput, Prisma.listingsUncheckedCreateWithoutSinglesInput> | Prisma.listingsCreateWithoutSinglesInput[] | Prisma.listingsUncheckedCreateWithoutSinglesInput[]
+  connectOrCreate?: Prisma.listingsCreateOrConnectWithoutSinglesInput | Prisma.listingsCreateOrConnectWithoutSinglesInput[]
+  createMany?: Prisma.listingsCreateManySinglesInputEnvelope
   connect?: Prisma.listingsWhereUniqueInput | Prisma.listingsWhereUniqueInput[]
 }
 
-export type listingsUncheckedCreateNestedManyWithoutProductsInput = {
-  create?: Prisma.XOR<Prisma.listingsCreateWithoutProductsInput, Prisma.listingsUncheckedCreateWithoutProductsInput> | Prisma.listingsCreateWithoutProductsInput[] | Prisma.listingsUncheckedCreateWithoutProductsInput[]
-  connectOrCreate?: Prisma.listingsCreateOrConnectWithoutProductsInput | Prisma.listingsCreateOrConnectWithoutProductsInput[]
-  createMany?: Prisma.listingsCreateManyProductsInputEnvelope
+export type listingsUncheckedCreateNestedManyWithoutSinglesInput = {
+  create?: Prisma.XOR<Prisma.listingsCreateWithoutSinglesInput, Prisma.listingsUncheckedCreateWithoutSinglesInput> | Prisma.listingsCreateWithoutSinglesInput[] | Prisma.listingsUncheckedCreateWithoutSinglesInput[]
+  connectOrCreate?: Prisma.listingsCreateOrConnectWithoutSinglesInput | Prisma.listingsCreateOrConnectWithoutSinglesInput[]
+  createMany?: Prisma.listingsCreateManySinglesInputEnvelope
   connect?: Prisma.listingsWhereUniqueInput | Prisma.listingsWhereUniqueInput[]
 }
 
-export type listingsUpdateManyWithoutProductsNestedInput = {
-  create?: Prisma.XOR<Prisma.listingsCreateWithoutProductsInput, Prisma.listingsUncheckedCreateWithoutProductsInput> | Prisma.listingsCreateWithoutProductsInput[] | Prisma.listingsUncheckedCreateWithoutProductsInput[]
-  connectOrCreate?: Prisma.listingsCreateOrConnectWithoutProductsInput | Prisma.listingsCreateOrConnectWithoutProductsInput[]
-  upsert?: Prisma.listingsUpsertWithWhereUniqueWithoutProductsInput | Prisma.listingsUpsertWithWhereUniqueWithoutProductsInput[]
-  createMany?: Prisma.listingsCreateManyProductsInputEnvelope
+export type listingsUpdateManyWithoutSinglesNestedInput = {
+  create?: Prisma.XOR<Prisma.listingsCreateWithoutSinglesInput, Prisma.listingsUncheckedCreateWithoutSinglesInput> | Prisma.listingsCreateWithoutSinglesInput[] | Prisma.listingsUncheckedCreateWithoutSinglesInput[]
+  connectOrCreate?: Prisma.listingsCreateOrConnectWithoutSinglesInput | Prisma.listingsCreateOrConnectWithoutSinglesInput[]
+  upsert?: Prisma.listingsUpsertWithWhereUniqueWithoutSinglesInput | Prisma.listingsUpsertWithWhereUniqueWithoutSinglesInput[]
+  createMany?: Prisma.listingsCreateManySinglesInputEnvelope
   set?: Prisma.listingsWhereUniqueInput | Prisma.listingsWhereUniqueInput[]
   disconnect?: Prisma.listingsWhereUniqueInput | Prisma.listingsWhereUniqueInput[]
   delete?: Prisma.listingsWhereUniqueInput | Prisma.listingsWhereUniqueInput[]
   connect?: Prisma.listingsWhereUniqueInput | Prisma.listingsWhereUniqueInput[]
-  update?: Prisma.listingsUpdateWithWhereUniqueWithoutProductsInput | Prisma.listingsUpdateWithWhereUniqueWithoutProductsInput[]
-  updateMany?: Prisma.listingsUpdateManyWithWhereWithoutProductsInput | Prisma.listingsUpdateManyWithWhereWithoutProductsInput[]
+  update?: Prisma.listingsUpdateWithWhereUniqueWithoutSinglesInput | Prisma.listingsUpdateWithWhereUniqueWithoutSinglesInput[]
+  updateMany?: Prisma.listingsUpdateManyWithWhereWithoutSinglesInput | Prisma.listingsUpdateManyWithWhereWithoutSinglesInput[]
   deleteMany?: Prisma.listingsScalarWhereInput | Prisma.listingsScalarWhereInput[]
 }
 
-export type listingsUncheckedUpdateManyWithoutProductsNestedInput = {
-  create?: Prisma.XOR<Prisma.listingsCreateWithoutProductsInput, Prisma.listingsUncheckedCreateWithoutProductsInput> | Prisma.listingsCreateWithoutProductsInput[] | Prisma.listingsUncheckedCreateWithoutProductsInput[]
-  connectOrCreate?: Prisma.listingsCreateOrConnectWithoutProductsInput | Prisma.listingsCreateOrConnectWithoutProductsInput[]
-  upsert?: Prisma.listingsUpsertWithWhereUniqueWithoutProductsInput | Prisma.listingsUpsertWithWhereUniqueWithoutProductsInput[]
-  createMany?: Prisma.listingsCreateManyProductsInputEnvelope
+export type listingsUncheckedUpdateManyWithoutSinglesNestedInput = {
+  create?: Prisma.XOR<Prisma.listingsCreateWithoutSinglesInput, Prisma.listingsUncheckedCreateWithoutSinglesInput> | Prisma.listingsCreateWithoutSinglesInput[] | Prisma.listingsUncheckedCreateWithoutSinglesInput[]
+  connectOrCreate?: Prisma.listingsCreateOrConnectWithoutSinglesInput | Prisma.listingsCreateOrConnectWithoutSinglesInput[]
+  upsert?: Prisma.listingsUpsertWithWhereUniqueWithoutSinglesInput | Prisma.listingsUpsertWithWhereUniqueWithoutSinglesInput[]
+  createMany?: Prisma.listingsCreateManySinglesInputEnvelope
   set?: Prisma.listingsWhereUniqueInput | Prisma.listingsWhereUniqueInput[]
   disconnect?: Prisma.listingsWhereUniqueInput | Prisma.listingsWhereUniqueInput[]
   delete?: Prisma.listingsWhereUniqueInput | Prisma.listingsWhereUniqueInput[]
   connect?: Prisma.listingsWhereUniqueInput | Prisma.listingsWhereUniqueInput[]
-  update?: Prisma.listingsUpdateWithWhereUniqueWithoutProductsInput | Prisma.listingsUpdateWithWhereUniqueWithoutProductsInput[]
-  updateMany?: Prisma.listingsUpdateManyWithWhereWithoutProductsInput | Prisma.listingsUpdateManyWithWhereWithoutProductsInput[]
+  update?: Prisma.listingsUpdateWithWhereUniqueWithoutSinglesInput | Prisma.listingsUpdateWithWhereUniqueWithoutSinglesInput[]
+  updateMany?: Prisma.listingsUpdateManyWithWhereWithoutSinglesInput | Prisma.listingsUpdateManyWithWhereWithoutSinglesInput[]
   deleteMany?: Prisma.listingsScalarWhereInput | Prisma.listingsScalarWhereInput[]
 }
 
@@ -388,12 +388,12 @@ export type Enumlisting_status_enumFieldUpdateOperationsInput = {
 export type listingsCreateWithoutUsersInput = {
   id?: string
   status: $Enums.listing_status_enum
-  products: Prisma.productsCreateNestedOneWithoutListingsInput
+  singles: Prisma.singlesCreateNestedOneWithoutListingsInput
 }
 
 export type listingsUncheckedCreateWithoutUsersInput = {
   id?: string
-  product_id: string
+  single_id: string
   status: $Enums.listing_status_enum
 }
 
@@ -429,91 +429,91 @@ export type listingsScalarWhereInput = {
   NOT?: Prisma.listingsScalarWhereInput | Prisma.listingsScalarWhereInput[]
   id?: Prisma.UuidFilter<"listings"> | string
   user_id?: Prisma.UuidFilter<"listings"> | string
-  product_id?: Prisma.UuidFilter<"listings"> | string
+  single_id?: Prisma.UuidFilter<"listings"> | string
   status?: Prisma.Enumlisting_status_enumFilter<"listings"> | $Enums.listing_status_enum
 }
 
-export type listingsCreateWithoutProductsInput = {
+export type listingsCreateWithoutSinglesInput = {
   id?: string
   status: $Enums.listing_status_enum
   users: Prisma.usersCreateNestedOneWithoutListingsInput
 }
 
-export type listingsUncheckedCreateWithoutProductsInput = {
+export type listingsUncheckedCreateWithoutSinglesInput = {
   id?: string
   user_id: string
   status: $Enums.listing_status_enum
 }
 
-export type listingsCreateOrConnectWithoutProductsInput = {
+export type listingsCreateOrConnectWithoutSinglesInput = {
   where: Prisma.listingsWhereUniqueInput
-  create: Prisma.XOR<Prisma.listingsCreateWithoutProductsInput, Prisma.listingsUncheckedCreateWithoutProductsInput>
+  create: Prisma.XOR<Prisma.listingsCreateWithoutSinglesInput, Prisma.listingsUncheckedCreateWithoutSinglesInput>
 }
 
-export type listingsCreateManyProductsInputEnvelope = {
-  data: Prisma.listingsCreateManyProductsInput | Prisma.listingsCreateManyProductsInput[]
+export type listingsCreateManySinglesInputEnvelope = {
+  data: Prisma.listingsCreateManySinglesInput | Prisma.listingsCreateManySinglesInput[]
   skipDuplicates?: boolean
 }
 
-export type listingsUpsertWithWhereUniqueWithoutProductsInput = {
+export type listingsUpsertWithWhereUniqueWithoutSinglesInput = {
   where: Prisma.listingsWhereUniqueInput
-  update: Prisma.XOR<Prisma.listingsUpdateWithoutProductsInput, Prisma.listingsUncheckedUpdateWithoutProductsInput>
-  create: Prisma.XOR<Prisma.listingsCreateWithoutProductsInput, Prisma.listingsUncheckedCreateWithoutProductsInput>
+  update: Prisma.XOR<Prisma.listingsUpdateWithoutSinglesInput, Prisma.listingsUncheckedUpdateWithoutSinglesInput>
+  create: Prisma.XOR<Prisma.listingsCreateWithoutSinglesInput, Prisma.listingsUncheckedCreateWithoutSinglesInput>
 }
 
-export type listingsUpdateWithWhereUniqueWithoutProductsInput = {
+export type listingsUpdateWithWhereUniqueWithoutSinglesInput = {
   where: Prisma.listingsWhereUniqueInput
-  data: Prisma.XOR<Prisma.listingsUpdateWithoutProductsInput, Prisma.listingsUncheckedUpdateWithoutProductsInput>
+  data: Prisma.XOR<Prisma.listingsUpdateWithoutSinglesInput, Prisma.listingsUncheckedUpdateWithoutSinglesInput>
 }
 
-export type listingsUpdateManyWithWhereWithoutProductsInput = {
+export type listingsUpdateManyWithWhereWithoutSinglesInput = {
   where: Prisma.listingsScalarWhereInput
-  data: Prisma.XOR<Prisma.listingsUpdateManyMutationInput, Prisma.listingsUncheckedUpdateManyWithoutProductsInput>
+  data: Prisma.XOR<Prisma.listingsUpdateManyMutationInput, Prisma.listingsUncheckedUpdateManyWithoutSinglesInput>
 }
 
 export type listingsCreateManyUsersInput = {
   id?: string
-  product_id: string
+  single_id: string
   status: $Enums.listing_status_enum
 }
 
 export type listingsUpdateWithoutUsersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.Enumlisting_status_enumFieldUpdateOperationsInput | $Enums.listing_status_enum
-  products?: Prisma.productsUpdateOneRequiredWithoutListingsNestedInput
+  singles?: Prisma.singlesUpdateOneRequiredWithoutListingsNestedInput
 }
 
 export type listingsUncheckedUpdateWithoutUsersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  product_id?: Prisma.StringFieldUpdateOperationsInput | string
+  single_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.Enumlisting_status_enumFieldUpdateOperationsInput | $Enums.listing_status_enum
 }
 
 export type listingsUncheckedUpdateManyWithoutUsersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  product_id?: Prisma.StringFieldUpdateOperationsInput | string
+  single_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.Enumlisting_status_enumFieldUpdateOperationsInput | $Enums.listing_status_enum
 }
 
-export type listingsCreateManyProductsInput = {
+export type listingsCreateManySinglesInput = {
   id?: string
   user_id: string
   status: $Enums.listing_status_enum
 }
 
-export type listingsUpdateWithoutProductsInput = {
+export type listingsUpdateWithoutSinglesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.Enumlisting_status_enumFieldUpdateOperationsInput | $Enums.listing_status_enum
   users?: Prisma.usersUpdateOneRequiredWithoutListingsNestedInput
 }
 
-export type listingsUncheckedUpdateWithoutProductsInput = {
+export type listingsUncheckedUpdateWithoutSinglesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.Enumlisting_status_enumFieldUpdateOperationsInput | $Enums.listing_status_enum
 }
 
-export type listingsUncheckedUpdateManyWithoutProductsInput = {
+export type listingsUncheckedUpdateManyWithoutSinglesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.Enumlisting_status_enumFieldUpdateOperationsInput | $Enums.listing_status_enum
@@ -524,61 +524,61 @@ export type listingsUncheckedUpdateManyWithoutProductsInput = {
 export type listingsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   user_id?: boolean
-  product_id?: boolean
+  single_id?: boolean
   status?: boolean
   users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
-  products?: boolean | Prisma.productsDefaultArgs<ExtArgs>
+  singles?: boolean | Prisma.singlesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["listings"]>
 
 export type listingsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   user_id?: boolean
-  product_id?: boolean
+  single_id?: boolean
   status?: boolean
   users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
-  products?: boolean | Prisma.productsDefaultArgs<ExtArgs>
+  singles?: boolean | Prisma.singlesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["listings"]>
 
 export type listingsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   user_id?: boolean
-  product_id?: boolean
+  single_id?: boolean
   status?: boolean
   users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
-  products?: boolean | Prisma.productsDefaultArgs<ExtArgs>
+  singles?: boolean | Prisma.singlesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["listings"]>
 
 export type listingsSelectScalar = {
   id?: boolean
   user_id?: boolean
-  product_id?: boolean
+  single_id?: boolean
   status?: boolean
 }
 
-export type listingsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "user_id" | "product_id" | "status", ExtArgs["result"]["listings"]>
+export type listingsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "user_id" | "single_id" | "status", ExtArgs["result"]["listings"]>
 export type listingsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
-  products?: boolean | Prisma.productsDefaultArgs<ExtArgs>
+  singles?: boolean | Prisma.singlesDefaultArgs<ExtArgs>
 }
 export type listingsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
-  products?: boolean | Prisma.productsDefaultArgs<ExtArgs>
+  singles?: boolean | Prisma.singlesDefaultArgs<ExtArgs>
 }
 export type listingsIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
-  products?: boolean | Prisma.productsDefaultArgs<ExtArgs>
+  singles?: boolean | Prisma.singlesDefaultArgs<ExtArgs>
 }
 
 export type $listingsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "listings"
   objects: {
     users: Prisma.$usersPayload<ExtArgs>
-    products: Prisma.$productsPayload<ExtArgs>
+    singles: Prisma.$singlesPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     user_id: string
-    product_id: string
+    single_id: string
     status: $Enums.listing_status_enum
   }, ExtArgs["result"]["listings"]>
   composites: {}
@@ -975,7 +975,7 @@ readonly fields: listingsFieldRefs;
 export interface Prisma__listingsClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   users<T extends Prisma.usersDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.usersDefaultArgs<ExtArgs>>): Prisma.Prisma__usersClient<runtime.Types.Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  products<T extends Prisma.productsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.productsDefaultArgs<ExtArgs>>): Prisma.Prisma__productsClient<runtime.Types.Result.GetResult<Prisma.$productsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  singles<T extends Prisma.singlesDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.singlesDefaultArgs<ExtArgs>>): Prisma.Prisma__singlesClient<runtime.Types.Result.GetResult<Prisma.$singlesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1007,7 +1007,7 @@ export interface Prisma__listingsClient<T, Null = never, ExtArgs extends runtime
 export interface listingsFieldRefs {
   readonly id: Prisma.FieldRef<"listings", 'String'>
   readonly user_id: Prisma.FieldRef<"listings", 'String'>
-  readonly product_id: Prisma.FieldRef<"listings", 'String'>
+  readonly single_id: Prisma.FieldRef<"listings", 'String'>
   readonly status: Prisma.FieldRef<"listings", 'listing_status_enum'>
 }
     

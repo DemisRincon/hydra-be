@@ -1,6 +1,6 @@
-import { PrismaClient } from '../src/generated/prisma/client';
+import { PrismaClient } from '../src/generated/prisma/client.js';
 import { PrismaPg } from '@prisma/adapter-pg';
-import pg from 'pg';
+import * as pg from 'pg';
 import * as dotenv from 'dotenv';
 
 // Load environment variables
@@ -12,8 +12,9 @@ if (!connectionString) {
   throw new Error('DATABASE_URL is not configured');
 }
 
-const pool = new pg.Pool({
-  connectionString,
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+const pool: pg.Pool = new pg.Pool({
+  connectionString: connectionString,
   ssl: { rejectUnauthorized: false },
   max: 1,
   idleTimeoutMillis: 0,
@@ -126,20 +127,20 @@ async function main() {
   ];
 
   for (const language of languages) {
-    const existingLanguage = await prisma.languages.findUnique({
+    const existingLanguage = await prisma.languages.findFirst({
       where: { code: language.code },
-    });
+    } as Parameters<typeof prisma.languages.findFirst>[0]);
 
     if (existingLanguage) {
       console.log(
         `Language ${language.code} (${language.name}) already exists, skipping...`,
       );
     } else {
-      const created = await prisma.languages.create({
+      await prisma.languages.create({
         data: language,
       });
       console.log(
-        `Created language: ${created.display_name} (${created.code})`,
+        `Created language: ${language.display_name} (${language.code})`,
       );
     }
   }
@@ -176,20 +177,20 @@ async function main() {
   ];
 
   for (const condition of conditions) {
-    const existingCondition = await prisma.conditions.findUnique({
+    const existingCondition = await prisma.conditions.findFirst({
       where: { code: condition.code },
-    });
+    } as Parameters<typeof prisma.conditions.findFirst>[0]);
 
     if (existingCondition) {
       console.log(
         `Condition ${condition.code} (${condition.name}) already exists, skipping...`,
       );
     } else {
-      const created = await prisma.conditions.create({
+      await prisma.conditions.create({
         data: condition,
       });
       console.log(
-        `Created condition: ${created.display_name} (${created.code})`,
+        `Created condition: ${condition.display_name} (${condition.code})`,
       );
     }
   }

@@ -61,7 +61,7 @@ export class ConditionsService {
       where: { id },
       include: {
         _count: {
-          select: { products: true },
+          select: { singles: true },
         },
       },
     });
@@ -78,7 +78,7 @@ export class ConditionsService {
       where: { code },
       include: {
         _count: {
-          select: { products: true },
+          select: { singles: true },
         },
       },
     });
@@ -150,7 +150,7 @@ export class ConditionsService {
       where: { id },
       include: {
         _count: {
-          select: { products: true },
+          select: { singles: true },
         },
       },
     });

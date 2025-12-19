@@ -174,7 +174,7 @@ export type languagesWhereInput = {
   code?: Prisma.StringFilter<"languages"> | string
   name?: Prisma.StringFilter<"languages"> | string
   display_name?: Prisma.StringFilter<"languages"> | string
-  products?: Prisma.ProductsListRelationFilter
+  singles?: Prisma.SinglesListRelationFilter
 }
 
 export type languagesOrderByWithRelationInput = {
@@ -182,7 +182,7 @@ export type languagesOrderByWithRelationInput = {
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
   display_name?: Prisma.SortOrder
-  products?: Prisma.productsOrderByRelationAggregateInput
+  singles?: Prisma.singlesOrderByRelationAggregateInput
 }
 
 export type languagesWhereUniqueInput = Prisma.AtLeast<{
@@ -193,7 +193,7 @@ export type languagesWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.languagesWhereInput[]
   NOT?: Prisma.languagesWhereInput | Prisma.languagesWhereInput[]
   display_name?: Prisma.StringFilter<"languages"> | string
-  products?: Prisma.ProductsListRelationFilter
+  singles?: Prisma.SinglesListRelationFilter
 }, "id" | "code" | "name">
 
 export type languagesOrderByWithAggregationInput = {
@@ -221,7 +221,7 @@ export type languagesCreateInput = {
   code: string
   name: string
   display_name: string
-  products?: Prisma.productsCreateNestedManyWithoutLanguagesInput
+  singles?: Prisma.singlesCreateNestedManyWithoutLanguagesInput
 }
 
 export type languagesUncheckedCreateInput = {
@@ -229,7 +229,7 @@ export type languagesUncheckedCreateInput = {
   code: string
   name: string
   display_name: string
-  products?: Prisma.productsUncheckedCreateNestedManyWithoutLanguagesInput
+  singles?: Prisma.singlesUncheckedCreateNestedManyWithoutLanguagesInput
 }
 
 export type languagesUpdateInput = {
@@ -237,7 +237,7 @@ export type languagesUpdateInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
-  products?: Prisma.productsUpdateManyWithoutLanguagesNestedInput
+  singles?: Prisma.singlesUpdateManyWithoutLanguagesNestedInput
 }
 
 export type languagesUncheckedUpdateInput = {
@@ -245,7 +245,7 @@ export type languagesUncheckedUpdateInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
-  products?: Prisma.productsUncheckedUpdateManyWithoutLanguagesNestedInput
+  singles?: Prisma.singlesUncheckedUpdateManyWithoutLanguagesNestedInput
 }
 
 export type languagesCreateManyInput = {
@@ -295,60 +295,60 @@ export type LanguagesNullableScalarRelationFilter = {
   isNot?: Prisma.languagesWhereInput | null
 }
 
-export type languagesCreateNestedOneWithoutProductsInput = {
-  create?: Prisma.XOR<Prisma.languagesCreateWithoutProductsInput, Prisma.languagesUncheckedCreateWithoutProductsInput>
-  connectOrCreate?: Prisma.languagesCreateOrConnectWithoutProductsInput
+export type languagesCreateNestedOneWithoutSinglesInput = {
+  create?: Prisma.XOR<Prisma.languagesCreateWithoutSinglesInput, Prisma.languagesUncheckedCreateWithoutSinglesInput>
+  connectOrCreate?: Prisma.languagesCreateOrConnectWithoutSinglesInput
   connect?: Prisma.languagesWhereUniqueInput
 }
 
-export type languagesUpdateOneWithoutProductsNestedInput = {
-  create?: Prisma.XOR<Prisma.languagesCreateWithoutProductsInput, Prisma.languagesUncheckedCreateWithoutProductsInput>
-  connectOrCreate?: Prisma.languagesCreateOrConnectWithoutProductsInput
-  upsert?: Prisma.languagesUpsertWithoutProductsInput
+export type languagesUpdateOneWithoutSinglesNestedInput = {
+  create?: Prisma.XOR<Prisma.languagesCreateWithoutSinglesInput, Prisma.languagesUncheckedCreateWithoutSinglesInput>
+  connectOrCreate?: Prisma.languagesCreateOrConnectWithoutSinglesInput
+  upsert?: Prisma.languagesUpsertWithoutSinglesInput
   disconnect?: Prisma.languagesWhereInput | boolean
   delete?: Prisma.languagesWhereInput | boolean
   connect?: Prisma.languagesWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.languagesUpdateToOneWithWhereWithoutProductsInput, Prisma.languagesUpdateWithoutProductsInput>, Prisma.languagesUncheckedUpdateWithoutProductsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.languagesUpdateToOneWithWhereWithoutSinglesInput, Prisma.languagesUpdateWithoutSinglesInput>, Prisma.languagesUncheckedUpdateWithoutSinglesInput>
 }
 
-export type languagesCreateWithoutProductsInput = {
+export type languagesCreateWithoutSinglesInput = {
   id?: string
   code: string
   name: string
   display_name: string
 }
 
-export type languagesUncheckedCreateWithoutProductsInput = {
+export type languagesUncheckedCreateWithoutSinglesInput = {
   id?: string
   code: string
   name: string
   display_name: string
 }
 
-export type languagesCreateOrConnectWithoutProductsInput = {
+export type languagesCreateOrConnectWithoutSinglesInput = {
   where: Prisma.languagesWhereUniqueInput
-  create: Prisma.XOR<Prisma.languagesCreateWithoutProductsInput, Prisma.languagesUncheckedCreateWithoutProductsInput>
+  create: Prisma.XOR<Prisma.languagesCreateWithoutSinglesInput, Prisma.languagesUncheckedCreateWithoutSinglesInput>
 }
 
-export type languagesUpsertWithoutProductsInput = {
-  update: Prisma.XOR<Prisma.languagesUpdateWithoutProductsInput, Prisma.languagesUncheckedUpdateWithoutProductsInput>
-  create: Prisma.XOR<Prisma.languagesCreateWithoutProductsInput, Prisma.languagesUncheckedCreateWithoutProductsInput>
+export type languagesUpsertWithoutSinglesInput = {
+  update: Prisma.XOR<Prisma.languagesUpdateWithoutSinglesInput, Prisma.languagesUncheckedUpdateWithoutSinglesInput>
+  create: Prisma.XOR<Prisma.languagesCreateWithoutSinglesInput, Prisma.languagesUncheckedCreateWithoutSinglesInput>
   where?: Prisma.languagesWhereInput
 }
 
-export type languagesUpdateToOneWithWhereWithoutProductsInput = {
+export type languagesUpdateToOneWithWhereWithoutSinglesInput = {
   where?: Prisma.languagesWhereInput
-  data: Prisma.XOR<Prisma.languagesUpdateWithoutProductsInput, Prisma.languagesUncheckedUpdateWithoutProductsInput>
+  data: Prisma.XOR<Prisma.languagesUpdateWithoutSinglesInput, Prisma.languagesUncheckedUpdateWithoutSinglesInput>
 }
 
-export type languagesUpdateWithoutProductsInput = {
+export type languagesUpdateWithoutSinglesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type languagesUncheckedUpdateWithoutProductsInput = {
+export type languagesUncheckedUpdateWithoutSinglesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -361,11 +361,11 @@ export type languagesUncheckedUpdateWithoutProductsInput = {
  */
 
 export type LanguagesCountOutputType = {
-  products: number
+  singles: number
 }
 
 export type LanguagesCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  products?: boolean | LanguagesCountOutputTypeCountProductsArgs
+  singles?: boolean | LanguagesCountOutputTypeCountSinglesArgs
 }
 
 /**
@@ -381,8 +381,8 @@ export type LanguagesCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ex
 /**
  * LanguagesCountOutputType without action
  */
-export type LanguagesCountOutputTypeCountProductsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.productsWhereInput
+export type LanguagesCountOutputTypeCountSinglesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.singlesWhereInput
 }
 
 
@@ -391,7 +391,7 @@ export type languagesSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   code?: boolean
   name?: boolean
   display_name?: boolean
-  products?: boolean | Prisma.languages$productsArgs<ExtArgs>
+  singles?: boolean | Prisma.languages$singlesArgs<ExtArgs>
   _count?: boolean | Prisma.LanguagesCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["languages"]>
 
@@ -418,7 +418,7 @@ export type languagesSelectScalar = {
 
 export type languagesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "display_name", ExtArgs["result"]["languages"]>
 export type languagesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  products?: boolean | Prisma.languages$productsArgs<ExtArgs>
+  singles?: boolean | Prisma.languages$singlesArgs<ExtArgs>
   _count?: boolean | Prisma.LanguagesCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type languagesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -427,7 +427,7 @@ export type languagesIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
 export type $languagesPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "languages"
   objects: {
-    products: Prisma.$productsPayload<ExtArgs>[]
+    singles: Prisma.$singlesPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -828,7 +828,7 @@ readonly fields: languagesFieldRefs;
  */
 export interface Prisma__languagesClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  products<T extends Prisma.languages$productsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.languages$productsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$productsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  singles<T extends Prisma.languages$singlesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.languages$singlesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$singlesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1250,27 +1250,27 @@ export type languagesDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Int
 }
 
 /**
- * languages.products
+ * languages.singles
  */
-export type languages$productsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type languages$singlesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the products
+   * Select specific fields to fetch from the singles
    */
-  select?: Prisma.productsSelect<ExtArgs> | null
+  select?: Prisma.singlesSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the products
+   * Omit specific fields from the singles
    */
-  omit?: Prisma.productsOmit<ExtArgs> | null
+  omit?: Prisma.singlesOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.productsInclude<ExtArgs> | null
-  where?: Prisma.productsWhereInput
-  orderBy?: Prisma.productsOrderByWithRelationInput | Prisma.productsOrderByWithRelationInput[]
-  cursor?: Prisma.productsWhereUniqueInput
+  include?: Prisma.singlesInclude<ExtArgs> | null
+  where?: Prisma.singlesWhereInput
+  orderBy?: Prisma.singlesOrderByWithRelationInput | Prisma.singlesOrderByWithRelationInput[]
+  cursor?: Prisma.singlesWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.ProductsScalarFieldEnum | Prisma.ProductsScalarFieldEnum[]
+  distinct?: Prisma.SinglesScalarFieldEnum | Prisma.SinglesScalarFieldEnum[]
 }
 
 /**

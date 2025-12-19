@@ -36,19 +36,19 @@ export type Stock_itemsSumAggregateOutputType = {
 
 export type Stock_itemsMinAggregateOutputType = {
   id: string | null
-  product_id: string | null
+  single_id: string | null
   quantity: number | null
 }
 
 export type Stock_itemsMaxAggregateOutputType = {
   id: string | null
-  product_id: string | null
+  single_id: string | null
   quantity: number | null
 }
 
 export type Stock_itemsCountAggregateOutputType = {
   id: number
-  product_id: number
+  single_id: number
   quantity: number
   _all: number
 }
@@ -64,19 +64,19 @@ export type Stock_itemsSumAggregateInputType = {
 
 export type Stock_itemsMinAggregateInputType = {
   id?: true
-  product_id?: true
+  single_id?: true
   quantity?: true
 }
 
 export type Stock_itemsMaxAggregateInputType = {
   id?: true
-  product_id?: true
+  single_id?: true
   quantity?: true
 }
 
 export type Stock_itemsCountAggregateInputType = {
   id?: true
-  product_id?: true
+  single_id?: true
   quantity?: true
   _all?: true
 }
@@ -169,7 +169,7 @@ export type stock_itemsGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 
 export type Stock_itemsGroupByOutputType = {
   id: string
-  product_id: string
+  single_id: string
   quantity: number
   _count: Stock_itemsCountAggregateOutputType | null
   _avg: Stock_itemsAvgAggregateOutputType | null
@@ -198,16 +198,16 @@ export type stock_itemsWhereInput = {
   OR?: Prisma.stock_itemsWhereInput[]
   NOT?: Prisma.stock_itemsWhereInput | Prisma.stock_itemsWhereInput[]
   id?: Prisma.UuidFilter<"stock_items"> | string
-  product_id?: Prisma.UuidFilter<"stock_items"> | string
+  single_id?: Prisma.UuidFilter<"stock_items"> | string
   quantity?: Prisma.IntFilter<"stock_items"> | number
-  products?: Prisma.XOR<Prisma.ProductsScalarRelationFilter, Prisma.productsWhereInput>
+  singles?: Prisma.XOR<Prisma.SinglesScalarRelationFilter, Prisma.singlesWhereInput>
 }
 
 export type stock_itemsOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  product_id?: Prisma.SortOrder
+  single_id?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
-  products?: Prisma.productsOrderByWithRelationInput
+  singles?: Prisma.singlesOrderByWithRelationInput
 }
 
 export type stock_itemsWhereUniqueInput = Prisma.AtLeast<{
@@ -215,14 +215,14 @@ export type stock_itemsWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.stock_itemsWhereInput | Prisma.stock_itemsWhereInput[]
   OR?: Prisma.stock_itemsWhereInput[]
   NOT?: Prisma.stock_itemsWhereInput | Prisma.stock_itemsWhereInput[]
-  product_id?: Prisma.UuidFilter<"stock_items"> | string
+  single_id?: Prisma.UuidFilter<"stock_items"> | string
   quantity?: Prisma.IntFilter<"stock_items"> | number
-  products?: Prisma.XOR<Prisma.ProductsScalarRelationFilter, Prisma.productsWhereInput>
+  singles?: Prisma.XOR<Prisma.SinglesScalarRelationFilter, Prisma.singlesWhereInput>
 }, "id">
 
 export type stock_itemsOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  product_id?: Prisma.SortOrder
+  single_id?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   _count?: Prisma.stock_itemsCountOrderByAggregateInput
   _avg?: Prisma.stock_itemsAvgOrderByAggregateInput
@@ -236,37 +236,37 @@ export type stock_itemsScalarWhereWithAggregatesInput = {
   OR?: Prisma.stock_itemsScalarWhereWithAggregatesInput[]
   NOT?: Prisma.stock_itemsScalarWhereWithAggregatesInput | Prisma.stock_itemsScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"stock_items"> | string
-  product_id?: Prisma.UuidWithAggregatesFilter<"stock_items"> | string
+  single_id?: Prisma.UuidWithAggregatesFilter<"stock_items"> | string
   quantity?: Prisma.IntWithAggregatesFilter<"stock_items"> | number
 }
 
 export type stock_itemsCreateInput = {
   id?: string
   quantity: number
-  products: Prisma.productsCreateNestedOneWithoutStockInput
+  singles: Prisma.singlesCreateNestedOneWithoutStockItemsInput
 }
 
 export type stock_itemsUncheckedCreateInput = {
   id?: string
-  product_id: string
+  single_id: string
   quantity: number
 }
 
 export type stock_itemsUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  products?: Prisma.productsUpdateOneRequiredWithoutStockNestedInput
+  singles?: Prisma.singlesUpdateOneRequiredWithoutStockItemsNestedInput
 }
 
 export type stock_itemsUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  product_id?: Prisma.StringFieldUpdateOperationsInput | string
+  single_id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type stock_itemsCreateManyInput = {
   id?: string
-  product_id: string
+  single_id: string
   quantity: number
 }
 
@@ -277,7 +277,7 @@ export type stock_itemsUpdateManyMutationInput = {
 
 export type stock_itemsUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  product_id?: Prisma.StringFieldUpdateOperationsInput | string
+  single_id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -293,7 +293,7 @@ export type stock_itemsOrderByRelationAggregateInput = {
 
 export type stock_itemsCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  product_id?: Prisma.SortOrder
+  single_id?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
 }
 
@@ -303,13 +303,13 @@ export type stock_itemsAvgOrderByAggregateInput = {
 
 export type stock_itemsMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  product_id?: Prisma.SortOrder
+  single_id?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
 }
 
 export type stock_itemsMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  product_id?: Prisma.SortOrder
+  single_id?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
 }
 
@@ -317,82 +317,82 @@ export type stock_itemsSumOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
 }
 
-export type stock_itemsCreateNestedManyWithoutProductsInput = {
-  create?: Prisma.XOR<Prisma.stock_itemsCreateWithoutProductsInput, Prisma.stock_itemsUncheckedCreateWithoutProductsInput> | Prisma.stock_itemsCreateWithoutProductsInput[] | Prisma.stock_itemsUncheckedCreateWithoutProductsInput[]
-  connectOrCreate?: Prisma.stock_itemsCreateOrConnectWithoutProductsInput | Prisma.stock_itemsCreateOrConnectWithoutProductsInput[]
-  createMany?: Prisma.stock_itemsCreateManyProductsInputEnvelope
+export type stock_itemsCreateNestedManyWithoutSinglesInput = {
+  create?: Prisma.XOR<Prisma.stock_itemsCreateWithoutSinglesInput, Prisma.stock_itemsUncheckedCreateWithoutSinglesInput> | Prisma.stock_itemsCreateWithoutSinglesInput[] | Prisma.stock_itemsUncheckedCreateWithoutSinglesInput[]
+  connectOrCreate?: Prisma.stock_itemsCreateOrConnectWithoutSinglesInput | Prisma.stock_itemsCreateOrConnectWithoutSinglesInput[]
+  createMany?: Prisma.stock_itemsCreateManySinglesInputEnvelope
   connect?: Prisma.stock_itemsWhereUniqueInput | Prisma.stock_itemsWhereUniqueInput[]
 }
 
-export type stock_itemsUncheckedCreateNestedManyWithoutProductsInput = {
-  create?: Prisma.XOR<Prisma.stock_itemsCreateWithoutProductsInput, Prisma.stock_itemsUncheckedCreateWithoutProductsInput> | Prisma.stock_itemsCreateWithoutProductsInput[] | Prisma.stock_itemsUncheckedCreateWithoutProductsInput[]
-  connectOrCreate?: Prisma.stock_itemsCreateOrConnectWithoutProductsInput | Prisma.stock_itemsCreateOrConnectWithoutProductsInput[]
-  createMany?: Prisma.stock_itemsCreateManyProductsInputEnvelope
+export type stock_itemsUncheckedCreateNestedManyWithoutSinglesInput = {
+  create?: Prisma.XOR<Prisma.stock_itemsCreateWithoutSinglesInput, Prisma.stock_itemsUncheckedCreateWithoutSinglesInput> | Prisma.stock_itemsCreateWithoutSinglesInput[] | Prisma.stock_itemsUncheckedCreateWithoutSinglesInput[]
+  connectOrCreate?: Prisma.stock_itemsCreateOrConnectWithoutSinglesInput | Prisma.stock_itemsCreateOrConnectWithoutSinglesInput[]
+  createMany?: Prisma.stock_itemsCreateManySinglesInputEnvelope
   connect?: Prisma.stock_itemsWhereUniqueInput | Prisma.stock_itemsWhereUniqueInput[]
 }
 
-export type stock_itemsUpdateManyWithoutProductsNestedInput = {
-  create?: Prisma.XOR<Prisma.stock_itemsCreateWithoutProductsInput, Prisma.stock_itemsUncheckedCreateWithoutProductsInput> | Prisma.stock_itemsCreateWithoutProductsInput[] | Prisma.stock_itemsUncheckedCreateWithoutProductsInput[]
-  connectOrCreate?: Prisma.stock_itemsCreateOrConnectWithoutProductsInput | Prisma.stock_itemsCreateOrConnectWithoutProductsInput[]
-  upsert?: Prisma.stock_itemsUpsertWithWhereUniqueWithoutProductsInput | Prisma.stock_itemsUpsertWithWhereUniqueWithoutProductsInput[]
-  createMany?: Prisma.stock_itemsCreateManyProductsInputEnvelope
+export type stock_itemsUpdateManyWithoutSinglesNestedInput = {
+  create?: Prisma.XOR<Prisma.stock_itemsCreateWithoutSinglesInput, Prisma.stock_itemsUncheckedCreateWithoutSinglesInput> | Prisma.stock_itemsCreateWithoutSinglesInput[] | Prisma.stock_itemsUncheckedCreateWithoutSinglesInput[]
+  connectOrCreate?: Prisma.stock_itemsCreateOrConnectWithoutSinglesInput | Prisma.stock_itemsCreateOrConnectWithoutSinglesInput[]
+  upsert?: Prisma.stock_itemsUpsertWithWhereUniqueWithoutSinglesInput | Prisma.stock_itemsUpsertWithWhereUniqueWithoutSinglesInput[]
+  createMany?: Prisma.stock_itemsCreateManySinglesInputEnvelope
   set?: Prisma.stock_itemsWhereUniqueInput | Prisma.stock_itemsWhereUniqueInput[]
   disconnect?: Prisma.stock_itemsWhereUniqueInput | Prisma.stock_itemsWhereUniqueInput[]
   delete?: Prisma.stock_itemsWhereUniqueInput | Prisma.stock_itemsWhereUniqueInput[]
   connect?: Prisma.stock_itemsWhereUniqueInput | Prisma.stock_itemsWhereUniqueInput[]
-  update?: Prisma.stock_itemsUpdateWithWhereUniqueWithoutProductsInput | Prisma.stock_itemsUpdateWithWhereUniqueWithoutProductsInput[]
-  updateMany?: Prisma.stock_itemsUpdateManyWithWhereWithoutProductsInput | Prisma.stock_itemsUpdateManyWithWhereWithoutProductsInput[]
+  update?: Prisma.stock_itemsUpdateWithWhereUniqueWithoutSinglesInput | Prisma.stock_itemsUpdateWithWhereUniqueWithoutSinglesInput[]
+  updateMany?: Prisma.stock_itemsUpdateManyWithWhereWithoutSinglesInput | Prisma.stock_itemsUpdateManyWithWhereWithoutSinglesInput[]
   deleteMany?: Prisma.stock_itemsScalarWhereInput | Prisma.stock_itemsScalarWhereInput[]
 }
 
-export type stock_itemsUncheckedUpdateManyWithoutProductsNestedInput = {
-  create?: Prisma.XOR<Prisma.stock_itemsCreateWithoutProductsInput, Prisma.stock_itemsUncheckedCreateWithoutProductsInput> | Prisma.stock_itemsCreateWithoutProductsInput[] | Prisma.stock_itemsUncheckedCreateWithoutProductsInput[]
-  connectOrCreate?: Prisma.stock_itemsCreateOrConnectWithoutProductsInput | Prisma.stock_itemsCreateOrConnectWithoutProductsInput[]
-  upsert?: Prisma.stock_itemsUpsertWithWhereUniqueWithoutProductsInput | Prisma.stock_itemsUpsertWithWhereUniqueWithoutProductsInput[]
-  createMany?: Prisma.stock_itemsCreateManyProductsInputEnvelope
+export type stock_itemsUncheckedUpdateManyWithoutSinglesNestedInput = {
+  create?: Prisma.XOR<Prisma.stock_itemsCreateWithoutSinglesInput, Prisma.stock_itemsUncheckedCreateWithoutSinglesInput> | Prisma.stock_itemsCreateWithoutSinglesInput[] | Prisma.stock_itemsUncheckedCreateWithoutSinglesInput[]
+  connectOrCreate?: Prisma.stock_itemsCreateOrConnectWithoutSinglesInput | Prisma.stock_itemsCreateOrConnectWithoutSinglesInput[]
+  upsert?: Prisma.stock_itemsUpsertWithWhereUniqueWithoutSinglesInput | Prisma.stock_itemsUpsertWithWhereUniqueWithoutSinglesInput[]
+  createMany?: Prisma.stock_itemsCreateManySinglesInputEnvelope
   set?: Prisma.stock_itemsWhereUniqueInput | Prisma.stock_itemsWhereUniqueInput[]
   disconnect?: Prisma.stock_itemsWhereUniqueInput | Prisma.stock_itemsWhereUniqueInput[]
   delete?: Prisma.stock_itemsWhereUniqueInput | Prisma.stock_itemsWhereUniqueInput[]
   connect?: Prisma.stock_itemsWhereUniqueInput | Prisma.stock_itemsWhereUniqueInput[]
-  update?: Prisma.stock_itemsUpdateWithWhereUniqueWithoutProductsInput | Prisma.stock_itemsUpdateWithWhereUniqueWithoutProductsInput[]
-  updateMany?: Prisma.stock_itemsUpdateManyWithWhereWithoutProductsInput | Prisma.stock_itemsUpdateManyWithWhereWithoutProductsInput[]
+  update?: Prisma.stock_itemsUpdateWithWhereUniqueWithoutSinglesInput | Prisma.stock_itemsUpdateWithWhereUniqueWithoutSinglesInput[]
+  updateMany?: Prisma.stock_itemsUpdateManyWithWhereWithoutSinglesInput | Prisma.stock_itemsUpdateManyWithWhereWithoutSinglesInput[]
   deleteMany?: Prisma.stock_itemsScalarWhereInput | Prisma.stock_itemsScalarWhereInput[]
 }
 
-export type stock_itemsCreateWithoutProductsInput = {
+export type stock_itemsCreateWithoutSinglesInput = {
   id?: string
   quantity: number
 }
 
-export type stock_itemsUncheckedCreateWithoutProductsInput = {
+export type stock_itemsUncheckedCreateWithoutSinglesInput = {
   id?: string
   quantity: number
 }
 
-export type stock_itemsCreateOrConnectWithoutProductsInput = {
+export type stock_itemsCreateOrConnectWithoutSinglesInput = {
   where: Prisma.stock_itemsWhereUniqueInput
-  create: Prisma.XOR<Prisma.stock_itemsCreateWithoutProductsInput, Prisma.stock_itemsUncheckedCreateWithoutProductsInput>
+  create: Prisma.XOR<Prisma.stock_itemsCreateWithoutSinglesInput, Prisma.stock_itemsUncheckedCreateWithoutSinglesInput>
 }
 
-export type stock_itemsCreateManyProductsInputEnvelope = {
-  data: Prisma.stock_itemsCreateManyProductsInput | Prisma.stock_itemsCreateManyProductsInput[]
+export type stock_itemsCreateManySinglesInputEnvelope = {
+  data: Prisma.stock_itemsCreateManySinglesInput | Prisma.stock_itemsCreateManySinglesInput[]
   skipDuplicates?: boolean
 }
 
-export type stock_itemsUpsertWithWhereUniqueWithoutProductsInput = {
+export type stock_itemsUpsertWithWhereUniqueWithoutSinglesInput = {
   where: Prisma.stock_itemsWhereUniqueInput
-  update: Prisma.XOR<Prisma.stock_itemsUpdateWithoutProductsInput, Prisma.stock_itemsUncheckedUpdateWithoutProductsInput>
-  create: Prisma.XOR<Prisma.stock_itemsCreateWithoutProductsInput, Prisma.stock_itemsUncheckedCreateWithoutProductsInput>
+  update: Prisma.XOR<Prisma.stock_itemsUpdateWithoutSinglesInput, Prisma.stock_itemsUncheckedUpdateWithoutSinglesInput>
+  create: Prisma.XOR<Prisma.stock_itemsCreateWithoutSinglesInput, Prisma.stock_itemsUncheckedCreateWithoutSinglesInput>
 }
 
-export type stock_itemsUpdateWithWhereUniqueWithoutProductsInput = {
+export type stock_itemsUpdateWithWhereUniqueWithoutSinglesInput = {
   where: Prisma.stock_itemsWhereUniqueInput
-  data: Prisma.XOR<Prisma.stock_itemsUpdateWithoutProductsInput, Prisma.stock_itemsUncheckedUpdateWithoutProductsInput>
+  data: Prisma.XOR<Prisma.stock_itemsUpdateWithoutSinglesInput, Prisma.stock_itemsUncheckedUpdateWithoutSinglesInput>
 }
 
-export type stock_itemsUpdateManyWithWhereWithoutProductsInput = {
+export type stock_itemsUpdateManyWithWhereWithoutSinglesInput = {
   where: Prisma.stock_itemsScalarWhereInput
-  data: Prisma.XOR<Prisma.stock_itemsUpdateManyMutationInput, Prisma.stock_itemsUncheckedUpdateManyWithoutProductsInput>
+  data: Prisma.XOR<Prisma.stock_itemsUpdateManyMutationInput, Prisma.stock_itemsUncheckedUpdateManyWithoutSinglesInput>
 }
 
 export type stock_itemsScalarWhereInput = {
@@ -400,26 +400,26 @@ export type stock_itemsScalarWhereInput = {
   OR?: Prisma.stock_itemsScalarWhereInput[]
   NOT?: Prisma.stock_itemsScalarWhereInput | Prisma.stock_itemsScalarWhereInput[]
   id?: Prisma.UuidFilter<"stock_items"> | string
-  product_id?: Prisma.UuidFilter<"stock_items"> | string
+  single_id?: Prisma.UuidFilter<"stock_items"> | string
   quantity?: Prisma.IntFilter<"stock_items"> | number
 }
 
-export type stock_itemsCreateManyProductsInput = {
+export type stock_itemsCreateManySinglesInput = {
   id?: string
   quantity: number
 }
 
-export type stock_itemsUpdateWithoutProductsInput = {
+export type stock_itemsUpdateWithoutSinglesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
-export type stock_itemsUncheckedUpdateWithoutProductsInput = {
+export type stock_itemsUncheckedUpdateWithoutSinglesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
-export type stock_itemsUncheckedUpdateManyWithoutProductsInput = {
+export type stock_itemsUncheckedUpdateManyWithoutSinglesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
 }
@@ -428,50 +428,50 @@ export type stock_itemsUncheckedUpdateManyWithoutProductsInput = {
 
 export type stock_itemsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  product_id?: boolean
+  single_id?: boolean
   quantity?: boolean
-  products?: boolean | Prisma.productsDefaultArgs<ExtArgs>
+  singles?: boolean | Prisma.singlesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["stock_items"]>
 
 export type stock_itemsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  product_id?: boolean
+  single_id?: boolean
   quantity?: boolean
-  products?: boolean | Prisma.productsDefaultArgs<ExtArgs>
+  singles?: boolean | Prisma.singlesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["stock_items"]>
 
 export type stock_itemsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  product_id?: boolean
+  single_id?: boolean
   quantity?: boolean
-  products?: boolean | Prisma.productsDefaultArgs<ExtArgs>
+  singles?: boolean | Prisma.singlesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["stock_items"]>
 
 export type stock_itemsSelectScalar = {
   id?: boolean
-  product_id?: boolean
+  single_id?: boolean
   quantity?: boolean
 }
 
-export type stock_itemsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "product_id" | "quantity", ExtArgs["result"]["stock_items"]>
+export type stock_itemsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "single_id" | "quantity", ExtArgs["result"]["stock_items"]>
 export type stock_itemsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  products?: boolean | Prisma.productsDefaultArgs<ExtArgs>
+  singles?: boolean | Prisma.singlesDefaultArgs<ExtArgs>
 }
 export type stock_itemsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  products?: boolean | Prisma.productsDefaultArgs<ExtArgs>
+  singles?: boolean | Prisma.singlesDefaultArgs<ExtArgs>
 }
 export type stock_itemsIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  products?: boolean | Prisma.productsDefaultArgs<ExtArgs>
+  singles?: boolean | Prisma.singlesDefaultArgs<ExtArgs>
 }
 
 export type $stock_itemsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "stock_items"
   objects: {
-    products: Prisma.$productsPayload<ExtArgs>
+    singles: Prisma.$singlesPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    product_id: string
+    single_id: string
     quantity: number
   }, ExtArgs["result"]["stock_items"]>
   composites: {}
@@ -867,7 +867,7 @@ readonly fields: stock_itemsFieldRefs;
  */
 export interface Prisma__stock_itemsClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  products<T extends Prisma.productsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.productsDefaultArgs<ExtArgs>>): Prisma.Prisma__productsClient<runtime.Types.Result.GetResult<Prisma.$productsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  singles<T extends Prisma.singlesDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.singlesDefaultArgs<ExtArgs>>): Prisma.Prisma__singlesClient<runtime.Types.Result.GetResult<Prisma.$singlesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -898,7 +898,7 @@ export interface Prisma__stock_itemsClient<T, Null = never, ExtArgs extends runt
  */
 export interface stock_itemsFieldRefs {
   readonly id: Prisma.FieldRef<"stock_items", 'String'>
-  readonly product_id: Prisma.FieldRef<"stock_items", 'String'>
+  readonly single_id: Prisma.FieldRef<"stock_items", 'String'>
   readonly quantity: Prisma.FieldRef<"stock_items", 'Int'>
 }
     

@@ -58,9 +58,9 @@ export const ModelName = {
   conditions: 'conditions',
   languages: 'languages',
   rarities: 'rarities',
-  products: 'products',
+  singles: 'singles',
   tags: 'tags',
-  product_tags: 'product_tags',
+  single_tags: 'single_tags',
   stock_items: 'stock_items',
   carts: 'carts',
   cart_items: 'cart_items',
@@ -161,30 +161,39 @@ export const RaritiesScalarFieldEnum = {
 export type RaritiesScalarFieldEnum = (typeof RaritiesScalarFieldEnum)[keyof typeof RaritiesScalarFieldEnum]
 
 
-export const ProductsScalarFieldEnum = {
+export const SinglesScalarFieldEnum = {
   id: 'id',
   name: 'name',
   price: 'price',
-  image_url: 'image_url',
   category_id: 'category_id',
   condition_id: 'condition_id',
   language_id: 'language_id',
   rarity_id: 'rarity_id',
   owner_id: 'owner_id',
-  hareruya_product_id: 'hareruya_product_id',
-  card_name: 'card_name',
-  product_name_en: 'product_name_en',
-  product_name_jp: 'product_name_jp',
-  is_foil: 'is_foil',
-  hareruya_stock: 'hareruya_stock',
-  hareruya_product_class: 'hareruya_product_class',
-  hareruya_sale_flg: 'hareruya_sale_flg',
-  hareruya_weekly_sales: 'hareruya_weekly_sales',
+  borderless: 'borderless',
+  cardName: 'cardName',
+  cardNumber: 'cardNumber',
+  expansion: 'expansion',
+  extendedArt: 'extendedArt',
+  finalPrice: 'finalPrice',
+  foil: 'foil',
+  hareruyaId: 'hareruyaId',
+  img: 'img',
+  isLocalInventory: 'isLocalInventory',
+  link: 'link',
+  metadata: 'metadata',
+  prerelease: 'prerelease',
+  premierPlay: 'premierPlay',
+  showImportacionBadge: 'showImportacionBadge',
+  source: 'source',
+  stock: 'stock',
+  surgeFoil: 'surgeFoil',
+  variant: 'variant',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const
 
-export type ProductsScalarFieldEnum = (typeof ProductsScalarFieldEnum)[keyof typeof ProductsScalarFieldEnum]
+export type SinglesScalarFieldEnum = (typeof SinglesScalarFieldEnum)[keyof typeof SinglesScalarFieldEnum]
 
 
 export const TagsScalarFieldEnum = {
@@ -195,17 +204,17 @@ export const TagsScalarFieldEnum = {
 export type TagsScalarFieldEnum = (typeof TagsScalarFieldEnum)[keyof typeof TagsScalarFieldEnum]
 
 
-export const Product_tagsScalarFieldEnum = {
-  product_id: 'product_id',
+export const Single_tagsScalarFieldEnum = {
+  single_id: 'single_id',
   tag_id: 'tag_id'
 } as const
 
-export type Product_tagsScalarFieldEnum = (typeof Product_tagsScalarFieldEnum)[keyof typeof Product_tagsScalarFieldEnum]
+export type Single_tagsScalarFieldEnum = (typeof Single_tagsScalarFieldEnum)[keyof typeof Single_tagsScalarFieldEnum]
 
 
 export const Stock_itemsScalarFieldEnum = {
   id: 'id',
-  product_id: 'product_id',
+  single_id: 'single_id',
   quantity: 'quantity'
 } as const
 
@@ -223,7 +232,7 @@ export type CartsScalarFieldEnum = (typeof CartsScalarFieldEnum)[keyof typeof Ca
 export const Cart_itemsScalarFieldEnum = {
   id: 'id',
   cart_id: 'cart_id',
-  product_id: 'product_id',
+  single_id: 'single_id',
   quantity: 'quantity'
 } as const
 
@@ -243,7 +252,7 @@ export type OrdersScalarFieldEnum = (typeof OrdersScalarFieldEnum)[keyof typeof 
 export const Order_itemsScalarFieldEnum = {
   id: 'id',
   order_id: 'order_id',
-  product_id: 'product_id',
+  single_id: 'single_id',
   quantity: 'quantity',
   unit_price: 'unit_price'
 } as const
@@ -272,7 +281,7 @@ export type Order_shippingScalarFieldEnum = (typeof Order_shippingScalarFieldEnu
 export const ListingsScalarFieldEnum = {
   id: 'id',
   user_id: 'user_id',
-  product_id: 'product_id',
+  single_id: 'single_id',
   status: 'status'
 } as const
 

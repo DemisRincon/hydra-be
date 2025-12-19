@@ -4,12 +4,12 @@ import { listing_status_enum } from '../../generated/prisma/enums.js';
 
 export class CreateListingDto {
   @ApiProperty({
-    description: 'Product ID (UUID)',
+    description: 'Single ID (UUID)',
     example: '123e4567-e89b-12d3-a456-426614174000',
   })
   @IsUUID()
   @IsNotEmpty()
-  product_id: string;
+  single_id: string;
 
   @ApiProperty({
     description: 'Listing status',
