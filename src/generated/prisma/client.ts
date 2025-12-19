@@ -75,6 +75,11 @@ export type languages = Prisma.languagesModel
  */
 export type rarities = Prisma.raritiesModel
 /**
+ * Model tcgs
+ * 
+ */
+export type tcgs = Prisma.tcgsModel
+/**
  * Model singles
  * 
  */

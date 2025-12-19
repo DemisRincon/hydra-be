@@ -28,6 +28,7 @@ model users {
   role_id    String  @db.Uuid
   first_name String
   last_name  String
+  avatar_url String?
   is_active  Boolean @default(true)
 
   roles roles @relation(fields: [role_id], references: [id])
@@ -103,6 +104,17 @@ model rarities {
   singles singles[]
 }
 
+model tcgs {
+  id           String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name         String @unique // TCG name (Magic, Pokemon, Yugi, One piece)
+  display_name String // User-friendly display name
+  is_active    Boolean @default(true)
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+
+  singles singles[]
+}
+
 /**
  * =========================
  * SINGLES
@@ -117,6 +129,7 @@ model singles {
   condition_id String? @db.Uuid
   language_id  String? @db.Uuid
   rarity_id    String? @db.Uuid
+  tcg_id       String? @db.Uuid
   owner_id     String  @db.Uuid
 
   // Single product structure fields (matching HareruyaSearchResult JSON structure)
@@ -147,6 +160,7 @@ model singles {
   conditions conditions? @relation(fields: [condition_id], references: [id])
   languages  languages?  @relation(fields: [language_id], references: [id])
   rarities   rarities?   @relation(fields: [rarity_id], references: [id])
+  tcgs       tcgs?       @relation(fields: [tcg_id], references: [id])
   owner      users       @relation(fields: [owner_id], references: [id])
 
   tags       single_tags[]

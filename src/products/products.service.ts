@@ -87,6 +87,25 @@ export class ProductsService {
     // Use finalPrice for the price (already in MXN)
     const priceValue = finalPrice || 0;
 
+    // Get or set default TCG (Magic)
+    let tcgId = createDto.tcg_id;
+    if (!tcgId) {
+      const magicTcg = await this.prisma.tcgs.findUnique({
+        where: { name: 'Magic' },
+      });
+      if (magicTcg) {
+        tcgId = magicTcg.id;
+      }
+    } else {
+      // Verify TCG exists if provided
+      const tcg = await this.prisma.tcgs.findUnique({
+        where: { id: tcgId },
+      });
+      if (!tcg) {
+        throw new NotFoundException(`TCG with ID ${tcgId} not found`);
+      }
+    }
+
     // Create product with new schema structure
     try {
       const product = await this.prisma.singles.create({
@@ -96,6 +115,7 @@ export class ProductsService {
           category_id,
           condition_id,
           language_id,
+          tcg_id: tcgId,
           owner_id,
           borderless,
           cardName,
@@ -130,6 +150,7 @@ export class ProductsService {
           },
           conditions: true,
           languages: true,
+          tcgs: true,
           owner: {
             include: {
               roles: true,
@@ -237,6 +258,34 @@ export class ProductsService {
     // Use finalPrice for the price
     const price = finalPrice || 0;
 
+    // Get or set default TCG (Magic) if not provided
+    let tcgId = updateDto.tcg_id;
+    if (tcgId === undefined) {
+      // If tcg_id is not in the update, keep existing or set to Magic
+      const currentProduct = await this.prisma.singles.findUnique({
+        where: { id: productId },
+        select: { tcg_id: true },
+      });
+      if (!currentProduct?.tcg_id) {
+        const magicTcg = await this.prisma.tcgs.findUnique({
+          where: { name: 'Magic' },
+        });
+        if (magicTcg) {
+          tcgId = magicTcg.id;
+        }
+      } else {
+        tcgId = currentProduct.tcg_id;
+      }
+    } else if (tcgId !== null) {
+      // Verify TCG exists if provided
+      const tcg = await this.prisma.tcgs.findUnique({
+        where: { id: tcgId },
+      });
+      if (!tcg) {
+        throw new NotFoundException(`TCG with ID ${tcgId} not found`);
+      }
+    }
+
     // Update product with new schema structure
     const product = await this.prisma.singles.update({
       where: { id: productId },
@@ -246,6 +295,7 @@ export class ProductsService {
         category_id,
         condition_id,
         language_id,
+        tcg_id: tcgId,
         borderless,
         cardName,
         cardNumber,
@@ -278,6 +328,7 @@ export class ProductsService {
         },
         conditions: true,
         languages: true,
+        tcgs: true,
         owner: {
           include: {
             roles: true,
@@ -297,6 +348,7 @@ export class ProductsService {
         conditions: true,
         languages: true,
         rarities: true,
+        tcgs: true,
         owner: {
           include: {
             roles: true,
@@ -333,6 +385,7 @@ export class ProductsService {
           conditions: true,
           languages: true,
           rarities: true,
+          tcgs: true,
           owner: {
             include: {
               roles: true,
@@ -381,6 +434,7 @@ export class ProductsService {
           conditions: true,
           languages: true,
           rarities: true,
+          tcgs: true,
           owner: {
             include: {
               roles: true,
@@ -440,6 +494,7 @@ export class ProductsService {
           conditions: true,
           languages: true,
           rarities: true,
+          tcgs: true,
           owner: {
             include: {
               roles: true,
@@ -483,6 +538,7 @@ export class ProductsService {
         conditions: true,
         languages: true,
         rarities: true,
+        tcgs: true,
         owner: {
           include: {
             roles: true,

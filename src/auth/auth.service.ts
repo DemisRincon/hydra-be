@@ -71,6 +71,7 @@ export class AuthService {
         username: userWithoutPassword.username,
         first_name: userWithoutPassword.first_name,
         last_name: userWithoutPassword.last_name,
+        avatar_url: userWithoutPassword.avatar_url || null,
         role: {
           id: userWithoutPassword.roles.id,
           name: userWithoutPassword.roles.name,
@@ -137,6 +138,7 @@ export class AuthService {
         username: userWithoutPassword.username,
         first_name: userWithoutPassword.first_name,
         last_name: userWithoutPassword.last_name,
+        avatar_url: userWithoutPassword.avatar_url || null,
         role: {
           id: userWithoutPassword.roles.id,
           name: userWithoutPassword.roles.name,
@@ -162,21 +164,32 @@ export class AuthService {
         throw new UnauthorizedException('User account is inactive');
       }
 
-      // Update user with OAuth info if needed (e.g., first_name, last_name if missing)
-      if (!user.first_name && oauthDto.firstName) {
-        await this.prisma.users.update({
-          where: { id: user.id },
-          data: { first_name: oauthDto.firstName },
-        });
-        user.first_name = oauthDto.firstName;
+      // Update user with OAuth info - prioritize Google data for existing users
+      // Always update with Google data if provided (Google is the source of truth)
+      const updateData: any = {};
+      
+      // Update first_name if Google provides it (even if user already has one, Google takes priority)
+      if (oauthDto.firstName) {
+        updateData.first_name = oauthDto.firstName;
       }
 
-      if (!user.last_name && oauthDto.lastName) {
-        await this.prisma.users.update({
+      // Update last_name if Google provides it
+      if (oauthDto.lastName) {
+        updateData.last_name = oauthDto.lastName;
+      }
+
+      // Always update avatar_url if provided (Google profile picture is always fresh)
+      if (oauthDto.avatarUrl) {
+        updateData.avatar_url = oauthDto.avatarUrl;
+      }
+
+      // Update if we have any changes
+      if (Object.keys(updateData).length > 0) {
+        user = await this.prisma.users.update({
           where: { id: user.id },
-          data: { last_name: oauthDto.lastName },
+          data: updateData,
+          include: { roles: true },
         });
-        user.last_name = oauthDto.lastName;
       }
     } else {
       // Create new user from OAuth
@@ -215,6 +228,7 @@ export class AuthService {
           role_id: clientRole.id,
           first_name: oauthDto.firstName || 'User',
           last_name: oauthDto.lastName || '',
+          avatar_url: oauthDto.avatarUrl || null,
           is_active: true,
         },
         include: {
@@ -223,6 +237,7 @@ export class AuthService {
       });
     }
 
+    // At this point, user is guaranteed to be non-null
     // Generate JWT token
     const payload = {
       sub: user.id,
@@ -244,6 +259,7 @@ export class AuthService {
         username: userWithoutPassword.username,
         first_name: userWithoutPassword.first_name,
         last_name: userWithoutPassword.last_name,
+        avatar_url: userWithoutPassword.avatar_url || null,
         role: {
           id: userWithoutPassword.roles.id,
           name: userWithoutPassword.roles.name,

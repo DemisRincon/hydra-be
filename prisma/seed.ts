@@ -22,6 +22,7 @@ const pool: pg.Pool = new pg.Pool({
 });
 
 const adapter = new PrismaPg(pool);
+// TypeScript should infer the correct type from the PrismaClient constructor
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
@@ -216,6 +217,51 @@ async function main() {
       console.log(
         `Created category: ${category.display_name} (${category.name})`,
       );
+    }
+  }
+
+  // Seed TCGs
+  console.log('Seeding TCGs...');
+
+  const tcgs = [
+    {
+      name: 'Magic',
+      display_name: 'Magic: The Gathering',
+      is_active: true,
+    },
+    {
+      name: 'Pokemon',
+      display_name: 'Pokémon',
+      is_active: true,
+    },
+    {
+      name: 'Yugi',
+      display_name: 'Yu-Gi-Oh!',
+      is_active: true,
+    },
+    {
+      name: 'One piece',
+      display_name: 'One Piece',
+      is_active: true,
+    },
+  ];
+
+  for (const tcg of tcgs) {
+    // @ts-ignore - PrismaClient with adapter has correct types at runtime
+    const existingTcg = await prisma.tcgs.findUnique({
+      where: { name: tcg.name },
+    });
+
+    if (existingTcg) {
+      console.log(
+        `TCG ${tcg.name} (${tcg.display_name}) already exists, skipping...`,
+      );
+    } else {
+      // @ts-ignore - PrismaClient with adapter has correct types at runtime
+      await prisma.tcgs.create({
+        data: tcg,
+      });
+      console.log(`Created TCG: ${tcg.display_name} (${tcg.name})`);
     }
   }
 

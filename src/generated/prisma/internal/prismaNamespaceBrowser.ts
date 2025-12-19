@@ -58,6 +58,7 @@ export const ModelName = {
   conditions: 'conditions',
   languages: 'languages',
   rarities: 'rarities',
+  tcgs: 'tcgs',
   singles: 'singles',
   tags: 'tags',
   single_tags: 'single_tags',
@@ -104,6 +105,7 @@ export const UsersScalarFieldEnum = {
   role_id: 'role_id',
   first_name: 'first_name',
   last_name: 'last_name',
+  avatar_url: 'avatar_url',
   is_active: 'is_active'
 } as const
 
@@ -166,6 +168,18 @@ export const RaritiesScalarFieldEnum = {
 export type RaritiesScalarFieldEnum = (typeof RaritiesScalarFieldEnum)[keyof typeof RaritiesScalarFieldEnum]
 
 
+export const TcgsScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  display_name: 'display_name',
+  is_active: 'is_active',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type TcgsScalarFieldEnum = (typeof TcgsScalarFieldEnum)[keyof typeof TcgsScalarFieldEnum]
+
+
 export const SinglesScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -174,6 +188,7 @@ export const SinglesScalarFieldEnum = {
   condition_id: 'condition_id',
   language_id: 'language_id',
   rarity_id: 'rarity_id',
+  tcg_id: 'tcg_id',
   owner_id: 'owner_id',
   borderless: 'borderless',
   cardName: 'cardName',

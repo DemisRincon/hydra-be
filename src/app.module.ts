@@ -14,6 +14,7 @@ import { ConditionsModule } from './conditions/conditions.module.js';
 import { CategoriesModule } from './categories/categories.module.js';
 import { HareruyaModule } from './hareruya/hareruya.module.js';
 import { TagsModule } from './tags/tags.module.js';
+import { TcgsModule } from './tcgs/tcgs.module.js';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { TagsModule } from './tags/tags.module.js';
     CategoriesModule,
     HareruyaModule,
     TagsModule,
+    TcgsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

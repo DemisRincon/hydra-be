@@ -391,6 +391,7 @@ export const ModelName = {
   conditions: 'conditions',
   languages: 'languages',
   rarities: 'rarities',
+  tcgs: 'tcgs',
   singles: 'singles',
   tags: 'tags',
   single_tags: 'single_tags',
@@ -417,7 +418,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "roles" | "users" | "user_addresses" | "categories" | "conditions" | "languages" | "rarities" | "singles" | "tags" | "single_tags" | "stock_items" | "carts" | "cart_items" | "orders" | "order_items" | "shipping_methods" | "order_shipping" | "listings"
+    modelProps: "roles" | "users" | "user_addresses" | "categories" | "conditions" | "languages" | "rarities" | "tcgs" | "singles" | "tags" | "single_tags" | "stock_items" | "carts" | "cart_items" | "orders" | "order_items" | "shipping_methods" | "order_shipping" | "listings"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -936,6 +937,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.raritiesCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.RaritiesCountAggregateOutputType> | number
+        }
+      }
+    }
+    tcgs: {
+      payload: Prisma.$tcgsPayload<ExtArgs>
+      fields: Prisma.tcgsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.tcgsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$tcgsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.tcgsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$tcgsPayload>
+        }
+        findFirst: {
+          args: Prisma.tcgsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$tcgsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.tcgsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$tcgsPayload>
+        }
+        findMany: {
+          args: Prisma.tcgsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$tcgsPayload>[]
+        }
+        create: {
+          args: Prisma.tcgsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$tcgsPayload>
+        }
+        createMany: {
+          args: Prisma.tcgsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.tcgsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$tcgsPayload>[]
+        }
+        delete: {
+          args: Prisma.tcgsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$tcgsPayload>
+        }
+        update: {
+          args: Prisma.tcgsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$tcgsPayload>
+        }
+        deleteMany: {
+          args: Prisma.tcgsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.tcgsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.tcgsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$tcgsPayload>[]
+        }
+        upsert: {
+          args: Prisma.tcgsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$tcgsPayload>
+        }
+        aggregate: {
+          args: Prisma.TcgsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTcgs>
+        }
+        groupBy: {
+          args: Prisma.tcgsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TcgsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.tcgsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TcgsCountAggregateOutputType> | number
         }
       }
     }
@@ -1809,6 +1884,7 @@ export const UsersScalarFieldEnum = {
   role_id: 'role_id',
   first_name: 'first_name',
   last_name: 'last_name',
+  avatar_url: 'avatar_url',
   is_active: 'is_active'
 } as const
 
@@ -1871,6 +1947,18 @@ export const RaritiesScalarFieldEnum = {
 export type RaritiesScalarFieldEnum = (typeof RaritiesScalarFieldEnum)[keyof typeof RaritiesScalarFieldEnum]
 
 
+export const TcgsScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  display_name: 'display_name',
+  is_active: 'is_active',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type TcgsScalarFieldEnum = (typeof TcgsScalarFieldEnum)[keyof typeof TcgsScalarFieldEnum]
+
+
 export const SinglesScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -1879,6 +1967,7 @@ export const SinglesScalarFieldEnum = {
   condition_id: 'condition_id',
   language_id: 'language_id',
   rarity_id: 'rarity_id',
+  tcg_id: 'tcg_id',
   owner_id: 'owner_id',
   borderless: 'borderless',
   cardName: 'cardName',
@@ -2253,6 +2342,7 @@ export type GlobalOmitConfig = {
   conditions?: Prisma.conditionsOmit
   languages?: Prisma.languagesOmit
   rarities?: Prisma.raritiesOmit
+  tcgs?: Prisma.tcgsOmit
   singles?: Prisma.singlesOmit
   tags?: Prisma.tagsOmit
   single_tags?: Prisma.single_tagsOmit

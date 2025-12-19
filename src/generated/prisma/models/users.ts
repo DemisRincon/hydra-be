@@ -32,6 +32,7 @@ export type UsersMinAggregateOutputType = {
   role_id: string | null
   first_name: string | null
   last_name: string | null
+  avatar_url: string | null
   is_active: boolean | null
 }
 
@@ -43,6 +44,7 @@ export type UsersMaxAggregateOutputType = {
   role_id: string | null
   first_name: string | null
   last_name: string | null
+  avatar_url: string | null
   is_active: boolean | null
 }
 
@@ -54,6 +56,7 @@ export type UsersCountAggregateOutputType = {
   role_id: number
   first_name: number
   last_name: number
+  avatar_url: number
   is_active: number
   _all: number
 }
@@ -67,6 +70,7 @@ export type UsersMinAggregateInputType = {
   role_id?: true
   first_name?: true
   last_name?: true
+  avatar_url?: true
   is_active?: true
 }
 
@@ -78,6 +82,7 @@ export type UsersMaxAggregateInputType = {
   role_id?: true
   first_name?: true
   last_name?: true
+  avatar_url?: true
   is_active?: true
 }
 
@@ -89,6 +94,7 @@ export type UsersCountAggregateInputType = {
   role_id?: true
   first_name?: true
   last_name?: true
+  avatar_url?: true
   is_active?: true
   _all?: true
 }
@@ -173,6 +179,7 @@ export type UsersGroupByOutputType = {
   role_id: string
   first_name: string
   last_name: string
+  avatar_url: string | null
   is_active: boolean
   _count: UsersCountAggregateOutputType | null
   _min: UsersMinAggregateOutputType | null
@@ -205,6 +212,7 @@ export type usersWhereInput = {
   role_id?: Prisma.UuidFilter<"users"> | string
   first_name?: Prisma.StringFilter<"users"> | string
   last_name?: Prisma.StringFilter<"users"> | string
+  avatar_url?: Prisma.StringNullableFilter<"users"> | string | null
   is_active?: Prisma.BoolFilter<"users"> | boolean
   roles?: Prisma.XOR<Prisma.RolesScalarRelationFilter, Prisma.rolesWhereInput>
   addresses?: Prisma.User_addressesListRelationFilter
@@ -222,6 +230,7 @@ export type usersOrderByWithRelationInput = {
   role_id?: Prisma.SortOrder
   first_name?: Prisma.SortOrder
   last_name?: Prisma.SortOrder
+  avatar_url?: Prisma.SortOrderInput | Prisma.SortOrder
   is_active?: Prisma.SortOrder
   roles?: Prisma.rolesOrderByWithRelationInput
   addresses?: Prisma.user_addressesOrderByRelationAggregateInput
@@ -242,6 +251,7 @@ export type usersWhereUniqueInput = Prisma.AtLeast<{
   role_id?: Prisma.UuidFilter<"users"> | string
   first_name?: Prisma.StringFilter<"users"> | string
   last_name?: Prisma.StringFilter<"users"> | string
+  avatar_url?: Prisma.StringNullableFilter<"users"> | string | null
   is_active?: Prisma.BoolFilter<"users"> | boolean
   roles?: Prisma.XOR<Prisma.RolesScalarRelationFilter, Prisma.rolesWhereInput>
   addresses?: Prisma.User_addressesListRelationFilter
@@ -259,6 +269,7 @@ export type usersOrderByWithAggregationInput = {
   role_id?: Prisma.SortOrder
   first_name?: Prisma.SortOrder
   last_name?: Prisma.SortOrder
+  avatar_url?: Prisma.SortOrderInput | Prisma.SortOrder
   is_active?: Prisma.SortOrder
   _count?: Prisma.usersCountOrderByAggregateInput
   _max?: Prisma.usersMaxOrderByAggregateInput
@@ -276,6 +287,7 @@ export type usersScalarWhereWithAggregatesInput = {
   role_id?: Prisma.UuidWithAggregatesFilter<"users"> | string
   first_name?: Prisma.StringWithAggregatesFilter<"users"> | string
   last_name?: Prisma.StringWithAggregatesFilter<"users"> | string
+  avatar_url?: Prisma.StringNullableWithAggregatesFilter<"users"> | string | null
   is_active?: Prisma.BoolWithAggregatesFilter<"users"> | boolean
 }
 
@@ -286,6 +298,7 @@ export type usersCreateInput = {
   password?: string | null
   first_name: string
   last_name: string
+  avatar_url?: string | null
   is_active?: boolean
   roles: Prisma.rolesCreateNestedOneWithoutUsersInput
   addresses?: Prisma.user_addressesCreateNestedManyWithoutUsersInput
@@ -303,6 +316,7 @@ export type usersUncheckedCreateInput = {
   role_id: string
   first_name: string
   last_name: string
+  avatar_url?: string | null
   is_active?: boolean
   addresses?: Prisma.user_addressesUncheckedCreateNestedManyWithoutUsersInput
   carts?: Prisma.cartsUncheckedCreateNestedOneWithoutUsersInput
@@ -318,6 +332,7 @@ export type usersUpdateInput = {
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   roles?: Prisma.rolesUpdateOneRequiredWithoutUsersNestedInput
   addresses?: Prisma.user_addressesUpdateManyWithoutUsersNestedInput
@@ -335,6 +350,7 @@ export type usersUncheckedUpdateInput = {
   role_id?: Prisma.StringFieldUpdateOperationsInput | string
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   addresses?: Prisma.user_addressesUncheckedUpdateManyWithoutUsersNestedInput
   carts?: Prisma.cartsUncheckedUpdateOneWithoutUsersNestedInput
@@ -351,6 +367,7 @@ export type usersCreateManyInput = {
   role_id: string
   first_name: string
   last_name: string
+  avatar_url?: string | null
   is_active?: boolean
 }
 
@@ -361,6 +378,7 @@ export type usersUpdateManyMutationInput = {
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -372,6 +390,7 @@ export type usersUncheckedUpdateManyInput = {
   role_id?: Prisma.StringFieldUpdateOperationsInput | string
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -393,6 +412,7 @@ export type usersCountOrderByAggregateInput = {
   role_id?: Prisma.SortOrder
   first_name?: Prisma.SortOrder
   last_name?: Prisma.SortOrder
+  avatar_url?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
 }
 
@@ -404,6 +424,7 @@ export type usersMaxOrderByAggregateInput = {
   role_id?: Prisma.SortOrder
   first_name?: Prisma.SortOrder
   last_name?: Prisma.SortOrder
+  avatar_url?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
 }
 
@@ -415,6 +436,7 @@ export type usersMinOrderByAggregateInput = {
   role_id?: Prisma.SortOrder
   first_name?: Prisma.SortOrder
   last_name?: Prisma.SortOrder
+  avatar_url?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
 }
 
@@ -550,6 +572,7 @@ export type usersCreateWithoutRolesInput = {
   password?: string | null
   first_name: string
   last_name: string
+  avatar_url?: string | null
   is_active?: boolean
   addresses?: Prisma.user_addressesCreateNestedManyWithoutUsersInput
   carts?: Prisma.cartsCreateNestedOneWithoutUsersInput
@@ -565,6 +588,7 @@ export type usersUncheckedCreateWithoutRolesInput = {
   password?: string | null
   first_name: string
   last_name: string
+  avatar_url?: string | null
   is_active?: boolean
   addresses?: Prisma.user_addressesUncheckedCreateNestedManyWithoutUsersInput
   carts?: Prisma.cartsUncheckedCreateNestedOneWithoutUsersInput
@@ -610,6 +634,7 @@ export type usersScalarWhereInput = {
   role_id?: Prisma.UuidFilter<"users"> | string
   first_name?: Prisma.StringFilter<"users"> | string
   last_name?: Prisma.StringFilter<"users"> | string
+  avatar_url?: Prisma.StringNullableFilter<"users"> | string | null
   is_active?: Prisma.BoolFilter<"users"> | boolean
 }
 
@@ -620,6 +645,7 @@ export type usersCreateWithoutAddressesInput = {
   password?: string | null
   first_name: string
   last_name: string
+  avatar_url?: string | null
   is_active?: boolean
   roles: Prisma.rolesCreateNestedOneWithoutUsersInput
   carts?: Prisma.cartsCreateNestedOneWithoutUsersInput
@@ -636,6 +662,7 @@ export type usersUncheckedCreateWithoutAddressesInput = {
   role_id: string
   first_name: string
   last_name: string
+  avatar_url?: string | null
   is_active?: boolean
   carts?: Prisma.cartsUncheckedCreateNestedOneWithoutUsersInput
   orders?: Prisma.ordersUncheckedCreateNestedManyWithoutUsersInput
@@ -666,6 +693,7 @@ export type usersUpdateWithoutAddressesInput = {
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   roles?: Prisma.rolesUpdateOneRequiredWithoutUsersNestedInput
   carts?: Prisma.cartsUpdateOneWithoutUsersNestedInput
@@ -682,6 +710,7 @@ export type usersUncheckedUpdateWithoutAddressesInput = {
   role_id?: Prisma.StringFieldUpdateOperationsInput | string
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   carts?: Prisma.cartsUncheckedUpdateOneWithoutUsersNestedInput
   orders?: Prisma.ordersUncheckedUpdateManyWithoutUsersNestedInput
@@ -696,6 +725,7 @@ export type usersCreateWithoutOwnedSinglesInput = {
   password?: string | null
   first_name: string
   last_name: string
+  avatar_url?: string | null
   is_active?: boolean
   roles: Prisma.rolesCreateNestedOneWithoutUsersInput
   addresses?: Prisma.user_addressesCreateNestedManyWithoutUsersInput
@@ -712,6 +742,7 @@ export type usersUncheckedCreateWithoutOwnedSinglesInput = {
   role_id: string
   first_name: string
   last_name: string
+  avatar_url?: string | null
   is_active?: boolean
   addresses?: Prisma.user_addressesUncheckedCreateNestedManyWithoutUsersInput
   carts?: Prisma.cartsUncheckedCreateNestedOneWithoutUsersInput
@@ -742,6 +773,7 @@ export type usersUpdateWithoutOwnedSinglesInput = {
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   roles?: Prisma.rolesUpdateOneRequiredWithoutUsersNestedInput
   addresses?: Prisma.user_addressesUpdateManyWithoutUsersNestedInput
@@ -758,6 +790,7 @@ export type usersUncheckedUpdateWithoutOwnedSinglesInput = {
   role_id?: Prisma.StringFieldUpdateOperationsInput | string
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   addresses?: Prisma.user_addressesUncheckedUpdateManyWithoutUsersNestedInput
   carts?: Prisma.cartsUncheckedUpdateOneWithoutUsersNestedInput
@@ -772,6 +805,7 @@ export type usersCreateWithoutCartsInput = {
   password?: string | null
   first_name: string
   last_name: string
+  avatar_url?: string | null
   is_active?: boolean
   roles: Prisma.rolesCreateNestedOneWithoutUsersInput
   addresses?: Prisma.user_addressesCreateNestedManyWithoutUsersInput
@@ -788,6 +822,7 @@ export type usersUncheckedCreateWithoutCartsInput = {
   role_id: string
   first_name: string
   last_name: string
+  avatar_url?: string | null
   is_active?: boolean
   addresses?: Prisma.user_addressesUncheckedCreateNestedManyWithoutUsersInput
   orders?: Prisma.ordersUncheckedCreateNestedManyWithoutUsersInput
@@ -818,6 +853,7 @@ export type usersUpdateWithoutCartsInput = {
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   roles?: Prisma.rolesUpdateOneRequiredWithoutUsersNestedInput
   addresses?: Prisma.user_addressesUpdateManyWithoutUsersNestedInput
@@ -834,6 +870,7 @@ export type usersUncheckedUpdateWithoutCartsInput = {
   role_id?: Prisma.StringFieldUpdateOperationsInput | string
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   addresses?: Prisma.user_addressesUncheckedUpdateManyWithoutUsersNestedInput
   orders?: Prisma.ordersUncheckedUpdateManyWithoutUsersNestedInput
@@ -848,6 +885,7 @@ export type usersCreateWithoutOrdersInput = {
   password?: string | null
   first_name: string
   last_name: string
+  avatar_url?: string | null
   is_active?: boolean
   roles: Prisma.rolesCreateNestedOneWithoutUsersInput
   addresses?: Prisma.user_addressesCreateNestedManyWithoutUsersInput
@@ -864,6 +902,7 @@ export type usersUncheckedCreateWithoutOrdersInput = {
   role_id: string
   first_name: string
   last_name: string
+  avatar_url?: string | null
   is_active?: boolean
   addresses?: Prisma.user_addressesUncheckedCreateNestedManyWithoutUsersInput
   carts?: Prisma.cartsUncheckedCreateNestedOneWithoutUsersInput
@@ -894,6 +933,7 @@ export type usersUpdateWithoutOrdersInput = {
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   roles?: Prisma.rolesUpdateOneRequiredWithoutUsersNestedInput
   addresses?: Prisma.user_addressesUpdateManyWithoutUsersNestedInput
@@ -910,6 +950,7 @@ export type usersUncheckedUpdateWithoutOrdersInput = {
   role_id?: Prisma.StringFieldUpdateOperationsInput | string
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   addresses?: Prisma.user_addressesUncheckedUpdateManyWithoutUsersNestedInput
   carts?: Prisma.cartsUncheckedUpdateOneWithoutUsersNestedInput
@@ -924,6 +965,7 @@ export type usersCreateWithoutListingsInput = {
   password?: string | null
   first_name: string
   last_name: string
+  avatar_url?: string | null
   is_active?: boolean
   roles: Prisma.rolesCreateNestedOneWithoutUsersInput
   addresses?: Prisma.user_addressesCreateNestedManyWithoutUsersInput
@@ -940,6 +982,7 @@ export type usersUncheckedCreateWithoutListingsInput = {
   role_id: string
   first_name: string
   last_name: string
+  avatar_url?: string | null
   is_active?: boolean
   addresses?: Prisma.user_addressesUncheckedCreateNestedManyWithoutUsersInput
   carts?: Prisma.cartsUncheckedCreateNestedOneWithoutUsersInput
@@ -970,6 +1013,7 @@ export type usersUpdateWithoutListingsInput = {
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   roles?: Prisma.rolesUpdateOneRequiredWithoutUsersNestedInput
   addresses?: Prisma.user_addressesUpdateManyWithoutUsersNestedInput
@@ -986,6 +1030,7 @@ export type usersUncheckedUpdateWithoutListingsInput = {
   role_id?: Prisma.StringFieldUpdateOperationsInput | string
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   addresses?: Prisma.user_addressesUncheckedUpdateManyWithoutUsersNestedInput
   carts?: Prisma.cartsUncheckedUpdateOneWithoutUsersNestedInput
@@ -1000,6 +1045,7 @@ export type usersCreateManyRolesInput = {
   password?: string | null
   first_name: string
   last_name: string
+  avatar_url?: string | null
   is_active?: boolean
 }
 
@@ -1010,6 +1056,7 @@ export type usersUpdateWithoutRolesInput = {
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   addresses?: Prisma.user_addressesUpdateManyWithoutUsersNestedInput
   carts?: Prisma.cartsUpdateOneWithoutUsersNestedInput
@@ -1025,6 +1072,7 @@ export type usersUncheckedUpdateWithoutRolesInput = {
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   addresses?: Prisma.user_addressesUncheckedUpdateManyWithoutUsersNestedInput
   carts?: Prisma.cartsUncheckedUpdateOneWithoutUsersNestedInput
@@ -1040,6 +1088,7 @@ export type usersUncheckedUpdateManyWithoutRolesInput = {
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -1109,6 +1158,7 @@ export type usersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   role_id?: boolean
   first_name?: boolean
   last_name?: boolean
+  avatar_url?: boolean
   is_active?: boolean
   roles?: boolean | Prisma.rolesDefaultArgs<ExtArgs>
   addresses?: boolean | Prisma.users$addressesArgs<ExtArgs>
@@ -1127,6 +1177,7 @@ export type usersSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   role_id?: boolean
   first_name?: boolean
   last_name?: boolean
+  avatar_url?: boolean
   is_active?: boolean
   roles?: boolean | Prisma.rolesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["users"]>
@@ -1139,6 +1190,7 @@ export type usersSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   role_id?: boolean
   first_name?: boolean
   last_name?: boolean
+  avatar_url?: boolean
   is_active?: boolean
   roles?: boolean | Prisma.rolesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["users"]>
@@ -1151,10 +1203,11 @@ export type usersSelectScalar = {
   role_id?: boolean
   first_name?: boolean
   last_name?: boolean
+  avatar_url?: boolean
   is_active?: boolean
 }
 
-export type usersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "username" | "password" | "role_id" | "first_name" | "last_name" | "is_active", ExtArgs["result"]["users"]>
+export type usersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "username" | "password" | "role_id" | "first_name" | "last_name" | "avatar_url" | "is_active", ExtArgs["result"]["users"]>
 export type usersInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   roles?: boolean | Prisma.rolesDefaultArgs<ExtArgs>
   addresses?: boolean | Prisma.users$addressesArgs<ExtArgs>
@@ -1189,6 +1242,7 @@ export type $usersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     role_id: string
     first_name: string
     last_name: string
+    avatar_url: string | null
     is_active: boolean
   }, ExtArgs["result"]["users"]>
   composites: {}
@@ -1626,6 +1680,7 @@ export interface usersFieldRefs {
   readonly role_id: Prisma.FieldRef<"users", 'String'>
   readonly first_name: Prisma.FieldRef<"users", 'String'>
   readonly last_name: Prisma.FieldRef<"users", 'String'>
+  readonly avatar_url: Prisma.FieldRef<"users", 'String'>
   readonly is_active: Prisma.FieldRef<"users", 'Boolean'>
 }
     

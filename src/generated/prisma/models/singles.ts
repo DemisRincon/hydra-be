@@ -46,6 +46,7 @@ export type SinglesMinAggregateOutputType = {
   condition_id: string | null
   language_id: string | null
   rarity_id: string | null
+  tcg_id: string | null
   owner_id: string | null
   borderless: boolean | null
   cardName: string | null
@@ -77,6 +78,7 @@ export type SinglesMaxAggregateOutputType = {
   condition_id: string | null
   language_id: string | null
   rarity_id: string | null
+  tcg_id: string | null
   owner_id: string | null
   borderless: boolean | null
   cardName: string | null
@@ -108,6 +110,7 @@ export type SinglesCountAggregateOutputType = {
   condition_id: number
   language_id: number
   rarity_id: number
+  tcg_id: number
   owner_id: number
   borderless: number
   cardName: number
@@ -154,6 +157,7 @@ export type SinglesMinAggregateInputType = {
   condition_id?: true
   language_id?: true
   rarity_id?: true
+  tcg_id?: true
   owner_id?: true
   borderless?: true
   cardName?: true
@@ -185,6 +189,7 @@ export type SinglesMaxAggregateInputType = {
   condition_id?: true
   language_id?: true
   rarity_id?: true
+  tcg_id?: true
   owner_id?: true
   borderless?: true
   cardName?: true
@@ -216,6 +221,7 @@ export type SinglesCountAggregateInputType = {
   condition_id?: true
   language_id?: true
   rarity_id?: true
+  tcg_id?: true
   owner_id?: true
   borderless?: true
   cardName?: true
@@ -335,6 +341,7 @@ export type SinglesGroupByOutputType = {
   condition_id: string | null
   language_id: string | null
   rarity_id: string | null
+  tcg_id: string | null
   owner_id: string
   borderless: boolean
   cardName: string | null
@@ -390,6 +397,7 @@ export type singlesWhereInput = {
   condition_id?: Prisma.UuidNullableFilter<"singles"> | string | null
   language_id?: Prisma.UuidNullableFilter<"singles"> | string | null
   rarity_id?: Prisma.UuidNullableFilter<"singles"> | string | null
+  tcg_id?: Prisma.UuidNullableFilter<"singles"> | string | null
   owner_id?: Prisma.UuidFilter<"singles"> | string
   borderless?: Prisma.BoolFilter<"singles"> | boolean
   cardName?: Prisma.StringNullableFilter<"singles"> | string | null
@@ -416,6 +424,7 @@ export type singlesWhereInput = {
   conditions?: Prisma.XOR<Prisma.ConditionsNullableScalarRelationFilter, Prisma.conditionsWhereInput> | null
   languages?: Prisma.XOR<Prisma.LanguagesNullableScalarRelationFilter, Prisma.languagesWhereInput> | null
   rarities?: Prisma.XOR<Prisma.RaritiesNullableScalarRelationFilter, Prisma.raritiesWhereInput> | null
+  tcgs?: Prisma.XOR<Prisma.TcgsNullableScalarRelationFilter, Prisma.tcgsWhereInput> | null
   owner?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
   tags?: Prisma.Single_tagsListRelationFilter
   stockItems?: Prisma.Stock_itemsListRelationFilter
@@ -432,6 +441,7 @@ export type singlesOrderByWithRelationInput = {
   condition_id?: Prisma.SortOrderInput | Prisma.SortOrder
   language_id?: Prisma.SortOrderInput | Prisma.SortOrder
   rarity_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  tcg_id?: Prisma.SortOrderInput | Prisma.SortOrder
   owner_id?: Prisma.SortOrder
   borderless?: Prisma.SortOrder
   cardName?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -458,6 +468,7 @@ export type singlesOrderByWithRelationInput = {
   conditions?: Prisma.conditionsOrderByWithRelationInput
   languages?: Prisma.languagesOrderByWithRelationInput
   rarities?: Prisma.raritiesOrderByWithRelationInput
+  tcgs?: Prisma.tcgsOrderByWithRelationInput
   owner?: Prisma.usersOrderByWithRelationInput
   tags?: Prisma.single_tagsOrderByRelationAggregateInput
   stockItems?: Prisma.stock_itemsOrderByRelationAggregateInput
@@ -478,6 +489,7 @@ export type singlesWhereUniqueInput = Prisma.AtLeast<{
   condition_id?: Prisma.UuidNullableFilter<"singles"> | string | null
   language_id?: Prisma.UuidNullableFilter<"singles"> | string | null
   rarity_id?: Prisma.UuidNullableFilter<"singles"> | string | null
+  tcg_id?: Prisma.UuidNullableFilter<"singles"> | string | null
   owner_id?: Prisma.UuidFilter<"singles"> | string
   borderless?: Prisma.BoolFilter<"singles"> | boolean
   cardName?: Prisma.StringNullableFilter<"singles"> | string | null
@@ -503,6 +515,7 @@ export type singlesWhereUniqueInput = Prisma.AtLeast<{
   conditions?: Prisma.XOR<Prisma.ConditionsNullableScalarRelationFilter, Prisma.conditionsWhereInput> | null
   languages?: Prisma.XOR<Prisma.LanguagesNullableScalarRelationFilter, Prisma.languagesWhereInput> | null
   rarities?: Prisma.XOR<Prisma.RaritiesNullableScalarRelationFilter, Prisma.raritiesWhereInput> | null
+  tcgs?: Prisma.XOR<Prisma.TcgsNullableScalarRelationFilter, Prisma.tcgsWhereInput> | null
   owner?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
   tags?: Prisma.Single_tagsListRelationFilter
   stockItems?: Prisma.Stock_itemsListRelationFilter
@@ -519,6 +532,7 @@ export type singlesOrderByWithAggregationInput = {
   condition_id?: Prisma.SortOrderInput | Prisma.SortOrder
   language_id?: Prisma.SortOrderInput | Prisma.SortOrder
   rarity_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  tcg_id?: Prisma.SortOrderInput | Prisma.SortOrder
   owner_id?: Prisma.SortOrder
   borderless?: Prisma.SortOrder
   cardName?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -559,6 +573,7 @@ export type singlesScalarWhereWithAggregatesInput = {
   condition_id?: Prisma.UuidNullableWithAggregatesFilter<"singles"> | string | null
   language_id?: Prisma.UuidNullableWithAggregatesFilter<"singles"> | string | null
   rarity_id?: Prisma.UuidNullableWithAggregatesFilter<"singles"> | string | null
+  tcg_id?: Prisma.UuidNullableWithAggregatesFilter<"singles"> | string | null
   owner_id?: Prisma.UuidWithAggregatesFilter<"singles"> | string
   borderless?: Prisma.BoolWithAggregatesFilter<"singles"> | boolean
   cardName?: Prisma.StringNullableWithAggregatesFilter<"singles"> | string | null
@@ -612,6 +627,7 @@ export type singlesCreateInput = {
   conditions?: Prisma.conditionsCreateNestedOneWithoutSinglesInput
   languages?: Prisma.languagesCreateNestedOneWithoutSinglesInput
   rarities?: Prisma.raritiesCreateNestedOneWithoutSinglesInput
+  tcgs?: Prisma.tcgsCreateNestedOneWithoutSinglesInput
   owner: Prisma.usersCreateNestedOneWithoutOwnedSinglesInput
   tags?: Prisma.single_tagsCreateNestedManyWithoutSinglesInput
   stockItems?: Prisma.stock_itemsCreateNestedManyWithoutSinglesInput
@@ -628,6 +644,7 @@ export type singlesUncheckedCreateInput = {
   condition_id?: string | null
   language_id?: string | null
   rarity_id?: string | null
+  tcg_id?: string | null
   owner_id: string
   borderless?: boolean
   cardName?: string | null
@@ -686,6 +703,7 @@ export type singlesUpdateInput = {
   conditions?: Prisma.conditionsUpdateOneWithoutSinglesNestedInput
   languages?: Prisma.languagesUpdateOneWithoutSinglesNestedInput
   rarities?: Prisma.raritiesUpdateOneWithoutSinglesNestedInput
+  tcgs?: Prisma.tcgsUpdateOneWithoutSinglesNestedInput
   owner?: Prisma.usersUpdateOneRequiredWithoutOwnedSinglesNestedInput
   tags?: Prisma.single_tagsUpdateManyWithoutSinglesNestedInput
   stockItems?: Prisma.stock_itemsUpdateManyWithoutSinglesNestedInput
@@ -702,6 +720,7 @@ export type singlesUncheckedUpdateInput = {
   condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcg_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   owner_id?: Prisma.StringFieldUpdateOperationsInput | string
   borderless?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -739,6 +758,7 @@ export type singlesCreateManyInput = {
   condition_id?: string | null
   language_id?: string | null
   rarity_id?: string | null
+  tcg_id?: string | null
   owner_id: string
   borderless?: boolean
   cardName?: string | null
@@ -798,6 +818,7 @@ export type singlesUncheckedUpdateManyInput = {
   condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcg_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   owner_id?: Prisma.StringFieldUpdateOperationsInput | string
   borderless?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -848,6 +869,7 @@ export type singlesCountOrderByAggregateInput = {
   condition_id?: Prisma.SortOrder
   language_id?: Prisma.SortOrder
   rarity_id?: Prisma.SortOrder
+  tcg_id?: Prisma.SortOrder
   owner_id?: Prisma.SortOrder
   borderless?: Prisma.SortOrder
   cardName?: Prisma.SortOrder
@@ -886,6 +908,7 @@ export type singlesMaxOrderByAggregateInput = {
   condition_id?: Prisma.SortOrder
   language_id?: Prisma.SortOrder
   rarity_id?: Prisma.SortOrder
+  tcg_id?: Prisma.SortOrder
   owner_id?: Prisma.SortOrder
   borderless?: Prisma.SortOrder
   cardName?: Prisma.SortOrder
@@ -917,6 +940,7 @@ export type singlesMinOrderByAggregateInput = {
   condition_id?: Prisma.SortOrder
   language_id?: Prisma.SortOrder
   rarity_id?: Prisma.SortOrder
+  tcg_id?: Prisma.SortOrder
   owner_id?: Prisma.SortOrder
   borderless?: Prisma.SortOrder
   cardName?: Prisma.SortOrder
@@ -1161,6 +1185,48 @@ export type singlesUncheckedUpdateManyWithoutRaritiesNestedInput = {
   deleteMany?: Prisma.singlesScalarWhereInput | Prisma.singlesScalarWhereInput[]
 }
 
+export type singlesCreateNestedManyWithoutTcgsInput = {
+  create?: Prisma.XOR<Prisma.singlesCreateWithoutTcgsInput, Prisma.singlesUncheckedCreateWithoutTcgsInput> | Prisma.singlesCreateWithoutTcgsInput[] | Prisma.singlesUncheckedCreateWithoutTcgsInput[]
+  connectOrCreate?: Prisma.singlesCreateOrConnectWithoutTcgsInput | Prisma.singlesCreateOrConnectWithoutTcgsInput[]
+  createMany?: Prisma.singlesCreateManyTcgsInputEnvelope
+  connect?: Prisma.singlesWhereUniqueInput | Prisma.singlesWhereUniqueInput[]
+}
+
+export type singlesUncheckedCreateNestedManyWithoutTcgsInput = {
+  create?: Prisma.XOR<Prisma.singlesCreateWithoutTcgsInput, Prisma.singlesUncheckedCreateWithoutTcgsInput> | Prisma.singlesCreateWithoutTcgsInput[] | Prisma.singlesUncheckedCreateWithoutTcgsInput[]
+  connectOrCreate?: Prisma.singlesCreateOrConnectWithoutTcgsInput | Prisma.singlesCreateOrConnectWithoutTcgsInput[]
+  createMany?: Prisma.singlesCreateManyTcgsInputEnvelope
+  connect?: Prisma.singlesWhereUniqueInput | Prisma.singlesWhereUniqueInput[]
+}
+
+export type singlesUpdateManyWithoutTcgsNestedInput = {
+  create?: Prisma.XOR<Prisma.singlesCreateWithoutTcgsInput, Prisma.singlesUncheckedCreateWithoutTcgsInput> | Prisma.singlesCreateWithoutTcgsInput[] | Prisma.singlesUncheckedCreateWithoutTcgsInput[]
+  connectOrCreate?: Prisma.singlesCreateOrConnectWithoutTcgsInput | Prisma.singlesCreateOrConnectWithoutTcgsInput[]
+  upsert?: Prisma.singlesUpsertWithWhereUniqueWithoutTcgsInput | Prisma.singlesUpsertWithWhereUniqueWithoutTcgsInput[]
+  createMany?: Prisma.singlesCreateManyTcgsInputEnvelope
+  set?: Prisma.singlesWhereUniqueInput | Prisma.singlesWhereUniqueInput[]
+  disconnect?: Prisma.singlesWhereUniqueInput | Prisma.singlesWhereUniqueInput[]
+  delete?: Prisma.singlesWhereUniqueInput | Prisma.singlesWhereUniqueInput[]
+  connect?: Prisma.singlesWhereUniqueInput | Prisma.singlesWhereUniqueInput[]
+  update?: Prisma.singlesUpdateWithWhereUniqueWithoutTcgsInput | Prisma.singlesUpdateWithWhereUniqueWithoutTcgsInput[]
+  updateMany?: Prisma.singlesUpdateManyWithWhereWithoutTcgsInput | Prisma.singlesUpdateManyWithWhereWithoutTcgsInput[]
+  deleteMany?: Prisma.singlesScalarWhereInput | Prisma.singlesScalarWhereInput[]
+}
+
+export type singlesUncheckedUpdateManyWithoutTcgsNestedInput = {
+  create?: Prisma.XOR<Prisma.singlesCreateWithoutTcgsInput, Prisma.singlesUncheckedCreateWithoutTcgsInput> | Prisma.singlesCreateWithoutTcgsInput[] | Prisma.singlesUncheckedCreateWithoutTcgsInput[]
+  connectOrCreate?: Prisma.singlesCreateOrConnectWithoutTcgsInput | Prisma.singlesCreateOrConnectWithoutTcgsInput[]
+  upsert?: Prisma.singlesUpsertWithWhereUniqueWithoutTcgsInput | Prisma.singlesUpsertWithWhereUniqueWithoutTcgsInput[]
+  createMany?: Prisma.singlesCreateManyTcgsInputEnvelope
+  set?: Prisma.singlesWhereUniqueInput | Prisma.singlesWhereUniqueInput[]
+  disconnect?: Prisma.singlesWhereUniqueInput | Prisma.singlesWhereUniqueInput[]
+  delete?: Prisma.singlesWhereUniqueInput | Prisma.singlesWhereUniqueInput[]
+  connect?: Prisma.singlesWhereUniqueInput | Prisma.singlesWhereUniqueInput[]
+  update?: Prisma.singlesUpdateWithWhereUniqueWithoutTcgsInput | Prisma.singlesUpdateWithWhereUniqueWithoutTcgsInput[]
+  updateMany?: Prisma.singlesUpdateManyWithWhereWithoutTcgsInput | Prisma.singlesUpdateManyWithWhereWithoutTcgsInput[]
+  deleteMany?: Prisma.singlesScalarWhereInput | Prisma.singlesScalarWhereInput[]
+}
+
 export type singlesCreatemetadataInput = {
   set: string[]
 }
@@ -1285,6 +1351,7 @@ export type singlesCreateWithoutOwnerInput = {
   conditions?: Prisma.conditionsCreateNestedOneWithoutSinglesInput
   languages?: Prisma.languagesCreateNestedOneWithoutSinglesInput
   rarities?: Prisma.raritiesCreateNestedOneWithoutSinglesInput
+  tcgs?: Prisma.tcgsCreateNestedOneWithoutSinglesInput
   tags?: Prisma.single_tagsCreateNestedManyWithoutSinglesInput
   stockItems?: Prisma.stock_itemsCreateNestedManyWithoutSinglesInput
   cartItems?: Prisma.cart_itemsCreateNestedManyWithoutSinglesInput
@@ -1300,6 +1367,7 @@ export type singlesUncheckedCreateWithoutOwnerInput = {
   condition_id?: string | null
   language_id?: string | null
   rarity_id?: string | null
+  tcg_id?: string | null
   borderless?: boolean
   cardName?: string | null
   cardNumber?: string | null
@@ -1365,6 +1433,7 @@ export type singlesScalarWhereInput = {
   condition_id?: Prisma.UuidNullableFilter<"singles"> | string | null
   language_id?: Prisma.UuidNullableFilter<"singles"> | string | null
   rarity_id?: Prisma.UuidNullableFilter<"singles"> | string | null
+  tcg_id?: Prisma.UuidNullableFilter<"singles"> | string | null
   owner_id?: Prisma.UuidFilter<"singles"> | string
   borderless?: Prisma.BoolFilter<"singles"> | boolean
   cardName?: Prisma.StringNullableFilter<"singles"> | string | null
@@ -1417,6 +1486,7 @@ export type singlesCreateWithoutCategoriesInput = {
   conditions?: Prisma.conditionsCreateNestedOneWithoutSinglesInput
   languages?: Prisma.languagesCreateNestedOneWithoutSinglesInput
   rarities?: Prisma.raritiesCreateNestedOneWithoutSinglesInput
+  tcgs?: Prisma.tcgsCreateNestedOneWithoutSinglesInput
   owner: Prisma.usersCreateNestedOneWithoutOwnedSinglesInput
   tags?: Prisma.single_tagsCreateNestedManyWithoutSinglesInput
   stockItems?: Prisma.stock_itemsCreateNestedManyWithoutSinglesInput
@@ -1432,6 +1502,7 @@ export type singlesUncheckedCreateWithoutCategoriesInput = {
   condition_id?: string | null
   language_id?: string | null
   rarity_id?: string | null
+  tcg_id?: string | null
   owner_id: string
   borderless?: boolean
   cardName?: string | null
@@ -1515,6 +1586,7 @@ export type singlesCreateWithoutConditionsInput = {
   categories: Prisma.categoriesCreateNestedOneWithoutSinglesInput
   languages?: Prisma.languagesCreateNestedOneWithoutSinglesInput
   rarities?: Prisma.raritiesCreateNestedOneWithoutSinglesInput
+  tcgs?: Prisma.tcgsCreateNestedOneWithoutSinglesInput
   owner: Prisma.usersCreateNestedOneWithoutOwnedSinglesInput
   tags?: Prisma.single_tagsCreateNestedManyWithoutSinglesInput
   stockItems?: Prisma.stock_itemsCreateNestedManyWithoutSinglesInput
@@ -1530,6 +1602,7 @@ export type singlesUncheckedCreateWithoutConditionsInput = {
   category_id: string
   language_id?: string | null
   rarity_id?: string | null
+  tcg_id?: string | null
   owner_id: string
   borderless?: boolean
   cardName?: string | null
@@ -1613,6 +1686,7 @@ export type singlesCreateWithoutLanguagesInput = {
   categories: Prisma.categoriesCreateNestedOneWithoutSinglesInput
   conditions?: Prisma.conditionsCreateNestedOneWithoutSinglesInput
   rarities?: Prisma.raritiesCreateNestedOneWithoutSinglesInput
+  tcgs?: Prisma.tcgsCreateNestedOneWithoutSinglesInput
   owner: Prisma.usersCreateNestedOneWithoutOwnedSinglesInput
   tags?: Prisma.single_tagsCreateNestedManyWithoutSinglesInput
   stockItems?: Prisma.stock_itemsCreateNestedManyWithoutSinglesInput
@@ -1628,6 +1702,7 @@ export type singlesUncheckedCreateWithoutLanguagesInput = {
   category_id: string
   condition_id?: string | null
   rarity_id?: string | null
+  tcg_id?: string | null
   owner_id: string
   borderless?: boolean
   cardName?: string | null
@@ -1711,6 +1786,7 @@ export type singlesCreateWithoutRaritiesInput = {
   categories: Prisma.categoriesCreateNestedOneWithoutSinglesInput
   conditions?: Prisma.conditionsCreateNestedOneWithoutSinglesInput
   languages?: Prisma.languagesCreateNestedOneWithoutSinglesInput
+  tcgs?: Prisma.tcgsCreateNestedOneWithoutSinglesInput
   owner: Prisma.usersCreateNestedOneWithoutOwnedSinglesInput
   tags?: Prisma.single_tagsCreateNestedManyWithoutSinglesInput
   stockItems?: Prisma.stock_itemsCreateNestedManyWithoutSinglesInput
@@ -1726,6 +1802,7 @@ export type singlesUncheckedCreateWithoutRaritiesInput = {
   category_id: string
   condition_id?: string | null
   language_id?: string | null
+  tcg_id?: string | null
   owner_id: string
   borderless?: boolean
   cardName?: string | null
@@ -1781,7 +1858,7 @@ export type singlesUpdateManyWithWhereWithoutRaritiesInput = {
   data: Prisma.XOR<Prisma.singlesUpdateManyMutationInput, Prisma.singlesUncheckedUpdateManyWithoutRaritiesInput>
 }
 
-export type singlesCreateWithoutTagsInput = {
+export type singlesCreateWithoutTcgsInput = {
   id?: string
   name: string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1811,6 +1888,107 @@ export type singlesCreateWithoutTagsInput = {
   languages?: Prisma.languagesCreateNestedOneWithoutSinglesInput
   rarities?: Prisma.raritiesCreateNestedOneWithoutSinglesInput
   owner: Prisma.usersCreateNestedOneWithoutOwnedSinglesInput
+  tags?: Prisma.single_tagsCreateNestedManyWithoutSinglesInput
+  stockItems?: Prisma.stock_itemsCreateNestedManyWithoutSinglesInput
+  cartItems?: Prisma.cart_itemsCreateNestedManyWithoutSinglesInput
+  orderItems?: Prisma.order_itemsCreateNestedManyWithoutSinglesInput
+  listings?: Prisma.listingsCreateNestedManyWithoutSinglesInput
+}
+
+export type singlesUncheckedCreateWithoutTcgsInput = {
+  id?: string
+  name: string
+  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  category_id: string
+  condition_id?: string | null
+  language_id?: string | null
+  rarity_id?: string | null
+  owner_id: string
+  borderless?: boolean
+  cardName?: string | null
+  cardNumber?: string | null
+  expansion?: string | null
+  extendedArt?: boolean
+  finalPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  foil?: boolean
+  hareruyaId?: string | null
+  img: string
+  isLocalInventory?: boolean
+  link?: string | null
+  metadata?: Prisma.singlesCreatemetadataInput | string[]
+  prerelease?: boolean
+  premierPlay?: boolean
+  showImportacionBadge?: boolean
+  source?: string | null
+  stock?: number
+  surgeFoil?: boolean
+  variant?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  tags?: Prisma.single_tagsUncheckedCreateNestedManyWithoutSinglesInput
+  stockItems?: Prisma.stock_itemsUncheckedCreateNestedManyWithoutSinglesInput
+  cartItems?: Prisma.cart_itemsUncheckedCreateNestedManyWithoutSinglesInput
+  orderItems?: Prisma.order_itemsUncheckedCreateNestedManyWithoutSinglesInput
+  listings?: Prisma.listingsUncheckedCreateNestedManyWithoutSinglesInput
+}
+
+export type singlesCreateOrConnectWithoutTcgsInput = {
+  where: Prisma.singlesWhereUniqueInput
+  create: Prisma.XOR<Prisma.singlesCreateWithoutTcgsInput, Prisma.singlesUncheckedCreateWithoutTcgsInput>
+}
+
+export type singlesCreateManyTcgsInputEnvelope = {
+  data: Prisma.singlesCreateManyTcgsInput | Prisma.singlesCreateManyTcgsInput[]
+  skipDuplicates?: boolean
+}
+
+export type singlesUpsertWithWhereUniqueWithoutTcgsInput = {
+  where: Prisma.singlesWhereUniqueInput
+  update: Prisma.XOR<Prisma.singlesUpdateWithoutTcgsInput, Prisma.singlesUncheckedUpdateWithoutTcgsInput>
+  create: Prisma.XOR<Prisma.singlesCreateWithoutTcgsInput, Prisma.singlesUncheckedCreateWithoutTcgsInput>
+}
+
+export type singlesUpdateWithWhereUniqueWithoutTcgsInput = {
+  where: Prisma.singlesWhereUniqueInput
+  data: Prisma.XOR<Prisma.singlesUpdateWithoutTcgsInput, Prisma.singlesUncheckedUpdateWithoutTcgsInput>
+}
+
+export type singlesUpdateManyWithWhereWithoutTcgsInput = {
+  where: Prisma.singlesScalarWhereInput
+  data: Prisma.XOR<Prisma.singlesUpdateManyMutationInput, Prisma.singlesUncheckedUpdateManyWithoutTcgsInput>
+}
+
+export type singlesCreateWithoutTagsInput = {
+  id?: string
+  name: string
+  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  borderless?: boolean
+  cardName?: string | null
+  cardNumber?: string | null
+  expansion?: string | null
+  extendedArt?: boolean
+  finalPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  foil?: boolean
+  hareruyaId?: string | null
+  img: string
+  isLocalInventory?: boolean
+  link?: string | null
+  metadata?: Prisma.singlesCreatemetadataInput | string[]
+  prerelease?: boolean
+  premierPlay?: boolean
+  showImportacionBadge?: boolean
+  source?: string | null
+  stock?: number
+  surgeFoil?: boolean
+  variant?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  categories: Prisma.categoriesCreateNestedOneWithoutSinglesInput
+  conditions?: Prisma.conditionsCreateNestedOneWithoutSinglesInput
+  languages?: Prisma.languagesCreateNestedOneWithoutSinglesInput
+  rarities?: Prisma.raritiesCreateNestedOneWithoutSinglesInput
+  tcgs?: Prisma.tcgsCreateNestedOneWithoutSinglesInput
+  owner: Prisma.usersCreateNestedOneWithoutOwnedSinglesInput
   stockItems?: Prisma.stock_itemsCreateNestedManyWithoutSinglesInput
   cartItems?: Prisma.cart_itemsCreateNestedManyWithoutSinglesInput
   orderItems?: Prisma.order_itemsCreateNestedManyWithoutSinglesInput
@@ -1825,6 +2003,7 @@ export type singlesUncheckedCreateWithoutTagsInput = {
   condition_id?: string | null
   language_id?: string | null
   rarity_id?: string | null
+  tcg_id?: string | null
   owner_id: string
   borderless?: boolean
   cardName?: string | null
@@ -1898,6 +2077,7 @@ export type singlesUpdateWithoutTagsInput = {
   conditions?: Prisma.conditionsUpdateOneWithoutSinglesNestedInput
   languages?: Prisma.languagesUpdateOneWithoutSinglesNestedInput
   rarities?: Prisma.raritiesUpdateOneWithoutSinglesNestedInput
+  tcgs?: Prisma.tcgsUpdateOneWithoutSinglesNestedInput
   owner?: Prisma.usersUpdateOneRequiredWithoutOwnedSinglesNestedInput
   stockItems?: Prisma.stock_itemsUpdateManyWithoutSinglesNestedInput
   cartItems?: Prisma.cart_itemsUpdateManyWithoutSinglesNestedInput
@@ -1913,6 +2093,7 @@ export type singlesUncheckedUpdateWithoutTagsInput = {
   condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcg_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   owner_id?: Prisma.StringFieldUpdateOperationsInput | string
   borderless?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1970,6 +2151,7 @@ export type singlesCreateWithoutStockItemsInput = {
   conditions?: Prisma.conditionsCreateNestedOneWithoutSinglesInput
   languages?: Prisma.languagesCreateNestedOneWithoutSinglesInput
   rarities?: Prisma.raritiesCreateNestedOneWithoutSinglesInput
+  tcgs?: Prisma.tcgsCreateNestedOneWithoutSinglesInput
   owner: Prisma.usersCreateNestedOneWithoutOwnedSinglesInput
   tags?: Prisma.single_tagsCreateNestedManyWithoutSinglesInput
   cartItems?: Prisma.cart_itemsCreateNestedManyWithoutSinglesInput
@@ -1985,6 +2167,7 @@ export type singlesUncheckedCreateWithoutStockItemsInput = {
   condition_id?: string | null
   language_id?: string | null
   rarity_id?: string | null
+  tcg_id?: string | null
   owner_id: string
   borderless?: boolean
   cardName?: string | null
@@ -2058,6 +2241,7 @@ export type singlesUpdateWithoutStockItemsInput = {
   conditions?: Prisma.conditionsUpdateOneWithoutSinglesNestedInput
   languages?: Prisma.languagesUpdateOneWithoutSinglesNestedInput
   rarities?: Prisma.raritiesUpdateOneWithoutSinglesNestedInput
+  tcgs?: Prisma.tcgsUpdateOneWithoutSinglesNestedInput
   owner?: Prisma.usersUpdateOneRequiredWithoutOwnedSinglesNestedInput
   tags?: Prisma.single_tagsUpdateManyWithoutSinglesNestedInput
   cartItems?: Prisma.cart_itemsUpdateManyWithoutSinglesNestedInput
@@ -2073,6 +2257,7 @@ export type singlesUncheckedUpdateWithoutStockItemsInput = {
   condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcg_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   owner_id?: Prisma.StringFieldUpdateOperationsInput | string
   borderless?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2130,6 +2315,7 @@ export type singlesCreateWithoutCartItemsInput = {
   conditions?: Prisma.conditionsCreateNestedOneWithoutSinglesInput
   languages?: Prisma.languagesCreateNestedOneWithoutSinglesInput
   rarities?: Prisma.raritiesCreateNestedOneWithoutSinglesInput
+  tcgs?: Prisma.tcgsCreateNestedOneWithoutSinglesInput
   owner: Prisma.usersCreateNestedOneWithoutOwnedSinglesInput
   tags?: Prisma.single_tagsCreateNestedManyWithoutSinglesInput
   stockItems?: Prisma.stock_itemsCreateNestedManyWithoutSinglesInput
@@ -2145,6 +2331,7 @@ export type singlesUncheckedCreateWithoutCartItemsInput = {
   condition_id?: string | null
   language_id?: string | null
   rarity_id?: string | null
+  tcg_id?: string | null
   owner_id: string
   borderless?: boolean
   cardName?: string | null
@@ -2218,6 +2405,7 @@ export type singlesUpdateWithoutCartItemsInput = {
   conditions?: Prisma.conditionsUpdateOneWithoutSinglesNestedInput
   languages?: Prisma.languagesUpdateOneWithoutSinglesNestedInput
   rarities?: Prisma.raritiesUpdateOneWithoutSinglesNestedInput
+  tcgs?: Prisma.tcgsUpdateOneWithoutSinglesNestedInput
   owner?: Prisma.usersUpdateOneRequiredWithoutOwnedSinglesNestedInput
   tags?: Prisma.single_tagsUpdateManyWithoutSinglesNestedInput
   stockItems?: Prisma.stock_itemsUpdateManyWithoutSinglesNestedInput
@@ -2233,6 +2421,7 @@ export type singlesUncheckedUpdateWithoutCartItemsInput = {
   condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcg_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   owner_id?: Prisma.StringFieldUpdateOperationsInput | string
   borderless?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2290,6 +2479,7 @@ export type singlesCreateWithoutOrderItemsInput = {
   conditions?: Prisma.conditionsCreateNestedOneWithoutSinglesInput
   languages?: Prisma.languagesCreateNestedOneWithoutSinglesInput
   rarities?: Prisma.raritiesCreateNestedOneWithoutSinglesInput
+  tcgs?: Prisma.tcgsCreateNestedOneWithoutSinglesInput
   owner: Prisma.usersCreateNestedOneWithoutOwnedSinglesInput
   tags?: Prisma.single_tagsCreateNestedManyWithoutSinglesInput
   stockItems?: Prisma.stock_itemsCreateNestedManyWithoutSinglesInput
@@ -2305,6 +2495,7 @@ export type singlesUncheckedCreateWithoutOrderItemsInput = {
   condition_id?: string | null
   language_id?: string | null
   rarity_id?: string | null
+  tcg_id?: string | null
   owner_id: string
   borderless?: boolean
   cardName?: string | null
@@ -2378,6 +2569,7 @@ export type singlesUpdateWithoutOrderItemsInput = {
   conditions?: Prisma.conditionsUpdateOneWithoutSinglesNestedInput
   languages?: Prisma.languagesUpdateOneWithoutSinglesNestedInput
   rarities?: Prisma.raritiesUpdateOneWithoutSinglesNestedInput
+  tcgs?: Prisma.tcgsUpdateOneWithoutSinglesNestedInput
   owner?: Prisma.usersUpdateOneRequiredWithoutOwnedSinglesNestedInput
   tags?: Prisma.single_tagsUpdateManyWithoutSinglesNestedInput
   stockItems?: Prisma.stock_itemsUpdateManyWithoutSinglesNestedInput
@@ -2393,6 +2585,7 @@ export type singlesUncheckedUpdateWithoutOrderItemsInput = {
   condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcg_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   owner_id?: Prisma.StringFieldUpdateOperationsInput | string
   borderless?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2450,6 +2643,7 @@ export type singlesCreateWithoutListingsInput = {
   conditions?: Prisma.conditionsCreateNestedOneWithoutSinglesInput
   languages?: Prisma.languagesCreateNestedOneWithoutSinglesInput
   rarities?: Prisma.raritiesCreateNestedOneWithoutSinglesInput
+  tcgs?: Prisma.tcgsCreateNestedOneWithoutSinglesInput
   owner: Prisma.usersCreateNestedOneWithoutOwnedSinglesInput
   tags?: Prisma.single_tagsCreateNestedManyWithoutSinglesInput
   stockItems?: Prisma.stock_itemsCreateNestedManyWithoutSinglesInput
@@ -2465,6 +2659,7 @@ export type singlesUncheckedCreateWithoutListingsInput = {
   condition_id?: string | null
   language_id?: string | null
   rarity_id?: string | null
+  tcg_id?: string | null
   owner_id: string
   borderless?: boolean
   cardName?: string | null
@@ -2538,6 +2733,7 @@ export type singlesUpdateWithoutListingsInput = {
   conditions?: Prisma.conditionsUpdateOneWithoutSinglesNestedInput
   languages?: Prisma.languagesUpdateOneWithoutSinglesNestedInput
   rarities?: Prisma.raritiesUpdateOneWithoutSinglesNestedInput
+  tcgs?: Prisma.tcgsUpdateOneWithoutSinglesNestedInput
   owner?: Prisma.usersUpdateOneRequiredWithoutOwnedSinglesNestedInput
   tags?: Prisma.single_tagsUpdateManyWithoutSinglesNestedInput
   stockItems?: Prisma.stock_itemsUpdateManyWithoutSinglesNestedInput
@@ -2553,6 +2749,7 @@ export type singlesUncheckedUpdateWithoutListingsInput = {
   condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcg_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   owner_id?: Prisma.StringFieldUpdateOperationsInput | string
   borderless?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2589,6 +2786,7 @@ export type singlesCreateManyOwnerInput = {
   condition_id?: string | null
   language_id?: string | null
   rarity_id?: string | null
+  tcg_id?: string | null
   borderless?: boolean
   cardName?: string | null
   cardNumber?: string | null
@@ -2641,6 +2839,7 @@ export type singlesUpdateWithoutOwnerInput = {
   conditions?: Prisma.conditionsUpdateOneWithoutSinglesNestedInput
   languages?: Prisma.languagesUpdateOneWithoutSinglesNestedInput
   rarities?: Prisma.raritiesUpdateOneWithoutSinglesNestedInput
+  tcgs?: Prisma.tcgsUpdateOneWithoutSinglesNestedInput
   tags?: Prisma.single_tagsUpdateManyWithoutSinglesNestedInput
   stockItems?: Prisma.stock_itemsUpdateManyWithoutSinglesNestedInput
   cartItems?: Prisma.cart_itemsUpdateManyWithoutSinglesNestedInput
@@ -2656,6 +2855,7 @@ export type singlesUncheckedUpdateWithoutOwnerInput = {
   condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcg_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   borderless?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cardNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2692,6 +2892,7 @@ export type singlesUncheckedUpdateManyWithoutOwnerInput = {
   condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcg_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   borderless?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cardNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2722,6 +2923,7 @@ export type singlesCreateManyCategoriesInput = {
   condition_id?: string | null
   language_id?: string | null
   rarity_id?: string | null
+  tcg_id?: string | null
   owner_id: string
   borderless?: boolean
   cardName?: string | null
@@ -2774,6 +2976,7 @@ export type singlesUpdateWithoutCategoriesInput = {
   conditions?: Prisma.conditionsUpdateOneWithoutSinglesNestedInput
   languages?: Prisma.languagesUpdateOneWithoutSinglesNestedInput
   rarities?: Prisma.raritiesUpdateOneWithoutSinglesNestedInput
+  tcgs?: Prisma.tcgsUpdateOneWithoutSinglesNestedInput
   owner?: Prisma.usersUpdateOneRequiredWithoutOwnedSinglesNestedInput
   tags?: Prisma.single_tagsUpdateManyWithoutSinglesNestedInput
   stockItems?: Prisma.stock_itemsUpdateManyWithoutSinglesNestedInput
@@ -2789,6 +2992,7 @@ export type singlesUncheckedUpdateWithoutCategoriesInput = {
   condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcg_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   owner_id?: Prisma.StringFieldUpdateOperationsInput | string
   borderless?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2825,6 +3029,7 @@ export type singlesUncheckedUpdateManyWithoutCategoriesInput = {
   condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcg_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   owner_id?: Prisma.StringFieldUpdateOperationsInput | string
   borderless?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2856,6 +3061,7 @@ export type singlesCreateManyConditionsInput = {
   category_id: string
   language_id?: string | null
   rarity_id?: string | null
+  tcg_id?: string | null
   owner_id: string
   borderless?: boolean
   cardName?: string | null
@@ -2908,6 +3114,7 @@ export type singlesUpdateWithoutConditionsInput = {
   categories?: Prisma.categoriesUpdateOneRequiredWithoutSinglesNestedInput
   languages?: Prisma.languagesUpdateOneWithoutSinglesNestedInput
   rarities?: Prisma.raritiesUpdateOneWithoutSinglesNestedInput
+  tcgs?: Prisma.tcgsUpdateOneWithoutSinglesNestedInput
   owner?: Prisma.usersUpdateOneRequiredWithoutOwnedSinglesNestedInput
   tags?: Prisma.single_tagsUpdateManyWithoutSinglesNestedInput
   stockItems?: Prisma.stock_itemsUpdateManyWithoutSinglesNestedInput
@@ -2923,6 +3130,7 @@ export type singlesUncheckedUpdateWithoutConditionsInput = {
   category_id?: Prisma.StringFieldUpdateOperationsInput | string
   language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcg_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   owner_id?: Prisma.StringFieldUpdateOperationsInput | string
   borderless?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2959,6 +3167,7 @@ export type singlesUncheckedUpdateManyWithoutConditionsInput = {
   category_id?: Prisma.StringFieldUpdateOperationsInput | string
   language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcg_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   owner_id?: Prisma.StringFieldUpdateOperationsInput | string
   borderless?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2990,6 +3199,7 @@ export type singlesCreateManyLanguagesInput = {
   category_id: string
   condition_id?: string | null
   rarity_id?: string | null
+  tcg_id?: string | null
   owner_id: string
   borderless?: boolean
   cardName?: string | null
@@ -3042,6 +3252,7 @@ export type singlesUpdateWithoutLanguagesInput = {
   categories?: Prisma.categoriesUpdateOneRequiredWithoutSinglesNestedInput
   conditions?: Prisma.conditionsUpdateOneWithoutSinglesNestedInput
   rarities?: Prisma.raritiesUpdateOneWithoutSinglesNestedInput
+  tcgs?: Prisma.tcgsUpdateOneWithoutSinglesNestedInput
   owner?: Prisma.usersUpdateOneRequiredWithoutOwnedSinglesNestedInput
   tags?: Prisma.single_tagsUpdateManyWithoutSinglesNestedInput
   stockItems?: Prisma.stock_itemsUpdateManyWithoutSinglesNestedInput
@@ -3057,6 +3268,7 @@ export type singlesUncheckedUpdateWithoutLanguagesInput = {
   category_id?: Prisma.StringFieldUpdateOperationsInput | string
   condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcg_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   owner_id?: Prisma.StringFieldUpdateOperationsInput | string
   borderless?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3093,6 +3305,7 @@ export type singlesUncheckedUpdateManyWithoutLanguagesInput = {
   category_id?: Prisma.StringFieldUpdateOperationsInput | string
   condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcg_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   owner_id?: Prisma.StringFieldUpdateOperationsInput | string
   borderless?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3124,6 +3337,7 @@ export type singlesCreateManyRaritiesInput = {
   category_id: string
   condition_id?: string | null
   language_id?: string | null
+  tcg_id?: string | null
   owner_id: string
   borderless?: boolean
   cardName?: string | null
@@ -3176,6 +3390,7 @@ export type singlesUpdateWithoutRaritiesInput = {
   categories?: Prisma.categoriesUpdateOneRequiredWithoutSinglesNestedInput
   conditions?: Prisma.conditionsUpdateOneWithoutSinglesNestedInput
   languages?: Prisma.languagesUpdateOneWithoutSinglesNestedInput
+  tcgs?: Prisma.tcgsUpdateOneWithoutSinglesNestedInput
   owner?: Prisma.usersUpdateOneRequiredWithoutOwnedSinglesNestedInput
   tags?: Prisma.single_tagsUpdateManyWithoutSinglesNestedInput
   stockItems?: Prisma.stock_itemsUpdateManyWithoutSinglesNestedInput
@@ -3191,6 +3406,7 @@ export type singlesUncheckedUpdateWithoutRaritiesInput = {
   category_id?: Prisma.StringFieldUpdateOperationsInput | string
   condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcg_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   owner_id?: Prisma.StringFieldUpdateOperationsInput | string
   borderless?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3227,6 +3443,145 @@ export type singlesUncheckedUpdateManyWithoutRaritiesInput = {
   category_id?: Prisma.StringFieldUpdateOperationsInput | string
   condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcg_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  owner_id?: Prisma.StringFieldUpdateOperationsInput | string
+  borderless?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  cardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cardNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expansion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  extendedArt?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  finalPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruyaId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  img?: Prisma.StringFieldUpdateOperationsInput | string
+  isLocalInventory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.singlesUpdatemetadataInput | string[]
+  prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
+  surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type singlesCreateManyTcgsInput = {
+  id?: string
+  name: string
+  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  category_id: string
+  condition_id?: string | null
+  language_id?: string | null
+  rarity_id?: string | null
+  owner_id: string
+  borderless?: boolean
+  cardName?: string | null
+  cardNumber?: string | null
+  expansion?: string | null
+  extendedArt?: boolean
+  finalPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  foil?: boolean
+  hareruyaId?: string | null
+  img: string
+  isLocalInventory?: boolean
+  link?: string | null
+  metadata?: Prisma.singlesCreatemetadataInput | string[]
+  prerelease?: boolean
+  premierPlay?: boolean
+  showImportacionBadge?: boolean
+  source?: string | null
+  stock?: number
+  surgeFoil?: boolean
+  variant?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+}
+
+export type singlesUpdateWithoutTcgsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  borderless?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  cardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cardNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expansion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  extendedArt?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  finalPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruyaId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  img?: Prisma.StringFieldUpdateOperationsInput | string
+  isLocalInventory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.singlesUpdatemetadataInput | string[]
+  prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
+  surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  categories?: Prisma.categoriesUpdateOneRequiredWithoutSinglesNestedInput
+  conditions?: Prisma.conditionsUpdateOneWithoutSinglesNestedInput
+  languages?: Prisma.languagesUpdateOneWithoutSinglesNestedInput
+  rarities?: Prisma.raritiesUpdateOneWithoutSinglesNestedInput
+  owner?: Prisma.usersUpdateOneRequiredWithoutOwnedSinglesNestedInput
+  tags?: Prisma.single_tagsUpdateManyWithoutSinglesNestedInput
+  stockItems?: Prisma.stock_itemsUpdateManyWithoutSinglesNestedInput
+  cartItems?: Prisma.cart_itemsUpdateManyWithoutSinglesNestedInput
+  orderItems?: Prisma.order_itemsUpdateManyWithoutSinglesNestedInput
+  listings?: Prisma.listingsUpdateManyWithoutSinglesNestedInput
+}
+
+export type singlesUncheckedUpdateWithoutTcgsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  category_id?: Prisma.StringFieldUpdateOperationsInput | string
+  condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  owner_id?: Prisma.StringFieldUpdateOperationsInput | string
+  borderless?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  cardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cardNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expansion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  extendedArt?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  finalPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  foil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruyaId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  img?: Prisma.StringFieldUpdateOperationsInput | string
+  isLocalInventory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.singlesUpdatemetadataInput | string[]
+  prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
+  surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tags?: Prisma.single_tagsUncheckedUpdateManyWithoutSinglesNestedInput
+  stockItems?: Prisma.stock_itemsUncheckedUpdateManyWithoutSinglesNestedInput
+  cartItems?: Prisma.cart_itemsUncheckedUpdateManyWithoutSinglesNestedInput
+  orderItems?: Prisma.order_itemsUncheckedUpdateManyWithoutSinglesNestedInput
+  listings?: Prisma.listingsUncheckedUpdateManyWithoutSinglesNestedInput
+}
+
+export type singlesUncheckedUpdateManyWithoutTcgsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  category_id?: Prisma.StringFieldUpdateOperationsInput | string
+  condition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rarity_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   owner_id?: Prisma.StringFieldUpdateOperationsInput | string
   borderless?: Prisma.BoolFieldUpdateOperationsInput | boolean
   cardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3326,6 +3681,7 @@ export type singlesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   condition_id?: boolean
   language_id?: boolean
   rarity_id?: boolean
+  tcg_id?: boolean
   owner_id?: boolean
   borderless?: boolean
   cardName?: boolean
@@ -3352,6 +3708,7 @@ export type singlesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   conditions?: boolean | Prisma.singles$conditionsArgs<ExtArgs>
   languages?: boolean | Prisma.singles$languagesArgs<ExtArgs>
   rarities?: boolean | Prisma.singles$raritiesArgs<ExtArgs>
+  tcgs?: boolean | Prisma.singles$tcgsArgs<ExtArgs>
   owner?: boolean | Prisma.usersDefaultArgs<ExtArgs>
   tags?: boolean | Prisma.singles$tagsArgs<ExtArgs>
   stockItems?: boolean | Prisma.singles$stockItemsArgs<ExtArgs>
@@ -3369,6 +3726,7 @@ export type singlesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   condition_id?: boolean
   language_id?: boolean
   rarity_id?: boolean
+  tcg_id?: boolean
   owner_id?: boolean
   borderless?: boolean
   cardName?: boolean
@@ -3395,6 +3753,7 @@ export type singlesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   conditions?: boolean | Prisma.singles$conditionsArgs<ExtArgs>
   languages?: boolean | Prisma.singles$languagesArgs<ExtArgs>
   rarities?: boolean | Prisma.singles$raritiesArgs<ExtArgs>
+  tcgs?: boolean | Prisma.singles$tcgsArgs<ExtArgs>
   owner?: boolean | Prisma.usersDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["singles"]>
 
@@ -3406,6 +3765,7 @@ export type singlesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   condition_id?: boolean
   language_id?: boolean
   rarity_id?: boolean
+  tcg_id?: boolean
   owner_id?: boolean
   borderless?: boolean
   cardName?: boolean
@@ -3432,6 +3792,7 @@ export type singlesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   conditions?: boolean | Prisma.singles$conditionsArgs<ExtArgs>
   languages?: boolean | Prisma.singles$languagesArgs<ExtArgs>
   rarities?: boolean | Prisma.singles$raritiesArgs<ExtArgs>
+  tcgs?: boolean | Prisma.singles$tcgsArgs<ExtArgs>
   owner?: boolean | Prisma.usersDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["singles"]>
 
@@ -3443,6 +3804,7 @@ export type singlesSelectScalar = {
   condition_id?: boolean
   language_id?: boolean
   rarity_id?: boolean
+  tcg_id?: boolean
   owner_id?: boolean
   borderless?: boolean
   cardName?: boolean
@@ -3467,12 +3829,13 @@ export type singlesSelectScalar = {
   updated_at?: boolean
 }
 
-export type singlesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "price" | "category_id" | "condition_id" | "language_id" | "rarity_id" | "owner_id" | "borderless" | "cardName" | "cardNumber" | "expansion" | "extendedArt" | "finalPrice" | "foil" | "hareruyaId" | "img" | "isLocalInventory" | "link" | "metadata" | "prerelease" | "premierPlay" | "showImportacionBadge" | "source" | "stock" | "surgeFoil" | "variant" | "created_at" | "updated_at", ExtArgs["result"]["singles"]>
+export type singlesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "price" | "category_id" | "condition_id" | "language_id" | "rarity_id" | "tcg_id" | "owner_id" | "borderless" | "cardName" | "cardNumber" | "expansion" | "extendedArt" | "finalPrice" | "foil" | "hareruyaId" | "img" | "isLocalInventory" | "link" | "metadata" | "prerelease" | "premierPlay" | "showImportacionBadge" | "source" | "stock" | "surgeFoil" | "variant" | "created_at" | "updated_at", ExtArgs["result"]["singles"]>
 export type singlesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   categories?: boolean | Prisma.categoriesDefaultArgs<ExtArgs>
   conditions?: boolean | Prisma.singles$conditionsArgs<ExtArgs>
   languages?: boolean | Prisma.singles$languagesArgs<ExtArgs>
   rarities?: boolean | Prisma.singles$raritiesArgs<ExtArgs>
+  tcgs?: boolean | Prisma.singles$tcgsArgs<ExtArgs>
   owner?: boolean | Prisma.usersDefaultArgs<ExtArgs>
   tags?: boolean | Prisma.singles$tagsArgs<ExtArgs>
   stockItems?: boolean | Prisma.singles$stockItemsArgs<ExtArgs>
@@ -3486,6 +3849,7 @@ export type singlesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   conditions?: boolean | Prisma.singles$conditionsArgs<ExtArgs>
   languages?: boolean | Prisma.singles$languagesArgs<ExtArgs>
   rarities?: boolean | Prisma.singles$raritiesArgs<ExtArgs>
+  tcgs?: boolean | Prisma.singles$tcgsArgs<ExtArgs>
   owner?: boolean | Prisma.usersDefaultArgs<ExtArgs>
 }
 export type singlesIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3493,6 +3857,7 @@ export type singlesIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   conditions?: boolean | Prisma.singles$conditionsArgs<ExtArgs>
   languages?: boolean | Prisma.singles$languagesArgs<ExtArgs>
   rarities?: boolean | Prisma.singles$raritiesArgs<ExtArgs>
+  tcgs?: boolean | Prisma.singles$tcgsArgs<ExtArgs>
   owner?: boolean | Prisma.usersDefaultArgs<ExtArgs>
 }
 
@@ -3503,6 +3868,7 @@ export type $singlesPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     conditions: Prisma.$conditionsPayload<ExtArgs> | null
     languages: Prisma.$languagesPayload<ExtArgs> | null
     rarities: Prisma.$raritiesPayload<ExtArgs> | null
+    tcgs: Prisma.$tcgsPayload<ExtArgs> | null
     owner: Prisma.$usersPayload<ExtArgs>
     tags: Prisma.$single_tagsPayload<ExtArgs>[]
     stockItems: Prisma.$stock_itemsPayload<ExtArgs>[]
@@ -3518,6 +3884,7 @@ export type $singlesPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     condition_id: string | null
     language_id: string | null
     rarity_id: string | null
+    tcg_id: string | null
     owner_id: string
     borderless: boolean
     cardName: string | null
@@ -3938,6 +4305,7 @@ export interface Prisma__singlesClient<T, Null = never, ExtArgs extends runtime.
   conditions<T extends Prisma.singles$conditionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.singles$conditionsArgs<ExtArgs>>): Prisma.Prisma__conditionsClient<runtime.Types.Result.GetResult<Prisma.$conditionsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   languages<T extends Prisma.singles$languagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.singles$languagesArgs<ExtArgs>>): Prisma.Prisma__languagesClient<runtime.Types.Result.GetResult<Prisma.$languagesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   rarities<T extends Prisma.singles$raritiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.singles$raritiesArgs<ExtArgs>>): Prisma.Prisma__raritiesClient<runtime.Types.Result.GetResult<Prisma.$raritiesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  tcgs<T extends Prisma.singles$tcgsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.singles$tcgsArgs<ExtArgs>>): Prisma.Prisma__tcgsClient<runtime.Types.Result.GetResult<Prisma.$tcgsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   owner<T extends Prisma.usersDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.usersDefaultArgs<ExtArgs>>): Prisma.Prisma__usersClient<runtime.Types.Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   tags<T extends Prisma.singles$tagsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.singles$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$single_tagsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   stockItems<T extends Prisma.singles$stockItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.singles$stockItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$stock_itemsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3980,6 +4348,7 @@ export interface singlesFieldRefs {
   readonly condition_id: Prisma.FieldRef<"singles", 'String'>
   readonly language_id: Prisma.FieldRef<"singles", 'String'>
   readonly rarity_id: Prisma.FieldRef<"singles", 'String'>
+  readonly tcg_id: Prisma.FieldRef<"singles", 'String'>
   readonly owner_id: Prisma.FieldRef<"singles", 'String'>
   readonly borderless: Prisma.FieldRef<"singles", 'Boolean'>
   readonly cardName: Prisma.FieldRef<"singles", 'String'>
@@ -4452,6 +4821,25 @@ export type singles$raritiesArgs<ExtArgs extends runtime.Types.Extensions.Intern
    */
   include?: Prisma.raritiesInclude<ExtArgs> | null
   where?: Prisma.raritiesWhereInput
+}
+
+/**
+ * singles.tcgs
+ */
+export type singles$tcgsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the tcgs
+   */
+  select?: Prisma.tcgsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the tcgs
+   */
+  omit?: Prisma.tcgsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.tcgsInclude<ExtArgs> | null
+  where?: Prisma.tcgsWhereInput
 }
 
 /**

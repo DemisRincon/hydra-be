@@ -25,6 +25,8 @@ export class PrismaService
       max: 1, // Limit connections in serverless
       idleTimeoutMillis: 0, // Disable idle timeout
       connectionTimeoutMillis: 10000,
+      // Ensure UTF-8 encoding
+      options: '-c client_encoding=UTF8',
     });
 
     const adapter = new PrismaPg(pool);

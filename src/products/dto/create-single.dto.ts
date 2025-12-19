@@ -123,4 +123,12 @@ export class CreateSingleDto {
   @IsOptional()
   @IsString()
   variant?: string | null;
+
+  @ApiPropertyOptional({
+    description: 'TCG ID (UUID). If not provided, defaults to Magic',
+    example: 'uuid-here',
+  })
+  @IsOptional()
+  @IsUUID()
+  tcg_id?: string;
 }
