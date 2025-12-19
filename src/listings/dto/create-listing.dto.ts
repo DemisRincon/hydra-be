@@ -22,4 +22,3 @@ export class CreateListingDto {
   @IsNotEmpty()
   status: listing_status_enum;
 }
-

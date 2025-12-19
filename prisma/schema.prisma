@@ -163,8 +163,13 @@ model singles {
  */
 
 model tags {
-  id   String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name String @unique
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name         String   @unique
+  display_name String? // Display name for UI
+  is_default   Boolean  @default(false) // Tags that should appear by default in forms
+  is_active    Boolean  @default(true)
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
 
   singles single_tags[]
 }

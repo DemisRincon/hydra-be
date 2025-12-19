@@ -13,6 +13,7 @@ import { LanguagesModule } from './languages/languages.module.js';
 import { ConditionsModule } from './conditions/conditions.module.js';
 import { CategoriesModule } from './categories/categories.module.js';
 import { HareruyaModule } from './hareruya/hareruya.module.js';
+import { TagsModule } from './tags/tags.module.js';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { HareruyaModule } from './hareruya/hareruya.module.js';
     ConditionsModule,
     CategoriesModule,
     HareruyaModule,
+    TagsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

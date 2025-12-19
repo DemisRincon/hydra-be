@@ -2,6 +2,7 @@ import {
   Controller,
   Post,
   Get,
+  Delete,
   Body,
   Param,
   Query,
@@ -90,6 +91,35 @@ export class ProductsController {
     @Query('limit', new DefaultValuePipe(20), ParseIntPipe) limit: number,
   ) {
     return this.productsService.findByOwner(ownerId, page, limit);
+  }
+
+  @Get(':id')
+  @Public()
+  @ApiOperation({ summary: 'Get a single product by ID' })
+  @ApiResponse({
+    status: 200,
+    description: 'Product found',
+  })
+  @ApiResponse({ status: 404, description: 'Product not found' })
+  async findOne(@Param('id') id: string) {
+    return this.productsService.findOne(id);
+  }
+
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('ADMIN', 'SELLER')
+  @ApiBearerAuth('JWT-auth')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Delete a single product (ADMIN, SELLER only)' })
+  @ApiResponse({
+    status: 200,
+    description: 'Product deleted successfully',
+  })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden - Admin or Seller role required' })
+  @ApiResponse({ status: 404, description: 'Product not found' })
+  async remove(@Param('id') id: string) {
+    return this.productsService.remove(id);
   }
 }
 

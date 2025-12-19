@@ -384,5 +384,53 @@ export class ProductsService {
       },
     };
   }
+
+  async findOne(id: string) {
+    const product = await this.prisma.singles.findUnique({
+      where: { id },
+      include: {
+        categories: {
+          select: {
+            id: true,
+            name: true,
+            display_name: true,
+            description: true,
+            is_active: true,
+            order: true,
+          },
+        },
+        conditions: true,
+        languages: true,
+        rarities: true,
+        owner: {
+          include: {
+            roles: true,
+          },
+        },
+      },
+    });
+
+    if (!product) {
+      throw new NotFoundException(`Product with ID ${id} not found`);
+    }
+
+    return product;
+  }
+
+  async remove(id: string) {
+    const product = await this.prisma.singles.findUnique({
+      where: { id },
+    });
+
+    if (!product) {
+      throw new NotFoundException(`Product with ID ${id} not found`);
+    }
+
+    await this.prisma.singles.delete({
+      where: { id },
+    });
+
+    return { message: `Product with ID ${id} has been deleted successfully` };
+  }
 }
 
