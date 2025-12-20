@@ -3,16 +3,23 @@ import {
   NotFoundException,
   ConflictException,
 } from '@nestjs/common';
+import { listing_status_enum } from '../generated/prisma/enums.js';
+import { PrismaClient, Prisma } from '../generated/prisma/client.js';
 import { PrismaService } from '../database/prisma.service.js';
 import { CreateCategoryDto } from './dto/create-category.dto.js';
 import { UpdateCategoryDto } from './dto/update-category.dto.js';
+
+type PrismaWithSingles = PrismaClient & {
+  singles: {
+    count: (args?: { where?: { category_id: string } }) => Promise<number>;
+  };
+};
 
 @Injectable()
 export class CategoriesService {
   constructor(private prisma: PrismaService) {}
 
   async create(createCategoryDto: CreateCategoryDto) {
-    // Check if category with same name already exists
     const existing = await this.prisma.categories.findUnique({
       where: { name: createCategoryDto.name },
     });
@@ -34,15 +41,12 @@ export class CategoriesService {
 
   async findActive() {
     return this.prisma.categories.findMany({
-      where: { is_active: true },
+      where: { is_active: true } as Prisma.categoriesWhereInput,
       orderBy: { order: 'asc' },
     });
   }
 
   async findWithProducts() {
-    // Get categories that have at least one single
-    // First, try to get categories with active listings
-    // If none, fall back to categories with any singles
     const categoriesWithListings = await this.prisma.categories.findMany({
       where: {
         is_active: true,
@@ -50,67 +54,67 @@ export class CategoriesService {
           some: {
             listings: {
               some: {
-                status: 'ACTIVE',
+                status: listing_status_enum.ACTIVE,
               },
             },
           },
         },
-      },
+      } as Prisma.categoriesWhereInput,
       orderBy: { order: 'asc' },
       select: {
         id: true,
         name: true,
         display_name: true,
         order: true,
-      },
+      } as Prisma.categoriesSelect,
     });
 
-    // If we have categories with listings, return them
     if (categoriesWithListings.length > 0) {
       return categoriesWithListings;
     }
 
-    // Otherwise, return categories that have any singles (even without listings)
     const categoriesWithSingles = await this.prisma.categories.findMany({
       where: {
         is_active: true,
         singles: {
           some: {},
         },
-      },
+      } as Prisma.categoriesWhereInput,
       orderBy: { order: 'asc' },
       select: {
         id: true,
         name: true,
         display_name: true,
         order: true,
-      },
+      } as Prisma.categoriesSelect,
     });
 
     return categoriesWithSingles;
   }
 
   async findOne(id: string) {
-    const category = await this.prisma.categories.findUnique({
-      where: { id },
-      include: {
-        singles: {
-          select: {
-            id: true,
-          },
-        },
-      },
-    });
+    const [category, singlesCount] = await Promise.all([
+      this.prisma.categories.findUnique({
+        where: { id },
+      }),
+      (this.prisma as unknown as PrismaWithSingles).singles.count({
+        where: { category_id: id },
+      }),
+    ]);
 
     if (!category) {
       throw new NotFoundException(`Category with ID ${id} not found`);
     }
 
-    return category;
+    return {
+      ...category,
+      _count: {
+        singles: singlesCount,
+      },
+    };
   }
 
   async update(id: string, updateCategoryDto: UpdateCategoryDto) {
-    // Check if category exists
     const category = await this.prisma.categories.findUnique({
       where: { id },
     });
@@ -119,7 +123,6 @@ export class CategoriesService {
       throw new NotFoundException(`Category with ID ${id} not found`);
     }
 
-    // If name is being updated, check for conflicts
     if (updateCategoryDto.name && updateCategoryDto.name !== category.name) {
       const existing = await this.prisma.categories.findUnique({
         where: { name: updateCategoryDto.name },
@@ -137,26 +140,23 @@ export class CategoriesService {
   }
 
   async remove(id: string) {
-    // Check if category exists
     const category = await this.prisma.categories.findUnique({
       where: { id },
-      include: {
-        singles: {
-          select: {
-            id: true,
-          },
-        },
-      },
     });
 
     if (!category) {
       throw new NotFoundException(`Category with ID ${id} not found`);
     }
 
-    // Check if category has associated singles
-    if (category.singles.length > 0) {
+    const singlesCount = await (
+      this.prisma as unknown as PrismaWithSingles
+    ).singles.count({
+      where: { category_id: id },
+    });
+
+    if (singlesCount > 0) {
       throw new ConflictException(
-        `Cannot delete category with ID ${id} because it has ${category.singles.length} associated singles`,
+        `Cannot delete category with ID ${id} because it has ${singlesCount} associated singles`,
       );
     }
 
@@ -165,4 +165,3 @@ export class CategoriesService {
     });
   }
 }
-

@@ -84,6 +84,7 @@ model conditions {
   code         String @unique // Condition code (NM, SP, MP, HP, DM)
   name         String @unique // Human-readable name in Spanish
   display_name String // Display name for UI
+  discount     Int    @default(0) // Discount percentage (0-100)
 
   singles singles[]
 }

@@ -1923,7 +1923,8 @@ export const ConditionsScalarFieldEnum = {
   id: 'id',
   code: 'code',
   name: 'name',
-  display_name: 'display_name'
+  display_name: 'display_name',
+  discount: 'discount'
 } as const
 
 export type ConditionsScalarFieldEnum = (typeof ConditionsScalarFieldEnum)[keyof typeof ConditionsScalarFieldEnum]

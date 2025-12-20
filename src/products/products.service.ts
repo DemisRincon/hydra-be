@@ -521,6 +521,47 @@ export class ProductsService {
     };
   }
 
+  async findByName(name: string) {
+    if (!name || name.trim() === '') {
+      return [];
+    }
+
+    const products = await this.prisma.singles.findMany({
+      where: {
+        name: {
+          contains: name.trim(),
+          mode: 'insensitive',
+        },
+      },
+      include: {
+        categories: {
+          select: {
+            id: true,
+            name: true,
+            display_name: true,
+            description: true,
+            is_active: true,
+            order: true,
+          },
+        },
+        conditions: true,
+        languages: true,
+        rarities: true,
+        tcgs: true,
+        owner: {
+          include: {
+            roles: true,
+          },
+        },
+      },
+      orderBy: {
+        created_at: 'desc',
+      },
+    });
+
+    return products;
+  }
+
   async findOne(id: string) {
     const product = await this.prisma.singles.findUnique({
       where: { id },

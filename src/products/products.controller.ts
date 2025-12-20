@@ -18,6 +18,7 @@ import {
   ApiResponse,
   ApiBody,
   ApiBearerAuth,
+  ApiQuery,
 } from '@nestjs/swagger';
 import { ProductsService } from './products.service.js';
 import { CreateSingleDto } from './dto/create-single.dto.js';
@@ -108,6 +109,18 @@ export class ProductsController {
     @Query('limit', new DefaultValuePipe(12), ParseIntPipe) limit: number,
   ) {
     return this.productsService.findLocal(page, limit);
+  }
+
+  @Get('search')
+  @Public()
+  @ApiOperation({ summary: 'Search singles by name (case-insensitive)' })
+  @ApiQuery({ name: 'name', required: true, description: 'Card name to search for' })
+  @ApiResponse({
+    status: 200,
+    description: 'Singles found',
+  })
+  async findByName(@Query('name') name: string) {
+    return this.productsService.findByName(name);
   }
 
   @Get('owner/:ownerId')

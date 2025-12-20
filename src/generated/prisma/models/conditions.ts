@@ -20,8 +20,18 @@ export type conditionsModel = runtime.Types.Result.DefaultSelection<Prisma.$cond
 
 export type AggregateConditions = {
   _count: ConditionsCountAggregateOutputType | null
+  _avg: ConditionsAvgAggregateOutputType | null
+  _sum: ConditionsSumAggregateOutputType | null
   _min: ConditionsMinAggregateOutputType | null
   _max: ConditionsMaxAggregateOutputType | null
+}
+
+export type ConditionsAvgAggregateOutputType = {
+  discount: number | null
+}
+
+export type ConditionsSumAggregateOutputType = {
+  discount: number | null
 }
 
 export type ConditionsMinAggregateOutputType = {
@@ -29,6 +39,7 @@ export type ConditionsMinAggregateOutputType = {
   code: string | null
   name: string | null
   display_name: string | null
+  discount: number | null
 }
 
 export type ConditionsMaxAggregateOutputType = {
@@ -36,6 +47,7 @@ export type ConditionsMaxAggregateOutputType = {
   code: string | null
   name: string | null
   display_name: string | null
+  discount: number | null
 }
 
 export type ConditionsCountAggregateOutputType = {
@@ -43,15 +55,25 @@ export type ConditionsCountAggregateOutputType = {
   code: number
   name: number
   display_name: number
+  discount: number
   _all: number
 }
 
+
+export type ConditionsAvgAggregateInputType = {
+  discount?: true
+}
+
+export type ConditionsSumAggregateInputType = {
+  discount?: true
+}
 
 export type ConditionsMinAggregateInputType = {
   id?: true
   code?: true
   name?: true
   display_name?: true
+  discount?: true
 }
 
 export type ConditionsMaxAggregateInputType = {
@@ -59,6 +81,7 @@ export type ConditionsMaxAggregateInputType = {
   code?: true
   name?: true
   display_name?: true
+  discount?: true
 }
 
 export type ConditionsCountAggregateInputType = {
@@ -66,6 +89,7 @@ export type ConditionsCountAggregateInputType = {
   code?: true
   name?: true
   display_name?: true
+  discount?: true
   _all?: true
 }
 
@@ -107,6 +131,18 @@ export type ConditionsAggregateArgs<ExtArgs extends runtime.Types.Extensions.Int
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: ConditionsAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: ConditionsSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: ConditionsMinAggregateInputType
@@ -137,6 +173,8 @@ export type conditionsGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   _count?: ConditionsCountAggregateInputType | true
+  _avg?: ConditionsAvgAggregateInputType
+  _sum?: ConditionsSumAggregateInputType
   _min?: ConditionsMinAggregateInputType
   _max?: ConditionsMaxAggregateInputType
 }
@@ -146,7 +184,10 @@ export type ConditionsGroupByOutputType = {
   code: string
   name: string
   display_name: string
+  discount: number
   _count: ConditionsCountAggregateOutputType | null
+  _avg: ConditionsAvgAggregateOutputType | null
+  _sum: ConditionsSumAggregateOutputType | null
   _min: ConditionsMinAggregateOutputType | null
   _max: ConditionsMaxAggregateOutputType | null
 }
@@ -174,6 +215,7 @@ export type conditionsWhereInput = {
   code?: Prisma.StringFilter<"conditions"> | string
   name?: Prisma.StringFilter<"conditions"> | string
   display_name?: Prisma.StringFilter<"conditions"> | string
+  discount?: Prisma.IntFilter<"conditions"> | number
   singles?: Prisma.SinglesListRelationFilter
 }
 
@@ -182,6 +224,7 @@ export type conditionsOrderByWithRelationInput = {
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
   display_name?: Prisma.SortOrder
+  discount?: Prisma.SortOrder
   singles?: Prisma.singlesOrderByRelationAggregateInput
 }
 
@@ -193,6 +236,7 @@ export type conditionsWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.conditionsWhereInput[]
   NOT?: Prisma.conditionsWhereInput | Prisma.conditionsWhereInput[]
   display_name?: Prisma.StringFilter<"conditions"> | string
+  discount?: Prisma.IntFilter<"conditions"> | number
   singles?: Prisma.SinglesListRelationFilter
 }, "id" | "code" | "name">
 
@@ -201,9 +245,12 @@ export type conditionsOrderByWithAggregationInput = {
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
   display_name?: Prisma.SortOrder
+  discount?: Prisma.SortOrder
   _count?: Prisma.conditionsCountOrderByAggregateInput
+  _avg?: Prisma.conditionsAvgOrderByAggregateInput
   _max?: Prisma.conditionsMaxOrderByAggregateInput
   _min?: Prisma.conditionsMinOrderByAggregateInput
+  _sum?: Prisma.conditionsSumOrderByAggregateInput
 }
 
 export type conditionsScalarWhereWithAggregatesInput = {
@@ -214,6 +261,7 @@ export type conditionsScalarWhereWithAggregatesInput = {
   code?: Prisma.StringWithAggregatesFilter<"conditions"> | string
   name?: Prisma.StringWithAggregatesFilter<"conditions"> | string
   display_name?: Prisma.StringWithAggregatesFilter<"conditions"> | string
+  discount?: Prisma.IntWithAggregatesFilter<"conditions"> | number
 }
 
 export type conditionsCreateInput = {
@@ -221,6 +269,7 @@ export type conditionsCreateInput = {
   code: string
   name: string
   display_name: string
+  discount?: number
   singles?: Prisma.singlesCreateNestedManyWithoutConditionsInput
 }
 
@@ -229,6 +278,7 @@ export type conditionsUncheckedCreateInput = {
   code: string
   name: string
   display_name: string
+  discount?: number
   singles?: Prisma.singlesUncheckedCreateNestedManyWithoutConditionsInput
 }
 
@@ -237,6 +287,7 @@ export type conditionsUpdateInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
+  discount?: Prisma.IntFieldUpdateOperationsInput | number
   singles?: Prisma.singlesUpdateManyWithoutConditionsNestedInput
 }
 
@@ -245,6 +296,7 @@ export type conditionsUncheckedUpdateInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
+  discount?: Prisma.IntFieldUpdateOperationsInput | number
   singles?: Prisma.singlesUncheckedUpdateManyWithoutConditionsNestedInput
 }
 
@@ -253,6 +305,7 @@ export type conditionsCreateManyInput = {
   code: string
   name: string
   display_name: string
+  discount?: number
 }
 
 export type conditionsUpdateManyMutationInput = {
@@ -260,6 +313,7 @@ export type conditionsUpdateManyMutationInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
+  discount?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type conditionsUncheckedUpdateManyInput = {
@@ -267,6 +321,7 @@ export type conditionsUncheckedUpdateManyInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
+  discount?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type conditionsCountOrderByAggregateInput = {
@@ -274,6 +329,11 @@ export type conditionsCountOrderByAggregateInput = {
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
   display_name?: Prisma.SortOrder
+  discount?: Prisma.SortOrder
+}
+
+export type conditionsAvgOrderByAggregateInput = {
+  discount?: Prisma.SortOrder
 }
 
 export type conditionsMaxOrderByAggregateInput = {
@@ -281,6 +341,7 @@ export type conditionsMaxOrderByAggregateInput = {
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
   display_name?: Prisma.SortOrder
+  discount?: Prisma.SortOrder
 }
 
 export type conditionsMinOrderByAggregateInput = {
@@ -288,6 +349,11 @@ export type conditionsMinOrderByAggregateInput = {
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
   display_name?: Prisma.SortOrder
+  discount?: Prisma.SortOrder
+}
+
+export type conditionsSumOrderByAggregateInput = {
+  discount?: Prisma.SortOrder
 }
 
 export type ConditionsNullableScalarRelationFilter = {
@@ -316,6 +382,7 @@ export type conditionsCreateWithoutSinglesInput = {
   code: string
   name: string
   display_name: string
+  discount?: number
 }
 
 export type conditionsUncheckedCreateWithoutSinglesInput = {
@@ -323,6 +390,7 @@ export type conditionsUncheckedCreateWithoutSinglesInput = {
   code: string
   name: string
   display_name: string
+  discount?: number
 }
 
 export type conditionsCreateOrConnectWithoutSinglesInput = {
@@ -346,6 +414,7 @@ export type conditionsUpdateWithoutSinglesInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
+  discount?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type conditionsUncheckedUpdateWithoutSinglesInput = {
@@ -353,6 +422,7 @@ export type conditionsUncheckedUpdateWithoutSinglesInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
+  discount?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -391,6 +461,7 @@ export type conditionsSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   code?: boolean
   name?: boolean
   display_name?: boolean
+  discount?: boolean
   singles?: boolean | Prisma.conditions$singlesArgs<ExtArgs>
   _count?: boolean | Prisma.ConditionsCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["conditions"]>
@@ -400,6 +471,7 @@ export type conditionsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   code?: boolean
   name?: boolean
   display_name?: boolean
+  discount?: boolean
 }, ExtArgs["result"]["conditions"]>
 
 export type conditionsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -407,6 +479,7 @@ export type conditionsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   code?: boolean
   name?: boolean
   display_name?: boolean
+  discount?: boolean
 }, ExtArgs["result"]["conditions"]>
 
 export type conditionsSelectScalar = {
@@ -414,9 +487,10 @@ export type conditionsSelectScalar = {
   code?: boolean
   name?: boolean
   display_name?: boolean
+  discount?: boolean
 }
 
-export type conditionsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "display_name", ExtArgs["result"]["conditions"]>
+export type conditionsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "display_name" | "discount", ExtArgs["result"]["conditions"]>
 export type conditionsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   singles?: boolean | Prisma.conditions$singlesArgs<ExtArgs>
   _count?: boolean | Prisma.ConditionsCountOutputTypeDefaultArgs<ExtArgs>
@@ -434,6 +508,7 @@ export type $conditionsPayload<ExtArgs extends runtime.Types.Extensions.Internal
     code: string
     name: string
     display_name: string
+    discount: number
   }, ExtArgs["result"]["conditions"]>
   composites: {}
 }
@@ -862,6 +937,7 @@ export interface conditionsFieldRefs {
   readonly code: Prisma.FieldRef<"conditions", 'String'>
   readonly name: Prisma.FieldRef<"conditions", 'String'>
   readonly display_name: Prisma.FieldRef<"conditions", 'String'>
+  readonly discount: Prisma.FieldRef<"conditions", 'Int'>
 }
     
 

@@ -20,6 +20,7 @@ import { SearchHareruyaDto } from './dto/search-hareruya.dto.js';
 import { HareruyaPricingDto } from '../hareruya/dto/hareruya-pricing.dto.js';
 import { HareruyaService } from '../hareruya/hareruya.service.js';
 import { Public } from '../auth/guards/jwt-auth.guard.js';
+import { HybridSearchDto } from './dto/hybrid-search.dto.js';
 
 @ApiTags('search')
 @Controller('search')
@@ -105,6 +106,84 @@ export class SearchController {
       return [];
     }
     return this.searchService.autocomplete(query.trim());
+  }
+
+  @Get('hybrid')
+  @Public()
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Hybrid search: Search both Hareruya API and local database',
+    description:
+      'Searches Hareruya API and local database, synchronizes prices when matches are found (by hareruyaId, foil, and language), applies condition discounts to local products, and returns combined results with pagination',
+  })
+  @ApiQuery({
+    name: 'q',
+    required: true,
+    description: 'Search query (card name)',
+    example: 'Lightning Bolt',
+  })
+  @ApiQuery({
+    name: 'page',
+    required: false,
+    description: 'Page number (default: 1)',
+    type: Number,
+    example: 1,
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    description: 'Number of results per page (default: 12)',
+    type: Number,
+    example: 12,
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Combined search results from Hareruya and local database with pagination',
+    schema: {
+      type: 'object',
+      properties: {
+        success: { type: 'boolean' },
+        data: {
+          type: 'array',
+          items: { type: 'object' },
+        },
+        pagination: {
+          type: 'object',
+          properties: {
+            page: { type: 'number' },
+            limit: { type: 'number' },
+            total: { type: 'number' },
+            totalPages: { type: 'number' },
+          },
+        },
+        localCount: { type: 'number' },
+        hareruyaCount: { type: 'number' },
+        updatedPrices: { type: 'number' },
+      },
+    },
+  })
+  @ApiResponse({ status: 400, description: 'Invalid query parameter' })
+  async searchHybrid(
+    @Query('q') q: string,
+    @Query('page') page?: number,
+    @Query('limit') limit?: number,
+  ) {
+    if (!q || q.trim() === '') {
+      throw new BadRequestException('Query parameter (q) is required');
+    }
+
+    const pageNum = page ? Number(page) : 1;
+    const limitNum = limit ? Number(limit) : 12;
+
+    if (pageNum < 1) {
+      throw new BadRequestException('Page must be at least 1');
+    }
+
+    if (limitNum < 1) {
+      throw new BadRequestException('Limit must be at least 1');
+    }
+
+    return this.searchService.searchHybrid(q.trim(), pageNum, limitNum);
   }
 }
 
