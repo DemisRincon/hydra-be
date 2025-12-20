@@ -20,7 +20,6 @@ import { SearchHareruyaDto } from './dto/search-hareruya.dto.js';
 import { HareruyaPricingDto } from '../hareruya/dto/hareruya-pricing.dto.js';
 import { HareruyaService } from '../hareruya/hareruya.service.js';
 import { Public } from '../auth/guards/jwt-auth.guard.js';
-import { HybridSearchDto } from './dto/hybrid-search.dto.js';
 
 @ApiTags('search')
 @Controller('search')
@@ -38,10 +37,29 @@ export class SearchController {
     description:
       'Returns transformed search results with MXN prices, language mapping, foil status, card numbers, and metadata extraction',
   })
-  @ApiQuery({ name: 'kw', required: true, description: 'Search keyword (card name)' })
-  @ApiQuery({ name: 'rows', required: false, description: 'Number of results per page (default: 60)', type: Number })
-  @ApiQuery({ name: 'page', required: false, description: 'Page number (default: 1)', type: Number })
-  @ApiQuery({ name: 'fq.price', required: false, description: 'Price filter (default: "1~*")', example: '1~*' })
+  @ApiQuery({
+    name: 'kw',
+    required: true,
+    description: 'Search keyword (card name)',
+  })
+  @ApiQuery({
+    name: 'rows',
+    required: false,
+    description: 'Number of results per page (default: 60)',
+    type: Number,
+  })
+  @ApiQuery({
+    name: 'page',
+    required: false,
+    description: 'Page number (default: 1)',
+    type: Number,
+  })
+  @ApiQuery({
+    name: 'fq.price',
+    required: false,
+    description: 'Price filter (default: "1~*")',
+    example: '1~*',
+  })
   @ApiResponse({
     status: 200,
     description: 'Transformed search results with MXN prices and metadata',
@@ -92,20 +110,30 @@ export class SearchController {
   @HttpCode(HttpStatus.OK)
   @ApiOperation({
     summary: 'Get card name autocomplete suggestions from Scryfall',
-    description: 'Returns card name suggestions using Scryfall API autocomplete endpoint',
+    description:
+      'Returns card name suggestions using Scryfall API autocomplete endpoint',
   })
-  @ApiQuery({ name: 'query', required: true, description: 'Search query (minimum 2 characters)' })
+  @ApiQuery({
+    name: 'query',
+    required: true,
+    description: 'Search query (minimum 2 characters)',
+  })
   @ApiResponse({
     status: 200,
     description: 'Array of card name suggestions',
     type: [String],
+    schema: {
+      type: 'array',
+      items: { type: 'string' },
+    },
   })
   @ApiResponse({ status: 400, description: 'Invalid query parameter' })
-  async autocomplete(@Query('query') query: string) {
+  async autocomplete(@Query('query') query: string): Promise<string[]> {
     if (!query || query.trim().length < 2) {
       return [];
     }
-    return this.searchService.autocomplete(query.trim());
+    const suggestions = await this.searchService.autocomplete(query.trim());
+    return suggestions;
   }
 
   @Get('hybrid')
@@ -138,7 +166,8 @@ export class SearchController {
   })
   @ApiResponse({
     status: 200,
-    description: 'Combined search results from Hareruya and local database with pagination',
+    description:
+      'Combined search results from Hareruya and local database with pagination',
     schema: {
       type: 'object',
       properties: {
@@ -186,4 +215,3 @@ export class SearchController {
     return this.searchService.searchHybrid(q.trim(), pageNum, limitNum);
   }
 }
-
