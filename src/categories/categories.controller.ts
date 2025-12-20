@@ -77,6 +77,17 @@ export class CategoriesController {
     return this.categoriesService.findActive();
   }
 
+  @Get('with-products')
+  @Public()
+  @ApiOperation({ summary: 'Get categories that have products with active listings' })
+  @ApiResponse({
+    status: 200,
+    description: 'List of categories with available products',
+  })
+  findWithProducts() {
+    return this.categoriesService.findWithProducts();
+  }
+
   @Get(':id')
   @Public()
   @ApiOperation({ summary: 'Get a category by ID' })

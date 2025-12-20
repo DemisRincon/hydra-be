@@ -39,6 +39,57 @@ export class CategoriesService {
     });
   }
 
+  async findWithProducts() {
+    // Get categories that have at least one single
+    // First, try to get categories with active listings
+    // If none, fall back to categories with any singles
+    const categoriesWithListings = await this.prisma.categories.findMany({
+      where: {
+        is_active: true,
+        singles: {
+          some: {
+            listings: {
+              some: {
+                status: 'ACTIVE',
+              },
+            },
+          },
+        },
+      },
+      orderBy: { order: 'asc' },
+      select: {
+        id: true,
+        name: true,
+        display_name: true,
+        order: true,
+      },
+    });
+
+    // If we have categories with listings, return them
+    if (categoriesWithListings.length > 0) {
+      return categoriesWithListings;
+    }
+
+    // Otherwise, return categories that have any singles (even without listings)
+    const categoriesWithSingles = await this.prisma.categories.findMany({
+      where: {
+        is_active: true,
+        singles: {
+          some: {},
+        },
+      },
+      orderBy: { order: 'asc' },
+      select: {
+        id: true,
+        name: true,
+        display_name: true,
+        order: true,
+      },
+    });
+
+    return categoriesWithSingles;
+  }
+
   async findOne(id: string) {
     const category = await this.prisma.categories.findUnique({
       where: { id },
