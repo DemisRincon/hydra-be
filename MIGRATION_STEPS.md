@@ -57,3 +57,4 @@ pnpm start:dev
 - The owner must be a valid user in the database
 - When creating products, you must provide `owner_id` in the request
 
+

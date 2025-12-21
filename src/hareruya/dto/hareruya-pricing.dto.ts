@@ -23,3 +23,4 @@ export class HareruyaPricingDto {
   cardNames?: string[];
 }
 
+

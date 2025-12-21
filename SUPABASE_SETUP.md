@@ -100,3 +100,4 @@ With Supabase configured, the OAuth flow works as follows:
 - Never commit your `.env` file to git
 - Use different Supabase projects for development and production
 
+

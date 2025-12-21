@@ -8,3 +8,4 @@ import { CurrencyService } from './currency.service.js';
 })
 export class HareruyaModule {}
 
+

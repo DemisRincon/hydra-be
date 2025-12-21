@@ -246,3 +246,4 @@ curl -X DELETE http://localhost:3002/api/conditions/{id} \
 - The `_count.products` field shows how many products use this condition
 - Hareruya condition codes are automatically mapped when creating products from Hareruya data
 
+
