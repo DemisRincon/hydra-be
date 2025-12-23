@@ -138,6 +138,116 @@ export class SearchService {
   }
 
   /**
+   * Transform local product to match Hareruya search result format
+   */
+  private transformLocalProductToHareruyaFormat(localProduct: any): any {
+    // Extract price values (handle Decimal types)
+    const basePrice =
+      localProduct.finalPrice?.toNumber?.() ||
+      localProduct.finalPrice ||
+      localProduct.price?.toNumber?.() ||
+      localProduct.price ||
+      0;
+
+    // Calculate final price with condition discount
+    const condition = localProduct.conditions;
+    const discountPercent = condition?.discount || 0;
+    const finalPrice =
+      Math.round(basePrice * (1 - discountPercent / 100) * 100) / 100;
+
+    // Format price as string
+    const priceFormatted = `$${finalPrice.toFixed(2)} MXN`;
+
+    // Extract category name
+    const categoryName =
+      localProduct.categories?.name ||
+      localProduct.categories?.display_name ||
+      'SINGLES';
+
+    // Extract condition name
+    const conditionName =
+      localProduct.conditions?.display_name ||
+      localProduct.conditions?.name ||
+      'Near Mint';
+
+    // Extract language display name
+    const languageName =
+      localProduct.languages?.display_name ||
+      localProduct.languages?.name ||
+      'Inglés';
+
+    // Extract metadata from local product
+    const metadata: string[] = [];
+    if (localProduct.metadata && Array.isArray(localProduct.metadata)) {
+      metadata.push(...localProduct.metadata);
+    }
+    if (localProduct.foil === true) {
+      if (!metadata.includes('Foil')) {
+        metadata.push('Foil');
+      }
+    }
+
+    // Extract boolean flags from metadata
+    const borderless = metadata.includes('Borderless') || localProduct.borderless === true;
+    const extendedArt = metadata.includes('Extended Art') || localProduct.extendedArt === true;
+    const prerelease = metadata.includes('Prerelease') || localProduct.prerelease === true;
+    const premierPlay = metadata.includes('Premier Play') || localProduct.premierPlay === true;
+    const surgeFoil = metadata.includes('Surge Foil') || metadata.includes('SurgeFoil') || localProduct.surgeFoil === true;
+
+    // Build link if hareruyaId exists
+    const languageCode = localProduct.languages?.code || 'EN';
+    const link = localProduct.hareruyaId
+      ? `https://www.hareruyamtg.com/en/products/detail/${localProduct.hareruyaId}?lang=${languageCode}`
+      : '';
+
+    // Extract stock count
+    const stockCount = localProduct.stock || 0;
+    const hasStock = stockCount > 0;
+    const hasHareruyaId = !!localProduct.hareruyaId;
+
+    // Check if metadata includes "Personal"
+    const hasPersonalMetadata = metadata.includes('Personal');
+
+    // Determine if import badge should be shown
+    // Show badge if:
+    // 1. Product has hareruyaId AND is local inventory AND has stock > 0, OR
+    // 2. Explicitly set to true, OR
+    // 3. Metadata includes "Personal"
+    const showImportacionBadge =
+      (hasHareruyaId && hasStock) ||
+      localProduct.showImportacionBadge === true ||
+      hasPersonalMetadata;
+
+    // Return in Hareruya format
+    return {
+      borderless,
+      cardName: localProduct.cardName || localProduct.name || '',
+      cardNumber: localProduct.cardNumber || '',
+      category: categoryName,
+      condition: conditionName,
+      expansion: localProduct.expansion || localProduct.variant || '',
+      extendedArt,
+      finalPrice: finalPrice,
+      foil: localProduct.foil === true,
+      hareruyaId: localProduct.hareruyaId || null,
+      img: localProduct.img || '',
+      isLocalInventory: true,
+      language: languageName,
+      link: link,
+      metadata: metadata,
+      prerelease,
+      premierPlay,
+      price: priceFormatted,
+      showImportacionBadge: showImportacionBadge,
+      source: 'local',
+      stock: stockCount,
+      surgeFoil,
+      tags: localProduct.tags || [],
+      variant: localProduct.variant || localProduct.expansion || null,
+    };
+  }
+
+  /**
    * Hybrid search: searches both Hareruya API and local database
    * Synchronizes prices when matches are found
    * Applies condition discounts to local products
@@ -226,8 +336,9 @@ export class SearchService {
 
     for (const localProduct of localProducts) {
       if (!localProduct.hareruyaId) {
-        // No hareruyaId, skip matching but include in results
-        processedLocalProducts.push(localProduct);
+        // No hareruyaId, skip matching but include in results (transformed)
+        const transformedProduct = this.transformLocalProductToHareruyaFormat(localProduct);
+        processedLocalProducts.push(transformedProduct);
         continue;
       }
 
@@ -279,27 +390,9 @@ export class SearchService {
         updatedPricesCount++;
       }
 
-      // Calculate returned_price with condition discount
-      const condition = localProduct.conditions;
-      const discountPercent = condition?.discount || 0;
-      const basePrice =
-        localProduct.finalPrice?.toNumber?.() ||
-        localProduct.finalPrice ||
-        localProduct.price?.toNumber?.() ||
-        localProduct.price ||
-        0;
-
-      const returnedPrice =
-        Math.round(basePrice * (1 - discountPercent / 100) * 100) / 100;
-
-      // Add returned_price to product
-      const processedProduct = {
-        ...localProduct,
-        returned_price: returnedPrice,
-        source: 'local',
-      };
-
-      processedLocalProducts.push(processedProduct);
+      // Transform local product to match Hareruya format
+      const transformedProduct = this.transformLocalProductToHareruyaFormat(localProduct);
+      processedLocalProducts.push(transformedProduct);
     }
 
     // Update prices in database in batch
@@ -356,22 +449,26 @@ export class SearchService {
     } else {
       // Page is completely in Hareruya range
       // Calculate which Hareruya page corresponds to this page
-      const hareruyaStartIndex = startIndex - localTotal;
-      const hareruyaPage = Math.floor(hareruyaStartIndex / limit) + 1;
-      const hareruyaOffset = hareruyaStartIndex % limit;
+      // Since local products come first, we need to adjust the page number
+      // If there are local products, they take up space in earlier pages
+      // Example: if localTotal=1, page=2, limit=12:
+      //   - Page 1 had 1 local + 11 Hareruya (from Hareruya page 1)
+      //   - Page 2 needs 12 Hareruya (from Hareruya page 2)
+      // So: hareruyaPage = page - Math.floor(localTotal / limit)
+      // But if localTotal < limit, then page 1 uses some Hareruya from page 1
+      // and page 2 should use Hareruya page 2
+      // Actually simpler: hareruyaPage = page (if we assume local products are always < limit)
+      // But to be safe: hareruyaPage = page - Math.floor(localTotal / limit)
+      const hareruyaPage = page - Math.floor(localTotal / limit);
 
-      // Fetch the correct Hareruya page
+      // Fetch the correct Hareruya page directly
       try {
         const hareruyaPageResponse = await this.searchHareruya({
           kw: searchQuery,
           page: hareruyaPage,
           rows: limit,
         });
-        const hareruyaPageResults = hareruyaPageResponse.data || [];
-        paginatedResults = hareruyaPageResults.slice(
-          hareruyaOffset,
-          hareruyaOffset + limit,
-        );
+        paginatedResults = hareruyaPageResponse.data || [];
       } catch (error) {
         this.logger.warn(
           `Failed to fetch Hareruya page ${hareruyaPage}: ${error instanceof Error ? error.message : 'Unknown error'}`,

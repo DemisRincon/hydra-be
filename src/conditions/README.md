@@ -247,3 +247,4 @@ curl -X DELETE http://localhost:3002/api/conditions/{id} \
 - Hareruya condition codes are automatically mapped when creating products from Hareruya data
 
 
+
