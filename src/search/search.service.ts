@@ -491,4 +491,139 @@ export class SearchService {
       updatedPrices: updatedPricesCount,
     };
   }
+
+  /**
+   * Local search: searches only local database
+   * Applies condition discounts to local products
+   * Returns results with optional pagination
+   * If no query provided, returns latest added items
+   * Pagination is only returned if enabled via query parameter
+   */
+  async searchLocal(
+    query: string | null,
+    page: number = 1,
+    limit: number = 12,
+    enablePagination: boolean = false,
+  ): Promise<{
+    success: boolean;
+    data: any[];
+    pagination?: {
+      page: number;
+      limit: number;
+      total: number;
+      totalPages: number;
+    };
+    localCount: number;
+  }> {
+    const pageNum = page;
+    const limitNum = limit;
+
+    if (pageNum < 1) {
+      throw new BadRequestException('Page must be at least 1');
+    }
+
+    if (limitNum < 1) {
+      throw new BadRequestException('Limit must be at least 1');
+    }
+
+    let localProducts: any[] = [];
+    let totalCount = 0;
+
+    // If query is provided, search by name
+    // Otherwise, get latest added items
+    if (query && query.trim() !== '') {
+      const searchQuery = query.trim();
+      this.logger.log(
+        `Starting local search for: ${searchQuery}, page: ${pageNum}, limit: ${limitNum}, pagination: ${enablePagination}`,
+      );
+
+      try {
+        localProducts = await this.productsService.findByName(searchQuery);
+        totalCount = localProducts.length;
+        this.logger.log(`Found ${localProducts.length} local products`);
+
+        // Apply pagination only if enabled
+        if (enablePagination) {
+          const startIndex = (pageNum - 1) * limitNum;
+          const endIndex = startIndex + limitNum;
+          localProducts = localProducts.slice(startIndex, endIndex);
+        } else {
+          // If pagination is disabled, limit to the specified limit
+          localProducts = localProducts.slice(0, limitNum);
+        }
+      } catch (error) {
+        this.logger.error(
+          `Failed to search local database: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        );
+        localProducts = [];
+        totalCount = 0;
+      }
+    } else {
+      // Get latest added items
+      this.logger.log(
+        `Getting latest local products, page: ${pageNum}, limit: ${limitNum}, pagination: ${enablePagination}`,
+      );
+
+      try {
+        if (enablePagination) {
+          // Get total count first for pagination
+          totalCount = await this.prisma.singles.count();
+          // Get paginated results
+          localProducts = await this.productsService.findLatest(limitNum, pageNum);
+          this.logger.log(`Found ${localProducts.length} latest local products (total: ${totalCount})`);
+        } else {
+          // If pagination is disabled, just get the latest items up to limit
+          localProducts = await this.productsService.findLatest(limitNum, 1);
+          totalCount = localProducts.length;
+          this.logger.log(`Found ${localProducts.length} latest local products (no pagination)`);
+        }
+      } catch (error) {
+        this.logger.error(
+          `Failed to get latest products: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        );
+        localProducts = [];
+        totalCount = 0;
+      }
+    }
+
+    // Process local products: transform to Hareruya format
+    const processedLocalProducts: any[] = [];
+
+    for (const localProduct of localProducts) {
+      // Transform local product to match Hareruya format
+      const transformedProduct = this.transformLocalProductToHareruyaFormat(localProduct);
+      processedLocalProducts.push(transformedProduct);
+    }
+
+    // Build response
+    const response: {
+      success: boolean;
+      data: any[];
+      pagination?: {
+        page: number;
+        limit: number;
+        total: number;
+        totalPages: number;
+      };
+      localCount: number;
+    } = {
+      success: true,
+      data: processedLocalProducts,
+      localCount: totalCount,
+    };
+
+    // Only include pagination if enabled
+    if (enablePagination) {
+      const total = totalCount;
+      const totalPages = Math.ceil(total / limitNum);
+      response.pagination = {
+        page: pageNum,
+        limit: limitNum,
+        total,
+        totalPages,
+      };
+    }
+
+    return response;
+  }
 }

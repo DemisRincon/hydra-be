@@ -562,6 +562,41 @@ export class ProductsService {
     return products;
   }
 
+  async findLatest(limit: number = 12, page: number = 1) {
+    const skip = (page - 1) * limit;
+
+    const products = await this.prisma.singles.findMany({
+      skip,
+      take: limit,
+      include: {
+        categories: {
+          select: {
+            id: true,
+            name: true,
+            display_name: true,
+            description: true,
+            is_active: true,
+            order: true,
+          },
+        },
+        conditions: true,
+        languages: true,
+        rarities: true,
+        tcgs: true,
+        owner: {
+          include: {
+            roles: true,
+          },
+        },
+      },
+      orderBy: {
+        created_at: 'desc',
+      },
+    });
+
+    return products;
+  }
+
   async findOne(id: string) {
     const product = await this.prisma.singles.findUnique({
       where: { id },

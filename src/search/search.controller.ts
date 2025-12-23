@@ -214,4 +214,88 @@ export class SearchController {
 
     return this.searchService.searchHybrid(q.trim(), pageNum, limitNum);
   }
+
+  @Get('local')
+  @Public()
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Local search: Search only local database',
+    description:
+      'Searches only local database, applies condition discounts to local products, and returns results. If no query is provided, returns the latest added items. Pagination is optional and only returned if enabled via the paginate parameter.',
+  })
+  @ApiQuery({
+    name: 'q',
+    required: false,
+    description: 'Search query (card name). If not provided, returns latest added items',
+    example: 'Lightning Bolt',
+  })
+  @ApiQuery({
+    name: 'page',
+    required: false,
+    description: 'Page number (default: 1, only used if pagination is enabled)',
+    type: Number,
+    example: 1,
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    description: 'Number of results per page (default: 12)',
+    type: Number,
+    example: 12,
+  })
+  @ApiQuery({
+    name: 'paginate',
+    required: false,
+    description: 'Enable pagination (default: false). If true, returns pagination object',
+    type: Boolean,
+    example: false,
+  })
+  @ApiResponse({
+    status: 200,
+    description:
+      'Local search results. Pagination object is only included if paginate=true',
+    schema: {
+      type: 'object',
+      properties: {
+        success: { type: 'boolean' },
+        data: {
+          type: 'array',
+          items: { type: 'object' },
+        },
+        pagination: {
+          type: 'object',
+          properties: {
+            page: { type: 'number' },
+            limit: { type: 'number' },
+            total: { type: 'number' },
+            totalPages: { type: 'number' },
+          },
+          required: false,
+        },
+        localCount: { type: 'number' },
+      },
+    },
+  })
+  @ApiResponse({ status: 400, description: 'Invalid query parameter' })
+  async searchLocal(
+    @Query('q') q?: string,
+    @Query('page') page?: number,
+    @Query('limit') limit?: number,
+    @Query('paginate') paginate?: string,
+  ) {
+    const pageNum = page ? Number(page) : 1;
+    const limitNum = limit ? Number(limit) : 12;
+    const enablePagination = paginate === 'true' || paginate === '1';
+
+    if (pageNum < 1) {
+      throw new BadRequestException('Page must be at least 1');
+    }
+
+    if (limitNum < 1) {
+      throw new BadRequestException('Limit must be at least 1');
+    }
+
+    const query = q ? q.trim() : null;
+    return this.searchService.searchLocal(query, pageNum, limitNum, enablePagination);
+  }
 }
