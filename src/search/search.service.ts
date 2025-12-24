@@ -504,6 +504,7 @@ export class SearchService {
     page: number = 1,
     limit: number = 12,
     enablePagination: boolean = false,
+    metadata?: string,
   ): Promise<{
     success: boolean;
     data: any[];
@@ -559,30 +560,63 @@ export class SearchService {
         totalCount = 0;
       }
     } else {
-      // Get latest added items
-      this.logger.log(
-        `Getting latest local products, page: ${pageNum}, limit: ${limitNum}, pagination: ${enablePagination}`,
-      );
-
-      try {
-        if (enablePagination) {
-          // Get total count first for pagination
-          totalCount = await this.prisma.singles.count();
-          // Get paginated results
-          localProducts = await this.productsService.findLatest(limitNum, pageNum);
-          this.logger.log(`Found ${localProducts.length} latest local products (total: ${totalCount})`);
-        } else {
-          // If pagination is disabled, just get the latest items up to limit
-          localProducts = await this.productsService.findLatest(limitNum, 1);
-          totalCount = localProducts.length;
-          this.logger.log(`Found ${localProducts.length} latest local products (no pagination)`);
-        }
-      } catch (error) {
-        this.logger.error(
-          `Failed to get latest products: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      // Get latest added items or filter by metadata
+      if (metadata) {
+        this.logger.log(
+          `Getting local products with metadata: ${metadata}, page: ${pageNum}, limit: ${limitNum}, pagination: ${enablePagination}`,
         );
-        localProducts = [];
-        totalCount = 0;
+
+        try {
+          if (enablePagination) {
+            // Get total count first for pagination with metadata filter
+            totalCount = await this.prisma.singles.count({
+              where: {
+                metadata: {
+                  has: metadata,
+                },
+              },
+            });
+            // Get paginated results
+            localProducts = await this.productsService.findByMetadata(metadata, limitNum, pageNum);
+            this.logger.log(`Found ${localProducts.length} products with metadata ${metadata} (total: ${totalCount})`);
+          } else {
+            // If pagination is disabled, just get the items up to limit
+            localProducts = await this.productsService.findByMetadata(metadata, limitNum, 1);
+            totalCount = localProducts.length;
+            this.logger.log(`Found ${localProducts.length} products with metadata ${metadata} (no pagination)`);
+          }
+        } catch (error) {
+          this.logger.error(
+            `Failed to get products with metadata: ${error instanceof Error ? error.message : 'Unknown error'}`,
+          );
+          localProducts = [];
+          totalCount = 0;
+        }
+      } else {
+        this.logger.log(
+          `Getting latest local products, page: ${pageNum}, limit: ${limitNum}, pagination: ${enablePagination}`,
+        );
+
+        try {
+          if (enablePagination) {
+            // Get total count first for pagination
+            totalCount = await this.prisma.singles.count();
+            // Get paginated results
+            localProducts = await this.productsService.findLatest(limitNum, pageNum);
+            this.logger.log(`Found ${localProducts.length} latest local products (total: ${totalCount})`);
+          } else {
+            // If pagination is disabled, just get the latest items up to limit
+            localProducts = await this.productsService.findLatest(limitNum, 1);
+            totalCount = localProducts.length;
+            this.logger.log(`Found ${localProducts.length} latest local products (no pagination)`);
+          }
+        } catch (error) {
+          this.logger.error(
+            `Failed to get latest products: ${error instanceof Error ? error.message : 'Unknown error'}`,
+          );
+          localProducts = [];
+          totalCount = 0;
+        }
       }
     }
 

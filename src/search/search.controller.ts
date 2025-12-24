@@ -250,6 +250,13 @@ export class SearchController {
     type: Boolean,
     example: false,
   })
+  @ApiQuery({
+    name: 'metadata',
+    required: false,
+    description: 'Filter by metadata (e.g., "commander")',
+    type: String,
+    example: 'commander',
+  })
   @ApiResponse({
     status: 200,
     description:
@@ -282,10 +289,12 @@ export class SearchController {
     @Query('page') page?: number,
     @Query('limit') limit?: number,
     @Query('paginate') paginate?: string,
+    @Query('metadata') metadata?: string,
   ) {
     const pageNum = page ? Number(page) : 1;
     const limitNum = limit ? Number(limit) : 12;
     const enablePagination = paginate === 'true' || paginate === '1';
+    const metadataFilter = metadata ? metadata.trim() : undefined;
 
     if (pageNum < 1) {
       throw new BadRequestException('Page must be at least 1');
@@ -296,6 +305,6 @@ export class SearchController {
     }
 
     const query = q ? q.trim() : null;
-    return this.searchService.searchLocal(query, pageNum, limitNum, enablePagination);
+    return this.searchService.searchLocal(query, pageNum, limitNum, enablePagination, metadataFilter);
   }
 }
