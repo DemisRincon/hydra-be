@@ -257,6 +257,13 @@ export class SearchController {
     type: String,
     example: 'commander',
   })
+  @ApiQuery({
+    name: 'category',
+    required: false,
+    description: 'Filter by category name (e.g., "singles")',
+    type: String,
+    example: 'singles',
+  })
   @ApiResponse({
     status: 200,
     description:
@@ -277,10 +284,10 @@ export class SearchController {
             total: { type: 'number' },
             totalPages: { type: 'number' },
           },
-          required: false,
         },
         localCount: { type: 'number' },
       },
+      required: ['success', 'data', 'localCount'],
     },
   })
   @ApiResponse({ status: 400, description: 'Invalid query parameter' })
@@ -290,11 +297,13 @@ export class SearchController {
     @Query('limit') limit?: number,
     @Query('paginate') paginate?: string,
     @Query('metadata') metadata?: string,
+    @Query('category') category?: string,
   ) {
     const pageNum = page ? Number(page) : 1;
     const limitNum = limit ? Number(limit) : 12;
     const enablePagination = paginate === 'true' || paginate === '1';
     const metadataFilter = metadata ? metadata.trim() : undefined;
+    const categoryFilter = category ? category.trim() : undefined;
 
     if (pageNum < 1) {
       throw new BadRequestException('Page must be at least 1');
@@ -305,6 +314,6 @@ export class SearchController {
     }
 
     const query = q ? q.trim() : null;
-    return this.searchService.searchLocal(query, pageNum, limitNum, enablePagination, metadataFilter);
+    return this.searchService.searchLocal(query, pageNum, limitNum, enablePagination, metadataFilter, categoryFilter);
   }
 }

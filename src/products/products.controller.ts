@@ -3,6 +3,7 @@ import {
   Post,
   Get,
   Delete,
+  Patch,
   Body,
   Param,
   Query,
@@ -19,6 +20,7 @@ import {
   ApiBody,
   ApiBearerAuth,
   ApiQuery,
+  ApiParam,
 } from '@nestjs/swagger';
 import { ProductsService } from './products.service.js';
 import { CreateSingleDto } from './dto/create-single.dto.js';
@@ -139,6 +141,73 @@ export class ProductsController {
     return this.productsService.findByOwner(ownerId, page, limit);
   }
 
+  @Patch(':id/tags')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('ADMIN', 'SELLER')
+  @ApiBearerAuth('JWT-auth')
+  @ApiOperation({ summary: 'Update product tags (ADMIN, SELLER only)' })
+  @ApiParam({
+    name: 'id',
+    description: 'Product ID (UUID)',
+    example: '123e4567-e89b-12d3-a456-426614174000',
+  })
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        tags: {
+          type: 'array',
+          items: { type: 'string' },
+          example: ['Commander', 'Reestock', 'Personal'],
+        },
+      },
+    },
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Product tags updated successfully',
+  })
+  @ApiResponse({ status: 404, description: 'Product not found' })
+  async updateTags(
+    @Param('id') id: string,
+    @Body() body: { tags: string[] },
+  ) {
+    return this.productsService.updateTags(id, body.tags);
+  }
+
+  @Patch(':id/foil')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('ADMIN', 'SELLER')
+  @ApiBearerAuth('JWT-auth')
+  @ApiOperation({ summary: 'Update product foil status (ADMIN, SELLER only)' })
+  @ApiParam({
+    name: 'id',
+    description: 'Product ID (UUID)',
+    example: '123e4567-e89b-12d3-a456-426614174000',
+  })
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        foil: {
+          type: 'boolean',
+          example: true,
+        },
+      },
+    },
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Product foil status updated successfully',
+  })
+  @ApiResponse({ status: 404, description: 'Product not found' })
+  async updateFoil(
+    @Param('id') id: string,
+    @Body() body: { foil: boolean },
+  ) {
+    return this.productsService.updateFoil(id, body.foil);
+  }
+
   @Get(':id')
   @Public()
   @ApiOperation({ summary: 'Get a single product by ID' })
@@ -149,6 +218,34 @@ export class ProductsController {
   @ApiResponse({ status: 404, description: 'Product not found' })
   async findOne(@Param('id') id: string) {
     return this.productsService.findOne(id);
+  }
+
+  @Patch('update-to-local-inventory')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('ADMIN')
+  @ApiBearerAuth('JWT-auth')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Update all products to have isLocalInventory=true (ADMIN only)',
+    description:
+      'Fixes products that were incorrectly set with isLocalInventory=false. Updates all products in the database to have isLocalInventory=true since they are registered in the local database.',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Products updated successfully',
+    schema: {
+      type: 'object',
+      properties: {
+        success: { type: 'boolean' },
+        updated: { type: 'number' },
+        message: { type: 'string' },
+      },
+    },
+  })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden - Admin role required' })
+  async updateAllProductsToLocalInventory() {
+    return this.productsService.updateAllProductsToLocalInventory();
   }
 
   @Delete(':id')

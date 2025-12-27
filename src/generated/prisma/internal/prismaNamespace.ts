@@ -1985,7 +1985,6 @@ export const SinglesScalarFieldEnum = {
   prerelease: 'prerelease',
   premierPlay: 'premierPlay',
   showImportacionBadge: 'showImportacionBadge',
-  source: 'source',
   stock: 'stock',
   surgeFoil: 'surgeFoil',
   variant: 'variant',

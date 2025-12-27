@@ -2,9 +2,10 @@ import { Module } from '@nestjs/common';
 import { ProductsController } from './products.controller.js';
 import { ProductsService } from './products.service.js';
 import { PrismaModule } from '../database/prisma.module.js';
+import { HareruyaModule } from '../hareruya/hareruya.module.js';
 
 @Module({
-  imports: [PrismaModule],
+  imports: [PrismaModule, HareruyaModule],
   controllers: [ProductsController],
   providers: [ProductsService],
   exports: [ProductsService],

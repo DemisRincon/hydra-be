@@ -62,7 +62,6 @@ export type SinglesMinAggregateOutputType = {
   prerelease: boolean | null
   premierPlay: boolean | null
   showImportacionBadge: boolean | null
-  source: string | null
   stock: number | null
   surgeFoil: boolean | null
   variant: string | null
@@ -94,7 +93,6 @@ export type SinglesMaxAggregateOutputType = {
   prerelease: boolean | null
   premierPlay: boolean | null
   showImportacionBadge: boolean | null
-  source: string | null
   stock: number | null
   surgeFoil: boolean | null
   variant: string | null
@@ -127,7 +125,6 @@ export type SinglesCountAggregateOutputType = {
   prerelease: number
   premierPlay: number
   showImportacionBadge: number
-  source: number
   stock: number
   surgeFoil: number
   variant: number
@@ -173,7 +170,6 @@ export type SinglesMinAggregateInputType = {
   prerelease?: true
   premierPlay?: true
   showImportacionBadge?: true
-  source?: true
   stock?: true
   surgeFoil?: true
   variant?: true
@@ -205,7 +201,6 @@ export type SinglesMaxAggregateInputType = {
   prerelease?: true
   premierPlay?: true
   showImportacionBadge?: true
-  source?: true
   stock?: true
   surgeFoil?: true
   variant?: true
@@ -238,7 +233,6 @@ export type SinglesCountAggregateInputType = {
   prerelease?: true
   premierPlay?: true
   showImportacionBadge?: true
-  source?: true
   stock?: true
   surgeFoil?: true
   variant?: true
@@ -358,7 +352,6 @@ export type SinglesGroupByOutputType = {
   prerelease: boolean
   premierPlay: boolean
   showImportacionBadge: boolean
-  source: string | null
   stock: number
   surgeFoil: boolean
   variant: string | null
@@ -414,7 +407,6 @@ export type singlesWhereInput = {
   prerelease?: Prisma.BoolFilter<"singles"> | boolean
   premierPlay?: Prisma.BoolFilter<"singles"> | boolean
   showImportacionBadge?: Prisma.BoolFilter<"singles"> | boolean
-  source?: Prisma.StringNullableFilter<"singles"> | string | null
   stock?: Prisma.IntFilter<"singles"> | number
   surgeFoil?: Prisma.BoolFilter<"singles"> | boolean
   variant?: Prisma.StringNullableFilter<"singles"> | string | null
@@ -458,7 +450,6 @@ export type singlesOrderByWithRelationInput = {
   prerelease?: Prisma.SortOrder
   premierPlay?: Prisma.SortOrder
   showImportacionBadge?: Prisma.SortOrder
-  source?: Prisma.SortOrderInput | Prisma.SortOrder
   stock?: Prisma.SortOrder
   surgeFoil?: Prisma.SortOrder
   variant?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -505,7 +496,6 @@ export type singlesWhereUniqueInput = Prisma.AtLeast<{
   prerelease?: Prisma.BoolFilter<"singles"> | boolean
   premierPlay?: Prisma.BoolFilter<"singles"> | boolean
   showImportacionBadge?: Prisma.BoolFilter<"singles"> | boolean
-  source?: Prisma.StringNullableFilter<"singles"> | string | null
   stock?: Prisma.IntFilter<"singles"> | number
   surgeFoil?: Prisma.BoolFilter<"singles"> | boolean
   variant?: Prisma.StringNullableFilter<"singles"> | string | null
@@ -549,7 +539,6 @@ export type singlesOrderByWithAggregationInput = {
   prerelease?: Prisma.SortOrder
   premierPlay?: Prisma.SortOrder
   showImportacionBadge?: Prisma.SortOrder
-  source?: Prisma.SortOrderInput | Prisma.SortOrder
   stock?: Prisma.SortOrder
   surgeFoil?: Prisma.SortOrder
   variant?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -590,7 +579,6 @@ export type singlesScalarWhereWithAggregatesInput = {
   prerelease?: Prisma.BoolWithAggregatesFilter<"singles"> | boolean
   premierPlay?: Prisma.BoolWithAggregatesFilter<"singles"> | boolean
   showImportacionBadge?: Prisma.BoolWithAggregatesFilter<"singles"> | boolean
-  source?: Prisma.StringNullableWithAggregatesFilter<"singles"> | string | null
   stock?: Prisma.IntWithAggregatesFilter<"singles"> | number
   surgeFoil?: Prisma.BoolWithAggregatesFilter<"singles"> | boolean
   variant?: Prisma.StringNullableWithAggregatesFilter<"singles"> | string | null
@@ -617,7 +605,6 @@ export type singlesCreateInput = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: string | null
   stock?: number
   surgeFoil?: boolean
   variant?: string | null
@@ -661,7 +648,6 @@ export type singlesUncheckedCreateInput = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: string | null
   stock?: number
   surgeFoil?: boolean
   variant?: string | null
@@ -693,7 +679,6 @@ export type singlesUpdateInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -737,7 +722,6 @@ export type singlesUncheckedUpdateInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -775,7 +759,6 @@ export type singlesCreateManyInput = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: string | null
   stock?: number
   surgeFoil?: boolean
   variant?: string | null
@@ -802,7 +785,6 @@ export type singlesUpdateManyMutationInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -835,7 +817,6 @@ export type singlesUncheckedUpdateManyInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -886,7 +867,6 @@ export type singlesCountOrderByAggregateInput = {
   prerelease?: Prisma.SortOrder
   premierPlay?: Prisma.SortOrder
   showImportacionBadge?: Prisma.SortOrder
-  source?: Prisma.SortOrder
   stock?: Prisma.SortOrder
   surgeFoil?: Prisma.SortOrder
   variant?: Prisma.SortOrder
@@ -924,7 +904,6 @@ export type singlesMaxOrderByAggregateInput = {
   prerelease?: Prisma.SortOrder
   premierPlay?: Prisma.SortOrder
   showImportacionBadge?: Prisma.SortOrder
-  source?: Prisma.SortOrder
   stock?: Prisma.SortOrder
   surgeFoil?: Prisma.SortOrder
   variant?: Prisma.SortOrder
@@ -956,7 +935,6 @@ export type singlesMinOrderByAggregateInput = {
   prerelease?: Prisma.SortOrder
   premierPlay?: Prisma.SortOrder
   showImportacionBadge?: Prisma.SortOrder
-  source?: Prisma.SortOrder
   stock?: Prisma.SortOrder
   surgeFoil?: Prisma.SortOrder
   variant?: Prisma.SortOrder
@@ -1341,7 +1319,6 @@ export type singlesCreateWithoutOwnerInput = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: string | null
   stock?: number
   surgeFoil?: boolean
   variant?: string | null
@@ -1383,7 +1360,6 @@ export type singlesUncheckedCreateWithoutOwnerInput = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: string | null
   stock?: number
   surgeFoil?: boolean
   variant?: string | null
@@ -1450,7 +1426,6 @@ export type singlesScalarWhereInput = {
   prerelease?: Prisma.BoolFilter<"singles"> | boolean
   premierPlay?: Prisma.BoolFilter<"singles"> | boolean
   showImportacionBadge?: Prisma.BoolFilter<"singles"> | boolean
-  source?: Prisma.StringNullableFilter<"singles"> | string | null
   stock?: Prisma.IntFilter<"singles"> | number
   surgeFoil?: Prisma.BoolFilter<"singles"> | boolean
   variant?: Prisma.StringNullableFilter<"singles"> | string | null
@@ -1477,7 +1452,6 @@ export type singlesCreateWithoutCategoriesInput = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: string | null
   stock?: number
   surgeFoil?: boolean
   variant?: string | null
@@ -1519,7 +1493,6 @@ export type singlesUncheckedCreateWithoutCategoriesInput = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: string | null
   stock?: number
   surgeFoil?: boolean
   variant?: string | null
@@ -1577,7 +1550,6 @@ export type singlesCreateWithoutConditionsInput = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: string | null
   stock?: number
   surgeFoil?: boolean
   variant?: string | null
@@ -1619,7 +1591,6 @@ export type singlesUncheckedCreateWithoutConditionsInput = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: string | null
   stock?: number
   surgeFoil?: boolean
   variant?: string | null
@@ -1677,7 +1648,6 @@ export type singlesCreateWithoutLanguagesInput = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: string | null
   stock?: number
   surgeFoil?: boolean
   variant?: string | null
@@ -1719,7 +1689,6 @@ export type singlesUncheckedCreateWithoutLanguagesInput = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: string | null
   stock?: number
   surgeFoil?: boolean
   variant?: string | null
@@ -1777,7 +1746,6 @@ export type singlesCreateWithoutRaritiesInput = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: string | null
   stock?: number
   surgeFoil?: boolean
   variant?: string | null
@@ -1819,7 +1787,6 @@ export type singlesUncheckedCreateWithoutRaritiesInput = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: string | null
   stock?: number
   surgeFoil?: boolean
   variant?: string | null
@@ -1877,7 +1844,6 @@ export type singlesCreateWithoutTcgsInput = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: string | null
   stock?: number
   surgeFoil?: boolean
   variant?: string | null
@@ -1919,7 +1885,6 @@ export type singlesUncheckedCreateWithoutTcgsInput = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: string | null
   stock?: number
   surgeFoil?: boolean
   variant?: string | null
@@ -1977,7 +1942,6 @@ export type singlesCreateWithoutTagsInput = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: string | null
   stock?: number
   surgeFoil?: boolean
   variant?: string | null
@@ -2020,7 +1984,6 @@ export type singlesUncheckedCreateWithoutTagsInput = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: string | null
   stock?: number
   surgeFoil?: boolean
   variant?: string | null
@@ -2067,7 +2030,6 @@ export type singlesUpdateWithoutTagsInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2110,7 +2072,6 @@ export type singlesUncheckedUpdateWithoutTagsInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2141,7 +2102,6 @@ export type singlesCreateWithoutStockItemsInput = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: string | null
   stock?: number
   surgeFoil?: boolean
   variant?: string | null
@@ -2184,7 +2144,6 @@ export type singlesUncheckedCreateWithoutStockItemsInput = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: string | null
   stock?: number
   surgeFoil?: boolean
   variant?: string | null
@@ -2231,7 +2190,6 @@ export type singlesUpdateWithoutStockItemsInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2274,7 +2232,6 @@ export type singlesUncheckedUpdateWithoutStockItemsInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2305,7 +2262,6 @@ export type singlesCreateWithoutCartItemsInput = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: string | null
   stock?: number
   surgeFoil?: boolean
   variant?: string | null
@@ -2348,7 +2304,6 @@ export type singlesUncheckedCreateWithoutCartItemsInput = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: string | null
   stock?: number
   surgeFoil?: boolean
   variant?: string | null
@@ -2395,7 +2350,6 @@ export type singlesUpdateWithoutCartItemsInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2438,7 +2392,6 @@ export type singlesUncheckedUpdateWithoutCartItemsInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2469,7 +2422,6 @@ export type singlesCreateWithoutOrderItemsInput = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: string | null
   stock?: number
   surgeFoil?: boolean
   variant?: string | null
@@ -2512,7 +2464,6 @@ export type singlesUncheckedCreateWithoutOrderItemsInput = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: string | null
   stock?: number
   surgeFoil?: boolean
   variant?: string | null
@@ -2559,7 +2510,6 @@ export type singlesUpdateWithoutOrderItemsInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2602,7 +2552,6 @@ export type singlesUncheckedUpdateWithoutOrderItemsInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2633,7 +2582,6 @@ export type singlesCreateWithoutListingsInput = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: string | null
   stock?: number
   surgeFoil?: boolean
   variant?: string | null
@@ -2676,7 +2624,6 @@ export type singlesUncheckedCreateWithoutListingsInput = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: string | null
   stock?: number
   surgeFoil?: boolean
   variant?: string | null
@@ -2723,7 +2670,6 @@ export type singlesUpdateWithoutListingsInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2766,7 +2712,6 @@ export type singlesUncheckedUpdateWithoutListingsInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2802,7 +2747,6 @@ export type singlesCreateManyOwnerInput = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: string | null
   stock?: number
   surgeFoil?: boolean
   variant?: string | null
@@ -2829,7 +2773,6 @@ export type singlesUpdateWithoutOwnerInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2871,7 +2814,6 @@ export type singlesUncheckedUpdateWithoutOwnerInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2908,7 +2850,6 @@ export type singlesUncheckedUpdateManyWithoutOwnerInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2940,7 +2881,6 @@ export type singlesCreateManyCategoriesInput = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: string | null
   stock?: number
   surgeFoil?: boolean
   variant?: string | null
@@ -2967,7 +2907,6 @@ export type singlesUpdateWithoutCategoriesInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3009,7 +2948,6 @@ export type singlesUncheckedUpdateWithoutCategoriesInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3046,7 +2984,6 @@ export type singlesUncheckedUpdateManyWithoutCategoriesInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3078,7 +3015,6 @@ export type singlesCreateManyConditionsInput = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: string | null
   stock?: number
   surgeFoil?: boolean
   variant?: string | null
@@ -3105,7 +3041,6 @@ export type singlesUpdateWithoutConditionsInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3147,7 +3082,6 @@ export type singlesUncheckedUpdateWithoutConditionsInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3184,7 +3118,6 @@ export type singlesUncheckedUpdateManyWithoutConditionsInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3216,7 +3149,6 @@ export type singlesCreateManyLanguagesInput = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: string | null
   stock?: number
   surgeFoil?: boolean
   variant?: string | null
@@ -3243,7 +3175,6 @@ export type singlesUpdateWithoutLanguagesInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3285,7 +3216,6 @@ export type singlesUncheckedUpdateWithoutLanguagesInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3322,7 +3252,6 @@ export type singlesUncheckedUpdateManyWithoutLanguagesInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3354,7 +3283,6 @@ export type singlesCreateManyRaritiesInput = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: string | null
   stock?: number
   surgeFoil?: boolean
   variant?: string | null
@@ -3381,7 +3309,6 @@ export type singlesUpdateWithoutRaritiesInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3423,7 +3350,6 @@ export type singlesUncheckedUpdateWithoutRaritiesInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3460,7 +3386,6 @@ export type singlesUncheckedUpdateManyWithoutRaritiesInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3492,7 +3417,6 @@ export type singlesCreateManyTcgsInput = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: string | null
   stock?: number
   surgeFoil?: boolean
   variant?: string | null
@@ -3519,7 +3443,6 @@ export type singlesUpdateWithoutTcgsInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3561,7 +3484,6 @@ export type singlesUncheckedUpdateWithoutTcgsInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3598,7 +3520,6 @@ export type singlesUncheckedUpdateManyWithoutTcgsInput = {
   prerelease?: Prisma.BoolFieldUpdateOperationsInput | boolean
   premierPlay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showImportacionBadge?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   surgeFoil?: Prisma.BoolFieldUpdateOperationsInput | boolean
   variant?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3698,7 +3619,6 @@ export type singlesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: boolean
   stock?: boolean
   surgeFoil?: boolean
   variant?: boolean
@@ -3743,7 +3663,6 @@ export type singlesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: boolean
   stock?: boolean
   surgeFoil?: boolean
   variant?: boolean
@@ -3782,7 +3701,6 @@ export type singlesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: boolean
   stock?: boolean
   surgeFoil?: boolean
   variant?: boolean
@@ -3821,7 +3739,6 @@ export type singlesSelectScalar = {
   prerelease?: boolean
   premierPlay?: boolean
   showImportacionBadge?: boolean
-  source?: boolean
   stock?: boolean
   surgeFoil?: boolean
   variant?: boolean
@@ -3829,7 +3746,7 @@ export type singlesSelectScalar = {
   updated_at?: boolean
 }
 
-export type singlesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "price" | "category_id" | "condition_id" | "language_id" | "rarity_id" | "tcg_id" | "owner_id" | "borderless" | "cardName" | "cardNumber" | "expansion" | "extendedArt" | "finalPrice" | "foil" | "hareruyaId" | "img" | "isLocalInventory" | "link" | "metadata" | "prerelease" | "premierPlay" | "showImportacionBadge" | "source" | "stock" | "surgeFoil" | "variant" | "created_at" | "updated_at", ExtArgs["result"]["singles"]>
+export type singlesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "price" | "category_id" | "condition_id" | "language_id" | "rarity_id" | "tcg_id" | "owner_id" | "borderless" | "cardName" | "cardNumber" | "expansion" | "extendedArt" | "finalPrice" | "foil" | "hareruyaId" | "img" | "isLocalInventory" | "link" | "metadata" | "prerelease" | "premierPlay" | "showImportacionBadge" | "stock" | "surgeFoil" | "variant" | "created_at" | "updated_at", ExtArgs["result"]["singles"]>
 export type singlesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   categories?: boolean | Prisma.categoriesDefaultArgs<ExtArgs>
   conditions?: boolean | Prisma.singles$conditionsArgs<ExtArgs>
@@ -3901,7 +3818,6 @@ export type $singlesPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     prerelease: boolean
     premierPlay: boolean
     showImportacionBadge: boolean
-    source: string | null
     stock: number
     surgeFoil: boolean
     variant: string | null
@@ -4365,7 +4281,6 @@ export interface singlesFieldRefs {
   readonly prerelease: Prisma.FieldRef<"singles", 'Boolean'>
   readonly premierPlay: Prisma.FieldRef<"singles", 'Boolean'>
   readonly showImportacionBadge: Prisma.FieldRef<"singles", 'Boolean'>
-  readonly source: Prisma.FieldRef<"singles", 'String'>
   readonly stock: Prisma.FieldRef<"singles", 'Int'>
   readonly surgeFoil: Prisma.FieldRef<"singles", 'Boolean'>
   readonly variant: Prisma.FieldRef<"singles", 'String'>

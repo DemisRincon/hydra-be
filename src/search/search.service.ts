@@ -138,6 +138,121 @@ export class SearchService {
   }
 
   /**
+   * Filter products that have "Personal" tag and don't have stock in Hareruya
+   * Returns a Set of product IDs that should be excluded
+   */
+  private async filterProductsWithoutHareruyaStock(
+    products: any[],
+  ): Promise<Set<string>> {
+    const productsWithoutHareruyaStock = new Set<string>();
+    const productsToCheckStock: Array<{
+      product: any;
+      hareruyaId: string;
+      cardName: string;
+      language: string;
+      foil: boolean;
+    }> = [];
+
+    // Identify products that need Hareruya stock verification
+    // IMPORTANT: Only process LOCAL products with "Personal" tag
+    for (const localProduct of products) {
+      // Skip products that are not local (isLocalInventory=false)
+      if (localProduct.isLocalInventory === false) {
+        continue;
+      }
+
+      // Extract metadata and tags
+      const metadata: string[] = [];
+      if (localProduct.metadata && Array.isArray(localProduct.metadata)) {
+        metadata.push(...localProduct.metadata);
+      }
+
+      // Get tags from single_tags relation
+      const tags = localProduct.tags || [];
+      const tagNames = tags.map((st: any) => st.tags?.name || '').filter(Boolean);
+      const hasPersonalTag = tagNames.some(
+        (tag: string) => tag.toLowerCase() === 'personal',
+      ) || metadata.includes('Personal');
+
+      // Check if product needs stock verification
+      // Only local products with Personal tag need verification
+      const needsStockCheck = hasPersonalTag && localProduct.hareruyaId;
+
+      if (needsStockCheck) {
+        const languageCode = localProduct.languages?.code || 'EN';
+        productsToCheckStock.push({
+          product: localProduct,
+          hareruyaId: localProduct.hareruyaId,
+          cardName: localProduct.cardName || localProduct.name || '',
+          language: languageCode,
+          foil: localProduct.foil === true,
+        });
+      }
+    }
+
+    // Check Hareruya stock for products that need verification
+    if (productsToCheckStock.length > 0) {
+      try {
+        const hareruyaIds = productsToCheckStock.map((p) => p.hareruyaId);
+        const cardNames = productsToCheckStock.map((p) => p.cardName);
+
+        const pricingResult = await this.hareruyaService.getHareruyaPricing({
+          productIds: hareruyaIds,
+          cardNames: cardNames,
+        });
+
+        if (pricingResult.success && pricingResult.pricing) {
+          // For each product, find matching variant by language and foil
+          for (const productToCheck of productsToCheckStock) {
+            const matchingVariant = pricingResult.pricing.find((variant) => {
+              // Match by hareruyaId
+              if (variant.productId !== productToCheck.hareruyaId) {
+                return false;
+              }
+
+              // Match by language
+              const variantLanguage = (variant.language || 'ENGLISH')
+                .toUpperCase()
+                .trim();
+              const productLanguage = this.normalizeLanguageForComparison(
+                productToCheck.language,
+              )
+                .toUpperCase()
+                .trim();
+              const languageMatches = variantLanguage === productLanguage;
+
+              // Match by foil
+              const foilMatches =
+                productToCheck.foil === (variant.isFoil === true);
+
+              return languageMatches && foilMatches;
+            });
+
+            // If no matching variant found or stock is 0, exclude from results
+            if (!matchingVariant || matchingVariant.stock <= 0) {
+              productsWithoutHareruyaStock.add(productToCheck.product.id);
+              this.logger.log(
+                `Excluding product ${productToCheck.product.id} (${productToCheck.cardName}) - no stock in Hareruya (Personal tag or local inventory)`,
+              );
+            }
+          }
+        }
+      } catch (error) {
+        this.logger.error(
+          `Error checking Hareruya stock for Personal/local inventory products: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        );
+        // On error, be conservative and exclude products that need stock check
+        // to avoid showing products that might not be available
+        productsToCheckStock.forEach((p) => {
+          productsWithoutHareruyaStock.add(p.product.id);
+        });
+      }
+    }
+
+    return productsWithoutHareruyaStock;
+  }
+
+  /**
    * Transform local product to match Hareruya search result format
    */
   private transformLocalProductToHareruyaFormat(localProduct: any): any {
@@ -239,7 +354,6 @@ export class SearchService {
       premierPlay,
       price: priceFormatted,
       showImportacionBadge: showImportacionBadge,
-      source: 'local',
       stock: stockCount,
       surgeFoil,
       tags: localProduct.tags || [],
@@ -326,6 +440,10 @@ export class SearchService {
       // Continue with Hareruya results only
     }
 
+    // Filter out products with "Personal" tag or isLocalInventory that don't have stock in Hareruya
+    const productsWithoutHareruyaStock =
+      await this.filterProductsWithoutHareruyaStock(localProducts);
+
     // Process local products: match with Hareruya and update prices
     const processedLocalProducts: any[] = [];
     const priceUpdates: Array<{
@@ -335,6 +453,11 @@ export class SearchService {
     }> = [];
 
     for (const localProduct of localProducts) {
+      // Skip products without Hareruya stock if they have Personal tag or are local inventory
+      if (productsWithoutHareruyaStock.has(localProduct.id)) {
+        continue;
+      }
+
       if (!localProduct.hareruyaId) {
         // No hareruyaId, skip matching but include in results (transformed)
         const transformedProduct = this.transformLocalProductToHareruyaFormat(localProduct);
@@ -505,6 +628,7 @@ export class SearchService {
     limit: number = 12,
     enablePagination: boolean = false,
     metadata?: string,
+    category?: string,
   ): Promise<{
     success: boolean;
     data: any[];
@@ -594,21 +718,74 @@ export class SearchService {
         }
       } else {
         this.logger.log(
-          `Getting latest local products, page: ${pageNum}, limit: ${limitNum}, pagination: ${enablePagination}`,
+          `Getting latest local products, page: ${pageNum}, limit: ${limitNum}, pagination: ${enablePagination}, category: ${category || 'all'}`,
         );
 
         try {
           if (enablePagination) {
             // Get total count first for pagination
-            totalCount = await this.prisma.singles.count();
+            if (category) {
+              totalCount = await this.productsService.countByCategory(category);
+            } else {
+              totalCount = await this.prisma.singles.count();
+            }
             // Get paginated results
-            localProducts = await this.productsService.findLatest(limitNum, pageNum);
+            localProducts = await this.productsService.findLatest(limitNum, pageNum, category);
             this.logger.log(`Found ${localProducts.length} latest local products (total: ${totalCount})`);
           } else {
-            // If pagination is disabled, just get the latest items up to limit
-            localProducts = await this.productsService.findLatest(limitNum, 1);
-            totalCount = localProducts.length;
-            this.logger.log(`Found ${localProducts.length} latest local products (no pagination)`);
+            // If pagination is disabled, search iteratively until we have 4 valid products
+            const TARGET_PRODUCTS = 4;
+            const BATCH_SIZE = 12; // Search in batches of 12
+            const validProducts: any[] = [];
+            let currentPage = 1;
+            let allFetchedProducts: any[] = [];
+
+            // Keep searching until we have 4 valid products or run out of products
+            while (validProducts.length < TARGET_PRODUCTS) {
+              // Fetch a batch of products
+              const batch = await this.productsService.findLatest(BATCH_SIZE, currentPage, category);
+              
+              if (batch.length === 0) {
+                // No more products available
+                break;
+              }
+
+              allFetchedProducts.push(...batch);
+
+              // Filter this batch
+              const productsWithoutHareruyaStock =
+                await this.filterProductsWithoutHareruyaStock(batch);
+
+              // Process and add valid products
+              for (const localProduct of batch) {
+                if (validProducts.length >= TARGET_PRODUCTS) {
+                  break;
+                }
+
+                // Skip products without Hareruya stock if they have Personal tag
+                if (productsWithoutHareruyaStock.has(localProduct.id)) {
+                  continue;
+                }
+
+                // Transform local product to match Hareruya format
+                const transformedProduct = this.transformLocalProductToHareruyaFormat(localProduct);
+                validProducts.push(transformedProduct);
+              }
+
+              // If we got less than BATCH_SIZE, we've reached the end
+              if (batch.length < BATCH_SIZE) {
+                break;
+              }
+
+              currentPage++;
+            }
+
+            // Store the valid products in localProducts for consistency
+            localProducts = validProducts;
+            totalCount = validProducts.length;
+            this.logger.log(
+              `Found ${validProducts.length} valid products after filtering (searched ${allFetchedProducts.length} total products)`,
+            );
           }
         } catch (error) {
           this.logger.error(
@@ -621,12 +798,27 @@ export class SearchService {
     }
 
     // Process local products: transform to Hareruya format
-    const processedLocalProducts: any[] = [];
+    // For pagination mode, filter all products at once
+    let processedLocalProducts: any[] = [];
+    if (enablePagination) {
+      // Filter out products with "Personal" tag or isLocalInventory that don't have stock in Hareruya
+      const productsWithoutHareruyaStock =
+        await this.filterProductsWithoutHareruyaStock(localProducts);
 
-    for (const localProduct of localProducts) {
-      // Transform local product to match Hareruya format
-      const transformedProduct = this.transformLocalProductToHareruyaFormat(localProduct);
-      processedLocalProducts.push(transformedProduct);
+      // Transform and filter products
+      for (const localProduct of localProducts) {
+        // Skip products without Hareruya stock if they have Personal tag or are local inventory
+        if (productsWithoutHareruyaStock.has(localProduct.id)) {
+          continue;
+        }
+
+        // Transform local product to match Hareruya format
+        const transformedProduct = this.transformLocalProductToHareruyaFormat(localProduct);
+        processedLocalProducts.push(transformedProduct);
+      }
+    } else {
+      // For non-pagination mode, products are already filtered and transformed above
+      processedLocalProducts = localProducts;
     }
 
     // Build response

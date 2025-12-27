@@ -149,7 +149,6 @@ model singles {
   prerelease           Boolean  @default(false)
   premierPlay          Boolean  @default(false) @map("premier_play")
   showImportacionBadge Boolean  @default(false) @map("show_importacion_badge")
-  source               String? // 'hareruya' or other sources
   stock                Int      @default(0) // Direct stock count
   surgeFoil            Boolean  @default(false) @map("surge_foil")
   variant              String? // Set name from brackets [SET NAME]

@@ -97,9 +97,6 @@ export class CreateSingleDto {
   @IsBoolean()
   showImportacionBadge: boolean;
 
-  @ApiProperty({ description: 'Source', example: 'hareruya' })
-  @IsString()
-  source: string;
 
   @ApiProperty({ description: 'Stock count', example: 0 })
   @IsNumber()
