@@ -525,6 +525,11 @@ export class ProductsService {
         languages: true,
         rarities: true,
         tcgs: true,
+        tags: {
+          include: {
+            tags: true,
+          },
+        },
         owner: {
           include: {
             roles: true,
@@ -539,7 +544,58 @@ export class ProductsService {
       );
     }
 
-    return product;
+    // Check if product has "Personal" tag
+    const tagNames = product.tags.map((st) => st.tags.name);
+    const hasPersonalTag =
+      tagNames.some((tag: string) => tag.toLowerCase() === 'personal') ||
+      product.metadata.includes('Personal');
+
+    // If product has "Personal" tag, return all products with same cardName
+    // filtered by foil and language_id (distinct combinations)
+    if (hasPersonalTag && product.cardName) {
+      const relatedProducts = await this.prisma.singles.findMany({
+        where: {
+          cardName: product.cardName,
+          // Filter by both foil and language_id to get distinct variants
+          foil: product.foil,
+          language_id: product.language_id,
+        },
+        include: {
+          categories: true,
+          conditions: true,
+          languages: true,
+          rarities: true,
+          tcgs: true,
+          tags: {
+            include: {
+              tags: true,
+            },
+          },
+          owner: {
+            include: {
+              roles: true,
+            },
+          },
+        },
+        orderBy: {
+          created_at: 'desc',
+        },
+      });
+
+      // Transform tags from single_tags[] to tags[]
+      const transformedProducts = relatedProducts.map((p) => ({
+        ...p,
+        tags: p.tags.map((st) => st.tags),
+      }));
+
+      return transformedProducts;
+    }
+
+    // Transform tags from single_tags[] to tags[] for single product
+    return {
+      ...product,
+      tags: product.tags.map((st) => st.tags),
+    };
   }
 
   async findAll(page: number = 1, limit: number = 20) {

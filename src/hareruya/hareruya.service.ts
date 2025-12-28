@@ -112,10 +112,12 @@ export class HareruyaService {
     }
 
     // Extract expansion code and card number from pattern (WAR-211) or (EXPANSION-NUMBER)
-    const expansionCardMatch = doc.product_name_en?.match(/\(([A-Z0-9]+)-(\d+)\)/);
+    const expansionCardMatch = doc.product_name_en?.match(
+      /\(([A-Z0-9]+)-(\d+)\)/,
+    );
     let expansionCode = '';
     let cardNumber = '';
-    
+
     if (expansionCardMatch) {
       expansionCode = expansionCardMatch[1]; // e.g., "WAR"
       cardNumber = expansionCardMatch[2]; // e.g., "211"
@@ -299,7 +301,7 @@ export class HareruyaService {
                   typeof doc === 'object' &&
                   doc !== null &&
                   'product' in doc &&
-                  typeof (doc as any).product === 'string'
+                  typeof (doc as Record<string, unknown>).product === 'string'
                 ) {
                   return doc as HareruyaApiDoc;
                 }
@@ -613,17 +615,13 @@ export class HareruyaService {
   /**
    * Transform Hareruya API document to search result format
    */
-  private async transformHareruyaDocToSearchResult(
+  private transformHareruyaDocToSearchResult(
     doc: HareruyaApiDoc,
-  ): Promise<HareruyaSearchResult> {
+  ): HareruyaSearchResult {
     const isFoil = doc.foil_flg === '1';
 
     // Format price with JPY to MXN conversion and condition discount
     const rawPrice = parseInt(doc.price) || 0;
-    const priceJPY =
-      rawPrice > 0
-        ? `${rawPrice.toLocaleString()} JPY`
-        : 'Precio no disponible';
 
     // Convert JPY to MXN
     const convertedPriceMXN =
@@ -647,10 +645,12 @@ export class HareruyaService {
     }
 
     // Extract expansion code and card number from pattern (WAR-211) or (EXPANSION-NUMBER)
-    const expansionCardMatch = doc.product_name_en?.match(/\(([A-Z0-9]+)-(\d+)\)/);
+    const expansionCardMatch = doc.product_name_en?.match(
+      /\(([A-Z0-9]+)-(\d+)\)/,
+    );
     let expansionCode = '';
     let cardNumber = '';
-    
+
     if (expansionCardMatch) {
       expansionCode = expansionCardMatch[1]; // e.g., "WAR"
       cardNumber = expansionCardMatch[2]; // e.g., "211"
@@ -675,18 +675,6 @@ export class HareruyaService {
 
     // Use expansion code from (WAR-211) pattern if available, otherwise use set name
     const expansion = expansionCode || set || '';
-
-    // Format title
-    let cardTitle = cleanCardName || doc.card_name || '';
-    if (expansionCode && cardNumber) {
-      cardTitle = `${cardTitle} (${expansionCode} - ${cardNumber})`;
-    } else if (set && cardNumber) {
-      cardTitle = `${cardTitle} (${set} - ${cardNumber})`;
-    } else if (set) {
-      cardTitle = `${cardTitle} (${set})`;
-    } else if (expansionCode) {
-      cardTitle = `${cardTitle} (${expansionCode})`;
-    }
 
     // Extract metadata
     const metadata: string[] = [];
@@ -801,7 +789,12 @@ export class HareruyaService {
    * Search cards in Hareruya API
    * Similar to searchCards from admin
    */
-  async searchCards(filters: { query: string; page?: number; rows?: number; priceFilter?: string }): Promise<{
+  async searchCards(filters: {
+    query: string;
+    page?: number;
+    rows?: number;
+    priceFilter?: string;
+  }): Promise<{
     success: boolean;
     data: HareruyaSearchResult[];
     pagination: {
@@ -908,29 +901,42 @@ export class HareruyaService {
         .map((doc: unknown, index: number) => {
           try {
             // Ensure all required fields exist with defaults
+            const docRecord = doc as Record<string, unknown>;
+            const getString = (value: unknown): string =>
+              typeof value === 'string' ? value : '';
+            const getStringOrNumber = (value: unknown): string =>
+              typeof value === 'string' || typeof value === 'number'
+                ? String(value)
+                : '0';
+            const getFoilFlag = (record: Record<string, unknown>): string => {
+              if (typeof record.foil_flg === 'string') return record.foil_flg;
+              if (typeof record.foilFlg === 'string') return record.foilFlg;
+              if (typeof record.foil === 'string') return record.foil;
+              if (typeof record.foil === 'boolean')
+                return record.foil ? '1' : '0';
+              return '0';
+            };
             const docWithDefaults = {
-              product: (doc as any)?.product || '',
+              product: getString(docRecord.product) || '',
               card_name:
-                (doc as any)?.card_name || (doc as any)?.cardName || '',
+                getString(docRecord.card_name) ||
+                getString(docRecord.cardName) ||
+                '',
               product_name_en:
-                (doc as any)?.product_name_en ||
-                (doc as any)?.productNameEn ||
-                (doc as any)?.card_name ||
+                getString(docRecord.product_name_en) ||
+                getString(docRecord.productNameEn) ||
+                getString(docRecord.card_name) ||
                 '',
-              price: String((doc as any)?.price || '0'),
-              stock: String((doc as any)?.stock || '0'),
+              price: getStringOrNumber(docRecord.price) || '0',
+              stock: getStringOrNumber(docRecord.stock) || '0',
               image_url:
-                (doc as any)?.image_url ||
-                (doc as any)?.imageUrl ||
-                (doc as any)?.img ||
+                getString(docRecord.image_url) ||
+                getString(docRecord.imageUrl) ||
+                getString(docRecord.img) ||
                 '',
-              language: (doc as any)?.language || 'EN',
-              foil_flg:
-                (doc as any)?.foil_flg ||
-                (doc as any)?.foilFlg ||
-                (doc as any)?.foil ||
-                '0',
-              ...(doc as any),
+              language: getString(docRecord.language) || 'EN',
+              foil_flg: getFoilFlag(docRecord),
+              ...docRecord,
             };
             return docWithDefaults as HareruyaApiDoc;
           } catch (parseError) {
@@ -946,10 +952,9 @@ export class HareruyaService {
         );
 
       // Transform documents to search result format
-      const dataPromises = docs.map((doc) =>
+      const data = docs.map((doc) =>
         this.transformHareruyaDocToSearchResult(doc),
       );
-      const data = await Promise.all(dataPromises);
 
       // Calculate pagination info
       const totalItems = apiData.response.numFound || 0;
@@ -992,4 +997,3 @@ export class HareruyaService {
     }
   }
 }
-

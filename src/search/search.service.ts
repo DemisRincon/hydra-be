@@ -1,6 +1,9 @@
 import { Injectable, BadRequestException, Logger } from '@nestjs/common';
 import { SearchHareruyaDto } from './dto/search-hareruya.dto.js';
-import { HareruyaService } from '../hareruya/hareruya.service.js';
+import {
+  HareruyaService,
+  HareruyaSearchResult,
+} from '../hareruya/hareruya.service.js';
 import { ProductsService } from '../products/products.service.js';
 import { PrismaService } from '../database/prisma.service.js';
 
@@ -146,7 +149,7 @@ export class SearchService {
   ): Promise<Set<string>> {
     const productsWithoutHareruyaStock = new Set<string>();
     const productsToCheckStock: Array<{
-      product: any;
+      product: { id?: string };
       hareruyaId: string;
       cardName: string;
       language: string;
@@ -156,36 +159,70 @@ export class SearchService {
     // Identify products that need Hareruya stock verification
     // IMPORTANT: Only process LOCAL products with "Personal" tag
     for (const localProduct of products) {
+      // Type guard: ensure we have a valid product object
+      const product = localProduct as Record<string, unknown> & {
+        id?: string;
+        isLocalInventory?: boolean;
+        metadata?: string[] | null;
+        tags?: unknown;
+        hareruyaId?: string | null;
+        languages?: { code?: string } | null;
+        cardName?: string | null;
+        name?: string | null;
+        foil?: boolean;
+      };
+
       // Skip products that are not local (isLocalInventory=false)
-      if (localProduct.isLocalInventory === false) {
+      if (product.isLocalInventory === false) {
         continue;
       }
 
       // Extract metadata and tags
       const metadata: string[] = [];
-      if (localProduct.metadata && Array.isArray(localProduct.metadata)) {
-        metadata.push(...localProduct.metadata);
+      const productMetadata = product.metadata;
+      if (productMetadata && Array.isArray(productMetadata)) {
+        metadata.push(
+          ...productMetadata.filter(
+            (item): item is string => typeof item === 'string',
+          ),
+        );
       }
 
       // Get tags from single_tags relation
-      const tags = localProduct.tags || [];
-      const tagNames = tags.map((st: any) => st.tags?.name || '').filter(Boolean);
-      const hasPersonalTag = tagNames.some(
-        (tag: string) => tag.toLowerCase() === 'personal',
-      ) || metadata.includes('Personal');
+      const tags = product.tags || [];
+      const tagNames = (Array.isArray(tags) ? tags : [])
+        .map((st: unknown) => {
+          if (st && typeof st === 'object' && 'tags' in st) {
+            const tagObj = st as { tags?: { name?: unknown } };
+            return typeof tagObj.tags?.name === 'string'
+              ? tagObj.tags.name
+              : '';
+          }
+          return '';
+        })
+        .filter(Boolean);
+      const hasPersonalTag =
+        tagNames.some((tag: string) => tag.toLowerCase() === 'personal') ||
+        metadata.includes('Personal');
 
       // Check if product needs stock verification
       // Only local products with Personal tag need verification
-      const needsStockCheck = hasPersonalTag && localProduct.hareruyaId;
+      const needsStockCheck = hasPersonalTag && product.hareruyaId;
 
       if (needsStockCheck) {
-        const languageCode = localProduct.languages?.code || 'EN';
+        const productLanguages = product.languages;
+        const languageCode =
+          productLanguages &&
+          typeof productLanguages === 'object' &&
+          typeof productLanguages.code === 'string'
+            ? productLanguages.code
+            : 'EN';
         productsToCheckStock.push({
-          product: localProduct,
-          hareruyaId: localProduct.hareruyaId,
-          cardName: localProduct.cardName || localProduct.name || '',
+          product: product,
+          hareruyaId: product.hareruyaId || '',
+          cardName: product.cardName || product.name || '',
           language: languageCode,
-          foil: localProduct.foil === true,
+          foil: product.foil === true,
         });
       }
     }
@@ -228,12 +265,26 @@ export class SearchService {
               return languageMatches && foilMatches;
             });
 
-            // If no matching variant found or stock is 0, exclude from results
-            if (!matchingVariant || matchingVariant.stock <= 0) {
-              productsWithoutHareruyaStock.add(productToCheck.product.id);
+            // If no matching variant found or stock is 0 or undefined, exclude from results
+            const productId = productToCheck.product.id;
+            if (!matchingVariant) {
+              if (productId) {
+                productsWithoutHareruyaStock.add(productId);
+              }
               this.logger.log(
-                `Excluding product ${productToCheck.product.id} (${productToCheck.cardName}) - no stock in Hareruya (Personal tag or local inventory)`,
+                `Excluding product ${productId || 'unknown'} (${productToCheck.cardName}) - no matching variant found in Hareruya (hareruyaId: ${productToCheck.hareruyaId}, language: ${productToCheck.language}, foil: ${productToCheck.foil})`,
               );
+            } else {
+              // Check stock - exclude if stock is 0, null, undefined, or negative
+              const stock = matchingVariant.stock;
+              if (stock === undefined || stock === null || stock <= 0) {
+                if (productId) {
+                  productsWithoutHareruyaStock.add(productId);
+                }
+                this.logger.log(
+                  `Excluding product ${productId || 'unknown'} (${productToCheck.cardName}) - stock is 0 or invalid in Hareruya (hareruyaId: ${productToCheck.hareruyaId}, stock: ${stock}, language: ${productToCheck.language}, foil: ${productToCheck.foil})`,
+                );
+              }
             }
           }
         }
@@ -244,7 +295,10 @@ export class SearchService {
         // On error, be conservative and exclude products that need stock check
         // to avoid showing products that might not be available
         productsToCheckStock.forEach((p) => {
-          productsWithoutHareruyaStock.add(p.product.id);
+          const productId = p.product.id;
+          if (productId) {
+            productsWithoutHareruyaStock.add(productId);
+          }
         });
       }
     }
@@ -257,16 +311,38 @@ export class SearchService {
    */
   private transformLocalProductToHareruyaFormat(localProduct: any): any {
     // Extract price values (handle Decimal types)
+    const getNumericValue = (value: unknown): number => {
+      if (value === null || value === undefined) return 0;
+      if (typeof value === 'number') return value;
+      if (
+        typeof value === 'object' &&
+        'toNumber' in value &&
+        typeof (value as { toNumber?: () => unknown }).toNumber === 'function'
+      ) {
+        const numValue = (value as { toNumber: () => unknown }).toNumber();
+        return typeof numValue === 'number' ? numValue : 0;
+      }
+      const parsed = Number(value);
+      return isNaN(parsed) ? 0 : parsed;
+    };
+
+    const productRecord = localProduct as Record<string, unknown>;
+    const finalPriceValue = productRecord.finalPrice;
+    const priceValue = productRecord.price;
     const basePrice =
-      localProduct.finalPrice?.toNumber?.() ||
-      localProduct.finalPrice ||
-      localProduct.price?.toNumber?.() ||
-      localProduct.price ||
-      0;
+      getNumericValue(finalPriceValue) || getNumericValue(priceValue) || 0;
 
     // Calculate final price with condition discount
-    const condition = localProduct.conditions;
-    const discountPercent = condition?.discount || 0;
+    const condition = productRecord.conditions as
+      | { discount?: number }
+      | null
+      | undefined;
+    const discountPercent =
+      condition &&
+      typeof condition === 'object' &&
+      typeof condition.discount === 'number'
+        ? condition.discount
+        : 0;
     const finalPrice =
       Math.round(basePrice * (1 - discountPercent / 100) * 100) / 100;
 
@@ -274,51 +350,135 @@ export class SearchService {
     const priceFormatted = `$${finalPrice.toFixed(2)} MXN`;
 
     // Extract category name
-    const categoryName =
-      localProduct.categories?.name ||
-      localProduct.categories?.display_name ||
-      'SINGLES';
+    const categories = productRecord.categories as
+      | { name?: string; display_name?: string }
+      | null
+      | undefined;
+    const getCategoryName = (cat: unknown): string | null => {
+      if (cat && typeof cat === 'object') {
+        if ('name' in cat && typeof cat.name === 'string') {
+          return cat.name;
+        }
+        if ('display_name' in cat && typeof cat.display_name === 'string') {
+          return cat.display_name;
+        }
+      }
+      return null;
+    };
+    const categoryName = getCategoryName(categories) || 'SINGLES';
 
     // Extract condition name
-    const conditionName =
-      localProduct.conditions?.display_name ||
-      localProduct.conditions?.name ||
-      'Near Mint';
+    const conditionWithName = productRecord.conditions as
+      | { name?: string; display_name?: string }
+      | null
+      | undefined;
+    const getConditionName = (cond: unknown): string | null => {
+      if (cond && typeof cond === 'object') {
+        if ('display_name' in cond && typeof cond.display_name === 'string') {
+          return cond.display_name;
+        }
+        if ('name' in cond && typeof cond.name === 'string') {
+          return cond.name;
+        }
+      }
+      return null;
+    };
+    const conditionName = getConditionName(conditionWithName) || 'Near Mint';
 
     // Extract language display name
-    const languageName =
-      localProduct.languages?.display_name ||
-      localProduct.languages?.name ||
-      'Inglés';
+    const languages = productRecord.languages as
+      | { name?: string; display_name?: string }
+      | null
+      | undefined;
+    const getLanguageName = (lang: unknown): string | null => {
+      if (lang && typeof lang === 'object') {
+        if ('display_name' in lang && typeof lang.display_name === 'string') {
+          return lang.display_name;
+        }
+        if ('name' in lang && typeof lang.name === 'string') {
+          return lang.name;
+        }
+      }
+      return null;
+    };
+    const languageName = getLanguageName(languages) || 'Inglés';
 
     // Extract metadata from local product
     const metadata: string[] = [];
-    if (localProduct.metadata && Array.isArray(localProduct.metadata)) {
-      metadata.push(...localProduct.metadata);
+    const productMetadata = productRecord.metadata;
+    if (productMetadata && Array.isArray(productMetadata)) {
+      metadata.push(
+        ...productMetadata.filter(
+          (item): item is string => typeof item === 'string',
+        ),
+      );
     }
-    if (localProduct.foil === true) {
+    const productFoil = productRecord.foil;
+    if (productFoil === true) {
       if (!metadata.includes('Foil')) {
         metadata.push('Foil');
       }
     }
 
     // Extract boolean flags from metadata
-    const borderless = metadata.includes('Borderless') || localProduct.borderless === true;
-    const extendedArt = metadata.includes('Extended Art') || localProduct.extendedArt === true;
-    const prerelease = metadata.includes('Prerelease') || localProduct.prerelease === true;
-    const premierPlay = metadata.includes('Premier Play') || localProduct.premierPlay === true;
-    const surgeFoil = metadata.includes('Surge Foil') || metadata.includes('SurgeFoil') || localProduct.surgeFoil === true;
+    const productBorderless = productRecord.borderless;
+    const productExtendedArt = productRecord.extendedArt;
+    const productPrerelease = productRecord.prerelease;
+    const productPremierPlay = productRecord.premierPlay;
+    const productSurgeFoil = productRecord.surgeFoil;
+
+    const borderless =
+      metadata.includes('Borderless') || productBorderless === true;
+    const extendedArt =
+      metadata.includes('Extended Art') || productExtendedArt === true;
+    const prerelease =
+      metadata.includes('Prerelease') || productPrerelease === true;
+    const premierPlay =
+      metadata.includes('Premier Play') || productPremierPlay === true;
+    const surgeFoil =
+      metadata.includes('Surge Foil') ||
+      metadata.includes('SurgeFoil') ||
+      productSurgeFoil === true;
 
     // Build link if hareruyaId exists
-    const languageCode = localProduct.languages?.code || 'EN';
-    const link = localProduct.hareruyaId
-      ? `https://www.hareruyamtg.com/en/products/detail/${localProduct.hareruyaId}?lang=${languageCode}`
+    const productLanguagesForLink = productRecord.languages as
+      | { code?: string }
+      | null
+      | undefined;
+    const languageCode =
+      (productLanguagesForLink &&
+      typeof productLanguagesForLink === 'object' &&
+      typeof productLanguagesForLink.code === 'string'
+        ? productLanguagesForLink.code
+        : null) || 'EN';
+    const productHareruyaId = productRecord.hareruyaId;
+    const hareruyaIdString =
+      productHareruyaId &&
+      (typeof productHareruyaId === 'string' ||
+        typeof productHareruyaId === 'number')
+        ? String(productHareruyaId)
+        : null;
+    const link = hareruyaIdString
+      ? `https://www.hareruyamtg.com/en/products/detail/${hareruyaIdString}?lang=${languageCode}`
       : '';
 
     // Extract stock count
-    const stockCount = localProduct.stock || 0;
+    const productStock = productRecord.stock;
+    const getNumericStock = (value: unknown): number => {
+      if (typeof value === 'number') return value;
+      if (typeof value === 'string') {
+        const parsed = Number(value);
+        return isNaN(parsed) ? 0 : parsed;
+      }
+      return 0;
+    };
+    const stockCount = getNumericStock(productStock);
     const hasStock = stockCount > 0;
-    const hasHareruyaId = !!localProduct.hareruyaId;
+    const hasHareruyaId = !!(
+      productHareruyaId &&
+      (typeof productHareruyaId === 'string' ||
+        typeof productHareruyaId === 'number')
+    );
 
     // Check if metadata includes "Personal"
     const hasPersonalMetadata = metadata.includes('Personal');
@@ -328,24 +488,48 @@ export class SearchService {
     // 1. Product has hareruyaId AND is local inventory AND has stock > 0, OR
     // 2. Explicitly set to true, OR
     // 3. Metadata includes "Personal"
+    const productShowImportacionBadge = productRecord.showImportacionBadge;
     const showImportacionBadge =
       (hasHareruyaId && hasStock) ||
-      localProduct.showImportacionBadge === true ||
+      productShowImportacionBadge === true ||
       hasPersonalMetadata;
+
+    // Extract remaining properties from productRecord
+    const productCardName = productRecord.cardName;
+    const productName = productRecord.name;
+    const productCardNumber = productRecord.cardNumber;
+    const productExpansion = productRecord.expansion;
+    const productVariant = productRecord.variant;
+    const productImg = productRecord.img;
+    const productTags = productRecord.tags;
+
+    const getStringValue = (value: unknown): string => {
+      return typeof value === 'string' ? value : '';
+    };
+
+    const getCardName = (): string => {
+      const cardName = getStringValue(productCardName);
+      if (cardName) return cardName;
+      const name = getStringValue(productName);
+      return name || '';
+    };
 
     // Return in Hareruya format
     return {
       borderless,
-      cardName: localProduct.cardName || localProduct.name || '',
-      cardNumber: localProduct.cardNumber || '',
+      cardName: getCardName(),
+      cardNumber: getStringValue(productCardNumber),
       category: categoryName,
       condition: conditionName,
-      expansion: localProduct.expansion || localProduct.variant || '',
+      expansion:
+        getStringValue(productExpansion) ||
+        getStringValue(productVariant) ||
+        '',
       extendedArt,
       finalPrice: finalPrice,
-      foil: localProduct.foil === true,
-      hareruyaId: localProduct.hareruyaId || null,
-      img: localProduct.img || '',
+      foil: productFoil === true,
+      hareruyaId: hareruyaIdString || null,
+      img: getStringValue(productImg),
       isLocalInventory: true,
       language: languageName,
       link: link,
@@ -356,8 +540,11 @@ export class SearchService {
       showImportacionBadge: showImportacionBadge,
       stock: stockCount,
       surgeFoil,
-      tags: localProduct.tags || [],
-      variant: localProduct.variant || localProduct.expansion || null,
+      tags: Array.isArray(productTags) ? productTags : [],
+      variant:
+        getStringValue(productVariant) ||
+        getStringValue(productExpansion) ||
+        null,
     };
   }
 
@@ -393,7 +580,7 @@ export class SearchService {
       `Starting hybrid search for: ${searchQuery}, page: ${page}, limit: ${limit}`,
     );
 
-    let hareruyaResults: any[] = [];
+    let hareruyaResults: HareruyaSearchResult[] = [];
     let hareruyaPagination: {
       totalItems: number;
       totalItemsAllPages: number;
@@ -453,14 +640,30 @@ export class SearchService {
     }> = [];
 
     for (const localProduct of localProducts) {
+      // Type guard: ensure we have a valid product object
+      const product = localProduct as Record<string, unknown> & {
+        id?: string;
+        hareruyaId?: string | null;
+        foil?: boolean;
+        languages?: {
+          code?: string;
+          name?: string;
+          display_name?: string;
+        } | null;
+      };
+
       // Skip products without Hareruya stock if they have Personal tag or are local inventory
-      if (productsWithoutHareruyaStock.has(localProduct.id)) {
+      const productId = product.id;
+      if (productId && productsWithoutHareruyaStock.has(productId)) {
         continue;
       }
 
-      if (!localProduct.hareruyaId) {
+      const productHareruyaId = product.hareruyaId;
+      if (!productHareruyaId) {
         // No hareruyaId, skip matching but include in results (transformed)
-        const transformedProduct = this.transformLocalProductToHareruyaFormat(localProduct);
+        const transformedProduct = this.transformLocalProductToHareruyaFormat(
+          localProduct,
+        ) as unknown;
         processedLocalProducts.push(transformedProduct);
         continue;
       }
@@ -468,23 +671,35 @@ export class SearchService {
       // Find matching Hareruya product
       const hareruyaMatch = hareruyaResults.find((h) => {
         // Match by hareruyaId
-        if (h.hareruyaId !== localProduct.hareruyaId) {
+        if (h.hareruyaId !== productHareruyaId) {
           return false;
         }
 
         // Match by foil status
-        const localFoil = localProduct.foil === true;
+        const localFoil = product.foil === true;
         const hareruyaFoil = h.foil === true;
         if (localFoil !== hareruyaFoil) {
           return false;
         }
 
         // Match by language
-        const localLanguageCode = localProduct.languages?.code || '';
+        const productLanguages = product.languages;
+        const localLanguageCode =
+          productLanguages &&
+          typeof productLanguages === 'object' &&
+          typeof productLanguages.code === 'string'
+            ? productLanguages.code
+            : '';
         const localLanguageName =
-          localProduct.languages?.name ||
-          localProduct.languages?.display_name ||
-          '';
+          productLanguages &&
+          typeof productLanguages === 'object' &&
+          typeof productLanguages.name === 'string'
+            ? productLanguages.name
+            : productLanguages &&
+                typeof productLanguages === 'object' &&
+                typeof productLanguages.display_name === 'string'
+              ? productLanguages.display_name
+              : '';
         const localNormalized = this.normalizeLanguageForComparison(
           localLanguageCode || localLanguageName,
         );
@@ -498,40 +713,55 @@ export class SearchService {
 
       // If match found, update prices
       if (hareruyaMatch && hareruyaMatch.finalPrice !== undefined) {
-        const newPrice = hareruyaMatch.finalPrice;
-        const newFinalPrice = hareruyaMatch.finalPrice;
+        const newPrice =
+          typeof hareruyaMatch.finalPrice === 'number'
+            ? hareruyaMatch.finalPrice
+            : 0;
+        const newFinalPrice =
+          typeof hareruyaMatch.finalPrice === 'number'
+            ? hareruyaMatch.finalPrice
+            : 0;
 
-        priceUpdates.push({
-          id: localProduct.id,
-          price: newPrice,
-          finalPrice: newFinalPrice,
-        });
+        if (productId) {
+          priceUpdates.push({
+            id: productId,
+            price: newPrice,
+            finalPrice: newFinalPrice,
+          });
+        }
 
         // Update local product object for response
-        localProduct.price = newPrice;
-        localProduct.finalPrice = newFinalPrice;
+        if (typeof localProduct === 'object' && localProduct !== null) {
+          (localProduct as Record<string, unknown>).price = newPrice;
+          (localProduct as Record<string, unknown>).finalPrice = newFinalPrice;
+        }
         updatedPricesCount++;
       }
 
       // Transform local product to match Hareruya format
-      const transformedProduct = this.transformLocalProductToHareruyaFormat(localProduct);
+      const transformedProduct = this.transformLocalProductToHareruyaFormat(
+        localProduct,
+      ) as unknown;
       processedLocalProducts.push(transformedProduct);
     }
 
     // Update prices in database in batch
     if (priceUpdates.length > 0) {
       try {
-        await this.prisma.$transaction(
-          priceUpdates.map((update) =>
-            (this.prisma as any).singles.update({
-              where: { id: update.id },
-              data: {
-                price: update.price,
-                finalPrice: update.finalPrice,
-              },
-            }),
-          ),
-        );
+        const updatePromises = priceUpdates.map((update) => {
+          const updateData: { price: number; finalPrice: number } = {
+            price: update.price,
+            finalPrice: update.finalPrice,
+          };
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+          const updateResult = (this.prisma as any).singles.update({
+            where: { id: update.id },
+            data: updateData,
+          }) as unknown;
+          return updateResult;
+        });
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        await this.prisma.$transaction(updatePromises as unknown as any);
         this.logger.log(`Updated ${priceUpdates.length} product prices`);
       } catch (error) {
         this.logger.error(
@@ -564,7 +794,10 @@ export class SearchService {
         // Need some Hareruya results to complete the page
         // Calculate which Hareruya page we need (always page 1 since we fetched buffer)
         const hareruyaSlice = hareruyaResults.slice(0, hareruyaNeeded);
-        paginatedResults = [...localSlice, ...hareruyaSlice];
+        paginatedResults = [
+          ...(localSlice as unknown[]),
+          ...(hareruyaSlice as unknown[]),
+        ];
       } else {
         // Only local products
         paginatedResults = localSlice;
@@ -701,13 +934,25 @@ export class SearchService {
               },
             });
             // Get paginated results
-            localProducts = await this.productsService.findByMetadata(metadata, limitNum, pageNum);
-            this.logger.log(`Found ${localProducts.length} products with metadata ${metadata} (total: ${totalCount})`);
+            localProducts = await this.productsService.findByMetadata(
+              metadata,
+              limitNum,
+              pageNum,
+            );
+            this.logger.log(
+              `Found ${localProducts.length} products with metadata ${metadata} (total: ${totalCount})`,
+            );
           } else {
             // If pagination is disabled, just get the items up to limit
-            localProducts = await this.productsService.findByMetadata(metadata, limitNum, 1);
+            localProducts = await this.productsService.findByMetadata(
+              metadata,
+              limitNum,
+              1,
+            );
             totalCount = localProducts.length;
-            this.logger.log(`Found ${localProducts.length} products with metadata ${metadata} (no pagination)`);
+            this.logger.log(
+              `Found ${localProducts.length} products with metadata ${metadata} (no pagination)`,
+            );
           }
         } catch (error) {
           this.logger.error(
@@ -730,21 +975,31 @@ export class SearchService {
               totalCount = await this.prisma.singles.count();
             }
             // Get paginated results
-            localProducts = await this.productsService.findLatest(limitNum, pageNum, category);
-            this.logger.log(`Found ${localProducts.length} latest local products (total: ${totalCount})`);
+            localProducts = await this.productsService.findLatest(
+              limitNum,
+              pageNum,
+              category,
+            );
+            this.logger.log(
+              `Found ${localProducts.length} latest local products (total: ${totalCount})`,
+            );
           } else {
             // If pagination is disabled, search iteratively until we have 4 valid products
             const TARGET_PRODUCTS = 4;
             const BATCH_SIZE = 12; // Search in batches of 12
             const validProducts: any[] = [];
             let currentPage = 1;
-            let allFetchedProducts: any[] = [];
+            const allFetchedProducts: any[] = [];
 
             // Keep searching until we have 4 valid products or run out of products
             while (validProducts.length < TARGET_PRODUCTS) {
               // Fetch a batch of products
-              const batch = await this.productsService.findLatest(BATCH_SIZE, currentPage, category);
-              
+              const batch = await this.productsService.findLatest(
+                BATCH_SIZE,
+                currentPage,
+                category,
+              );
+
               if (batch.length === 0) {
                 // No more products available
                 break;
@@ -763,12 +1018,20 @@ export class SearchService {
                 }
 
                 // Skip products without Hareruya stock if they have Personal tag
-                if (productsWithoutHareruyaStock.has(localProduct.id)) {
+                const productId = localProduct.id;
+                if (
+                  productId &&
+                  typeof productId === 'string' &&
+                  productsWithoutHareruyaStock.has(productId)
+                ) {
                   continue;
                 }
 
                 // Transform local product to match Hareruya format
-                const transformedProduct = this.transformLocalProductToHareruyaFormat(localProduct);
+                const transformedProduct =
+                  this.transformLocalProductToHareruyaFormat(
+                    localProduct,
+                  ) as unknown;
                 validProducts.push(transformedProduct);
               }
 
@@ -808,12 +1071,20 @@ export class SearchService {
       // Transform and filter products
       for (const localProduct of localProducts) {
         // Skip products without Hareruya stock if they have Personal tag or are local inventory
-        if (productsWithoutHareruyaStock.has(localProduct.id)) {
+        const productRecord = localProduct as Record<string, unknown>;
+        const productId = productRecord.id;
+        if (
+          productId &&
+          typeof productId === 'string' &&
+          productsWithoutHareruyaStock.has(productId)
+        ) {
           continue;
         }
 
         // Transform local product to match Hareruya format
-        const transformedProduct = this.transformLocalProductToHareruyaFormat(localProduct);
+        const transformedProduct = this.transformLocalProductToHareruyaFormat(
+          localProduct,
+        ) as unknown;
         processedLocalProducts.push(transformedProduct);
       }
     } else {
