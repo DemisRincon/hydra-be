@@ -924,13 +924,31 @@ export class SearchService {
         );
 
         try {
+          // Normalize metadata to match tag name (case-insensitive, capitalize first letter)
+          const normalizedMetadata =
+            metadata.charAt(0).toUpperCase() + metadata.slice(1).toLowerCase();
+
           if (enablePagination) {
-            // Get total count first for pagination with metadata filter
+            // Get total count first for pagination with tag filter
             totalCount = await this.prisma.singles.count({
               where: {
-                metadata: {
-                  has: metadata,
+                tags: {
+                  some: {
+                    tags: {
+                      name: {
+                        equals: normalizedMetadata,
+                        mode: 'insensitive',
+                      },
+                    },
+                  },
                 },
+                // Filter: Exclude local inventory items without hareruyaId
+                OR: [
+                  { isLocalInventory: { not: true } },
+                  {
+                    AND: [{ isLocalInventory: true }, { hareruyaId: { not: null } }],
+                  },
+                ],
               },
             });
             // Get paginated results
@@ -940,18 +958,74 @@ export class SearchService {
               pageNum,
             );
             this.logger.log(
-              `Found ${localProducts.length} products with metadata ${metadata} (total: ${totalCount})`,
+              `Found ${localProducts.length} products with tag ${normalizedMetadata} (total: ${totalCount})`,
             );
           } else {
-            // If pagination is disabled, just get the items up to limit
-            localProducts = await this.productsService.findByMetadata(
-              metadata,
-              limitNum,
-              1,
-            );
-            totalCount = localProducts.length;
+            // If pagination is disabled, search iteratively until we have 4 valid products
+            // (same behavior as category search without pagination)
+            const TARGET_PRODUCTS = 4;
+            const BATCH_SIZE = 12; // Search in batches of 12
+            const validProducts: any[] = [];
+            let currentPage = 1;
+            const allFetchedProducts: any[] = [];
+
+            // Keep searching until we have 4 valid products or run out of products
+            while (validProducts.length < TARGET_PRODUCTS) {
+              // Fetch a batch of products
+              const batch = await this.productsService.findByMetadata(
+                metadata,
+                BATCH_SIZE,
+                currentPage,
+              );
+
+              if (batch.length === 0) {
+                // No more products available
+                break;
+              }
+
+              allFetchedProducts.push(...batch);
+
+              // Filter this batch
+              const productsWithoutHareruyaStock =
+                await this.filterProductsWithoutHareruyaStock(batch);
+
+              // Process and add valid products
+              for (const localProduct of batch) {
+                if (validProducts.length >= TARGET_PRODUCTS) {
+                  break;
+                }
+
+                // Skip products without Hareruya stock if they have Personal tag
+                const productId = localProduct.id;
+                if (
+                  productId &&
+                  typeof productId === 'string' &&
+                  productsWithoutHareruyaStock.has(productId)
+                ) {
+                  continue;
+                }
+
+                // Transform local product to match Hareruya format
+                const transformedProduct =
+                  this.transformLocalProductToHareruyaFormat(
+                    localProduct,
+                  ) as unknown;
+                validProducts.push(transformedProduct);
+              }
+
+              // If we got less than BATCH_SIZE, we've reached the end
+              if (batch.length < BATCH_SIZE) {
+                break;
+              }
+
+              currentPage++;
+            }
+
+            // Store the valid products in localProducts for consistency
+            localProducts = validProducts;
+            totalCount = validProducts.length;
             this.logger.log(
-              `Found ${localProducts.length} products with metadata ${metadata} (no pagination)`,
+              `Found ${validProducts.length} valid products with tag ${normalizedMetadata} after filtering (searched ${allFetchedProducts.length} total products)`,
             );
           }
         } catch (error) {
@@ -962,23 +1036,23 @@ export class SearchService {
           totalCount = 0;
         }
       } else {
+        // If no category is specified, default to "singles" to match the behavior
+        // when category=singles is explicitly provided
+        const effectiveCategory = category || 'singles';
+        
         this.logger.log(
-          `Getting latest local products, page: ${pageNum}, limit: ${limitNum}, pagination: ${enablePagination}, category: ${category || 'all'}`,
+          `Getting latest local products, page: ${pageNum}, limit: ${limitNum}, pagination: ${enablePagination}, category: ${effectiveCategory}`,
         );
 
         try {
           if (enablePagination) {
             // Get total count first for pagination
-            if (category) {
-              totalCount = await this.productsService.countByCategory(category);
-            } else {
-              totalCount = await this.prisma.singles.count();
-            }
+            totalCount = await this.productsService.countByCategory(effectiveCategory);
             // Get paginated results
             localProducts = await this.productsService.findLatest(
               limitNum,
               pageNum,
-              category,
+              effectiveCategory,
             );
             this.logger.log(
               `Found ${localProducts.length} latest local products (total: ${totalCount})`,
@@ -997,7 +1071,7 @@ export class SearchService {
               const batch = await this.productsService.findLatest(
                 BATCH_SIZE,
                 currentPage,
-                category,
+                effectiveCategory,
               );
 
               if (batch.length === 0) {
@@ -1089,6 +1163,7 @@ export class SearchService {
       }
     } else {
       // For non-pagination mode, products are already filtered and transformed above
+      // (both for metadata and category searches, they go through the iterative filtering process)
       processedLocalProducts = localProducts;
     }
 

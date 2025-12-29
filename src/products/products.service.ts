@@ -1395,22 +1395,40 @@ export class ProductsService {
   async findByMetadata(metadata: string, limit: number = 12, page: number = 1) {
     const skip = (page - 1) * limit;
 
+    // Normalize metadata to match tag name (case-insensitive, capitalize first letter)
+    const normalizedMetadata =
+      metadata.charAt(0).toUpperCase() + metadata.slice(1).toLowerCase();
+
     const products = await this.prisma.singles.findMany({
       skip,
       take: limit,
       where: {
-        metadata: {
-          has: metadata,
-        },
-        // Filter: Exclude local inventory items without hareruyaId
-        // If isLocalInventory is true, must have hareruyaId (exists in Hareruya)
-        // Local stock is not checked - we know it exists if it's in my collection
-        OR: [
-          // Show items that are NOT local inventory
-          { isLocalInventory: { not: true } },
-          // OR show local inventory items that have hareruyaId (exist in Hareruya)
+        AND: [
+          // Search by tag name (case-insensitive)
           {
-            AND: [{ isLocalInventory: true }, { hareruyaId: { not: null } }],
+            tags: {
+              some: {
+                tags: {
+                  name: {
+                    equals: normalizedMetadata,
+                    mode: 'insensitive',
+                  },
+                },
+              },
+            },
+          },
+          // Filter: Exclude local inventory items without hareruyaId
+          // If isLocalInventory is true, must have hareruyaId (exists in Hareruya)
+          // Local stock is not checked - we know it exists if it's in my collection
+          {
+            OR: [
+              // Show items that are NOT local inventory
+              { isLocalInventory: { not: true } },
+              // OR show local inventory items that have hareruyaId (exist in Hareruya)
+              {
+                AND: [{ isLocalInventory: true }, { hareruyaId: { not: null } }],
+              },
+            ],
           },
         ],
       },
@@ -1434,13 +1452,26 @@ export class ProductsService {
             roles: true,
           },
         },
+        tags: {
+          include: {
+            tags: true,
+          },
+        },
       },
-      orderBy: {
-        price: 'desc', // Ordenar por precio descendente (más caros primero)
-      },
+      orderBy: [
+        {
+          price: 'desc', // Ordenar por precio descendente (más caros primero)
+        },
+      ],
     });
 
-    return products;
+    // Transform tags from single_tags[] to tags[]
+    const transformedProducts = products.map((product) => ({
+      ...product,
+      tags: product.tags.map((st) => st.tags),
+    }));
+
+    return transformedProducts;
   }
 
   async findOne(id: string) {

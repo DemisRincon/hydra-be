@@ -6,16 +6,7 @@ import { AppModule } from './app.module.js';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Set global prefix
-  app.setGlobalPrefix('api');
-
-  // Set UTF-8 encoding for all responses
-  app.use((req, res, next) => {
-    res.setHeader('Content-Type', 'application/json; charset=utf-8');
-    next();
-  });
-
-  // Enable CORS
+  // Enable CORS first (before global prefix)
   const allowedOrigins = process.env.FRONTEND_URL
     ? process.env.FRONTEND_URL.split(',').map((url) => url.trim())
     : ['http://localhost:3000', 'http://localhost:3001'];
@@ -42,23 +33,21 @@ async function bootstrap() {
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: [
+      'Content-Type',
+      'Authorization',
+      'Accept',
+      'Origin',
+      'X-Requested-With',
+    ],
   });
 
-  // Enable validation pipe globally
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      forbidNonWhitelisted: true,
-      transform: true,
-    }),
-  );
-
-  // Swagger configuration
+  // Swagger configuration - setup BEFORE global prefix to avoid asset path issues
   const config = new DocumentBuilder()
     .setTitle('Hydra BE API')
     .setDescription('The Hydra Backend API documentation')
     .setVersion('1.0')
+    .addServer('http://localhost:3002', 'Development server')
     .addTag('users')
     .addTag('auth')
     .addTag('roles')
@@ -81,7 +70,32 @@ async function bootstrap() {
     )
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('docs', app, document, {
+    swaggerOptions: {
+      persistAuthorization: true,
+      filter: true,
+      showRequestDuration: true,
+    },
+    customSiteTitle: 'Hydra BE API Documentation',
+    customCssUrl:
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.10.5/swagger-ui.css',
+    customJs: [
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.10.5/swagger-ui-bundle.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.10.5/swagger-ui-standalone-preset.js',
+    ],
+  });
+
+  // Set global prefix AFTER Swagger setup
+  app.setGlobalPrefix('api');
+
+  // Enable validation pipe globally
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  );
 
   await app.listen(process.env.PORT ?? 3002);
 }
