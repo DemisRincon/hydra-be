@@ -450,10 +450,12 @@ export class CartService {
         return null;
       }
 
-      // Use local price - no need to search Hareruya for cart display
-      // This avoids excessive API calls. If Hareruya price is needed,
-      // it should be fetched when the product is added to cart or on demand.
-      return transformed;
+      // Ensure imageUrl is set (transformLocalProductToHareruyaFormat returns 'img')
+      return {
+        ...transformed,
+        imageUrl: transformed.img || transformed.imageUrl || '',
+        img: transformed.img || transformed.imageUrl || '',
+      };
     } catch (error) {
       this.logger.error(`Error in getLocalProductDetails for single ${single.id}:`, error);
       throw error;
