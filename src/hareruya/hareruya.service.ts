@@ -86,6 +86,10 @@ const HARERUYA_LANGUAGE_MAP: Record<string, string> = {
 @Injectable()
 export class HareruyaService {
   private readonly logger = new Logger(HareruyaService.name);
+  private htmlResponseCount = 0;
+  private maintenanceModeStartTime: number | null = null;
+  private readonly MAINTENANCE_THRESHOLD = 3; // After 3 HTML responses, enter maintenance mode
+  private readonly MAINTENANCE_COOLDOWN_MS = 5 * 60 * 1000; // 5 minutes cooldown
 
   constructor(private currencyService: CurrencyService) {}
 
@@ -807,6 +811,40 @@ export class HareruyaService {
     };
     message?: string;
   }> {
+    // Check if we're in maintenance mode
+    if (this.maintenanceModeStartTime !== null) {
+      const timeSinceMaintenance = Date.now() - this.maintenanceModeStartTime;
+      if (timeSinceMaintenance < this.MAINTENANCE_COOLDOWN_MS) {
+        const remainingSeconds = Math.ceil(
+          (this.MAINTENANCE_COOLDOWN_MS - timeSinceMaintenance) / 1000,
+        );
+        this.logger.warn(
+          `[HARERUYA] Service in maintenance mode. Skipping API call. Time remaining: ${remainingSeconds}s`,
+        );
+        return {
+          success: false,
+          data: [],
+          pagination: {
+            totalItems: 0,
+            totalItemsAllPages: 0,
+            currentPage: filters.page || 1,
+            maxPage: 0,
+            hasNextPage: false,
+            itemsPerPage: filters.rows || 60,
+          },
+          message:
+            'Hareruya API is currently under maintenance. Please try again later.',
+        };
+      } else {
+        // Cooldown period expired, reset maintenance mode
+        this.logger.log(
+          '[HARERUYA] Maintenance cooldown expired. Resetting and attempting API call.',
+        );
+        this.maintenanceModeStartTime = null;
+        this.htmlResponseCount = 0;
+      }
+    }
+
     try {
       const { query, page = 1, rows = 60, priceFilter = '1~*' } = filters;
 
@@ -885,7 +923,106 @@ export class HareruyaService {
         };
       }
 
-      const apiData = (await response.json()) as HareruyaApiResponse;
+      // Try to parse JSON, but handle errors gracefully
+      // Read response text once (can only be read once)
+      const responseText = await response
+        .text()
+        .catch(() => 'Unable to read response');
+
+      // Check if response is HTML (common error case - maintenance page)
+      const isHtmlResponse =
+        responseText.trim().startsWith('<!DOCTYPE') ||
+        responseText.trim().startsWith('<html');
+
+      if (isHtmlResponse) {
+        this.htmlResponseCount++;
+        this.logger.error(
+          `[HARERUYA] Received HTML instead of JSON (count: ${this.htmlResponseCount}/${this.MAINTENANCE_THRESHOLD}):`,
+          {
+            url: apiUrlWithParams,
+            responsePreview: responseText.substring(0, 300),
+          },
+        );
+
+        // If we've received multiple HTML responses, enter maintenance mode
+        if (this.htmlResponseCount >= this.MAINTENANCE_THRESHOLD) {
+          if (this.maintenanceModeStartTime === null) {
+            this.maintenanceModeStartTime = Date.now();
+            this.logger.warn(
+              `[HARERUYA] Entering maintenance mode after ${this.htmlResponseCount} HTML responses. Will retry after ${this.MAINTENANCE_COOLDOWN_MS / 1000}s`,
+            );
+          }
+          return {
+            success: false,
+            data: [],
+            pagination: {
+              totalItems: 0,
+              totalItemsAllPages: 0,
+              currentPage: page,
+              maxPage: 0,
+              hasNextPage: false,
+              itemsPerPage: rows,
+            },
+            message:
+              'Hareruya API is currently under maintenance. Please try again later.',
+          };
+        }
+
+        return {
+          success: true,
+          data: [],
+          pagination: {
+            totalItems: 0,
+            totalItemsAllPages: 0,
+            currentPage: page,
+            maxPage: 0,
+            hasNextPage: false,
+            itemsPerPage: rows,
+          },
+        };
+      }
+
+      // Reset HTML response count on successful JSON response
+      if (this.htmlResponseCount > 0) {
+        this.logger.log(
+          `[HARERUYA] Received valid JSON response. Resetting HTML response count.`,
+        );
+        this.htmlResponseCount = 0;
+        this.maintenanceModeStartTime = null;
+      }
+
+      // Check Content-Type to ensure we're getting JSON
+      const contentType = response.headers.get('content-type') || '';
+      if (!contentType.includes('application/json')) {
+        this.logger.warn(
+          `[HARERUYA] Content-Type is ${contentType} but response appears to be JSON. Continuing...`,
+        );
+      }
+
+      // Try to parse as JSON
+      let apiData: HareruyaApiResponse;
+      try {
+        apiData = JSON.parse(responseText) as HareruyaApiResponse;
+      } catch (parseError) {
+        this.logger.error(`[HARERUYA] Failed to parse JSON response:`, {
+          error:
+            parseError instanceof Error ? parseError.message : 'Unknown error',
+          url: apiUrlWithParams,
+          responsePreview: responseText.substring(0, 300),
+        });
+        return {
+          success: true,
+          data: [],
+          pagination: {
+            totalItems: 0,
+            totalItemsAllPages: 0,
+            currentPage: page,
+            maxPage: 0,
+            hasNextPage: false,
+            itemsPerPage: rows,
+          },
+        };
+      }
 
       if (!apiData.response || !apiData.response.docs) {
         this.logger.error('Invalid API response structure:', {
