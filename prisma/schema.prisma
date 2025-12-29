@@ -227,13 +227,16 @@ model carts {
 }
 
 model cart_items {
-  id        String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  cart_id   String @db.Uuid
-  single_id String @db.Uuid
-  quantity  Int
+  id          String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  cart_id    String  @db.Uuid
+  single_id  String? @db.Uuid // Optional for Hareruya products
+  quantity   Int
+  is_hareruya Boolean @default(false) // true if product is from Hareruya
+  hareruya_id String? // Hareruya product ID if is_hareruya is true
+  product_data Json? // Full product data (for both local and Hareruya products)
 
   carts   carts   @relation(fields: [cart_id], references: [id])
-  singles singles @relation(fields: [single_id], references: [id])
+  singles singles? @relation(fields: [single_id], references: [id])
 }
 
 /**

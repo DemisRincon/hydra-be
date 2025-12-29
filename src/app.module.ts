@@ -15,6 +15,7 @@ import { CategoriesModule } from './categories/categories.module.js';
 import { HareruyaModule } from './hareruya/hareruya.module.js';
 import { TagsModule } from './tags/tags.module.js';
 import { TcgsModule } from './tcgs/tcgs.module.js';
+import { CartModule } from './cart/cart.module.js';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { TcgsModule } from './tcgs/tcgs.module.js';
     HareruyaModule,
     TagsModule,
     TcgsModule,
+    CartModule,
   ],
   controllers: [AppController],
   providers: [AppService],

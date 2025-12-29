@@ -953,6 +953,11 @@ export type SinglesScalarRelationFilter = {
   isNot?: Prisma.singlesWhereInput
 }
 
+export type SinglesNullableScalarRelationFilter = {
+  is?: Prisma.singlesWhereInput | null
+  isNot?: Prisma.singlesWhereInput | null
+}
+
 export type singlesCreateNestedManyWithoutOwnerInput = {
   create?: Prisma.XOR<Prisma.singlesCreateWithoutOwnerInput, Prisma.singlesUncheckedCreateWithoutOwnerInput> | Prisma.singlesCreateWithoutOwnerInput[] | Prisma.singlesUncheckedCreateWithoutOwnerInput[]
   connectOrCreate?: Prisma.singlesCreateOrConnectWithoutOwnerInput | Prisma.singlesCreateOrConnectWithoutOwnerInput[]
@@ -1264,10 +1269,12 @@ export type singlesCreateNestedOneWithoutCartItemsInput = {
   connect?: Prisma.singlesWhereUniqueInput
 }
 
-export type singlesUpdateOneRequiredWithoutCartItemsNestedInput = {
+export type singlesUpdateOneWithoutCartItemsNestedInput = {
   create?: Prisma.XOR<Prisma.singlesCreateWithoutCartItemsInput, Prisma.singlesUncheckedCreateWithoutCartItemsInput>
   connectOrCreate?: Prisma.singlesCreateOrConnectWithoutCartItemsInput
   upsert?: Prisma.singlesUpsertWithoutCartItemsInput
+  disconnect?: Prisma.singlesWhereInput | boolean
+  delete?: Prisma.singlesWhereInput | boolean
   connect?: Prisma.singlesWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.singlesUpdateToOneWithWhereWithoutCartItemsInput, Prisma.singlesUpdateWithoutCartItemsInput>, Prisma.singlesUncheckedUpdateWithoutCartItemsInput>
 }

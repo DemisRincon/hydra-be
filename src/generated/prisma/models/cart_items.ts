@@ -39,6 +39,8 @@ export type Cart_itemsMinAggregateOutputType = {
   cart_id: string | null
   single_id: string | null
   quantity: number | null
+  is_hareruya: boolean | null
+  hareruya_id: string | null
 }
 
 export type Cart_itemsMaxAggregateOutputType = {
@@ -46,6 +48,8 @@ export type Cart_itemsMaxAggregateOutputType = {
   cart_id: string | null
   single_id: string | null
   quantity: number | null
+  is_hareruya: boolean | null
+  hareruya_id: string | null
 }
 
 export type Cart_itemsCountAggregateOutputType = {
@@ -53,6 +57,9 @@ export type Cart_itemsCountAggregateOutputType = {
   cart_id: number
   single_id: number
   quantity: number
+  is_hareruya: number
+  hareruya_id: number
+  product_data: number
   _all: number
 }
 
@@ -70,6 +77,8 @@ export type Cart_itemsMinAggregateInputType = {
   cart_id?: true
   single_id?: true
   quantity?: true
+  is_hareruya?: true
+  hareruya_id?: true
 }
 
 export type Cart_itemsMaxAggregateInputType = {
@@ -77,6 +86,8 @@ export type Cart_itemsMaxAggregateInputType = {
   cart_id?: true
   single_id?: true
   quantity?: true
+  is_hareruya?: true
+  hareruya_id?: true
 }
 
 export type Cart_itemsCountAggregateInputType = {
@@ -84,6 +95,9 @@ export type Cart_itemsCountAggregateInputType = {
   cart_id?: true
   single_id?: true
   quantity?: true
+  is_hareruya?: true
+  hareruya_id?: true
+  product_data?: true
   _all?: true
 }
 
@@ -176,8 +190,11 @@ export type cart_itemsGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 export type Cart_itemsGroupByOutputType = {
   id: string
   cart_id: string
-  single_id: string
+  single_id: string | null
   quantity: number
+  is_hareruya: boolean
+  hareruya_id: string | null
+  product_data: runtime.JsonValue | null
   _count: Cart_itemsCountAggregateOutputType | null
   _avg: Cart_itemsAvgAggregateOutputType | null
   _sum: Cart_itemsSumAggregateOutputType | null
@@ -206,17 +223,23 @@ export type cart_itemsWhereInput = {
   NOT?: Prisma.cart_itemsWhereInput | Prisma.cart_itemsWhereInput[]
   id?: Prisma.UuidFilter<"cart_items"> | string
   cart_id?: Prisma.UuidFilter<"cart_items"> | string
-  single_id?: Prisma.UuidFilter<"cart_items"> | string
+  single_id?: Prisma.UuidNullableFilter<"cart_items"> | string | null
   quantity?: Prisma.IntFilter<"cart_items"> | number
+  is_hareruya?: Prisma.BoolFilter<"cart_items"> | boolean
+  hareruya_id?: Prisma.StringNullableFilter<"cart_items"> | string | null
+  product_data?: Prisma.JsonNullableFilter<"cart_items">
   carts?: Prisma.XOR<Prisma.CartsScalarRelationFilter, Prisma.cartsWhereInput>
-  singles?: Prisma.XOR<Prisma.SinglesScalarRelationFilter, Prisma.singlesWhereInput>
+  singles?: Prisma.XOR<Prisma.SinglesNullableScalarRelationFilter, Prisma.singlesWhereInput> | null
 }
 
 export type cart_itemsOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   cart_id?: Prisma.SortOrder
-  single_id?: Prisma.SortOrder
+  single_id?: Prisma.SortOrderInput | Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  is_hareruya?: Prisma.SortOrder
+  hareruya_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  product_data?: Prisma.SortOrderInput | Prisma.SortOrder
   carts?: Prisma.cartsOrderByWithRelationInput
   singles?: Prisma.singlesOrderByWithRelationInput
 }
@@ -227,17 +250,23 @@ export type cart_itemsWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.cart_itemsWhereInput[]
   NOT?: Prisma.cart_itemsWhereInput | Prisma.cart_itemsWhereInput[]
   cart_id?: Prisma.UuidFilter<"cart_items"> | string
-  single_id?: Prisma.UuidFilter<"cart_items"> | string
+  single_id?: Prisma.UuidNullableFilter<"cart_items"> | string | null
   quantity?: Prisma.IntFilter<"cart_items"> | number
+  is_hareruya?: Prisma.BoolFilter<"cart_items"> | boolean
+  hareruya_id?: Prisma.StringNullableFilter<"cart_items"> | string | null
+  product_data?: Prisma.JsonNullableFilter<"cart_items">
   carts?: Prisma.XOR<Prisma.CartsScalarRelationFilter, Prisma.cartsWhereInput>
-  singles?: Prisma.XOR<Prisma.SinglesScalarRelationFilter, Prisma.singlesWhereInput>
+  singles?: Prisma.XOR<Prisma.SinglesNullableScalarRelationFilter, Prisma.singlesWhereInput> | null
 }, "id">
 
 export type cart_itemsOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   cart_id?: Prisma.SortOrder
-  single_id?: Prisma.SortOrder
+  single_id?: Prisma.SortOrderInput | Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  is_hareruya?: Prisma.SortOrder
+  hareruya_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  product_data?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.cart_itemsCountOrderByAggregateInput
   _avg?: Prisma.cart_itemsAvgOrderByAggregateInput
   _max?: Prisma.cart_itemsMaxOrderByAggregateInput
@@ -251,55 +280,79 @@ export type cart_itemsScalarWhereWithAggregatesInput = {
   NOT?: Prisma.cart_itemsScalarWhereWithAggregatesInput | Prisma.cart_itemsScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"cart_items"> | string
   cart_id?: Prisma.UuidWithAggregatesFilter<"cart_items"> | string
-  single_id?: Prisma.UuidWithAggregatesFilter<"cart_items"> | string
+  single_id?: Prisma.UuidNullableWithAggregatesFilter<"cart_items"> | string | null
   quantity?: Prisma.IntWithAggregatesFilter<"cart_items"> | number
+  is_hareruya?: Prisma.BoolWithAggregatesFilter<"cart_items"> | boolean
+  hareruya_id?: Prisma.StringNullableWithAggregatesFilter<"cart_items"> | string | null
+  product_data?: Prisma.JsonNullableWithAggregatesFilter<"cart_items">
 }
 
 export type cart_itemsCreateInput = {
   id?: string
   quantity: number
+  is_hareruya?: boolean
+  hareruya_id?: string | null
+  product_data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   carts: Prisma.cartsCreateNestedOneWithoutItemsInput
-  singles: Prisma.singlesCreateNestedOneWithoutCartItemsInput
+  singles?: Prisma.singlesCreateNestedOneWithoutCartItemsInput
 }
 
 export type cart_itemsUncheckedCreateInput = {
   id?: string
   cart_id: string
-  single_id: string
+  single_id?: string | null
   quantity: number
+  is_hareruya?: boolean
+  hareruya_id?: string | null
+  product_data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type cart_itemsUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  is_hareruya?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   carts?: Prisma.cartsUpdateOneRequiredWithoutItemsNestedInput
-  singles?: Prisma.singlesUpdateOneRequiredWithoutCartItemsNestedInput
+  singles?: Prisma.singlesUpdateOneWithoutCartItemsNestedInput
 }
 
 export type cart_itemsUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   cart_id?: Prisma.StringFieldUpdateOperationsInput | string
-  single_id?: Prisma.StringFieldUpdateOperationsInput | string
+  single_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  is_hareruya?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type cart_itemsCreateManyInput = {
   id?: string
   cart_id: string
-  single_id: string
+  single_id?: string | null
   quantity: number
+  is_hareruya?: boolean
+  hareruya_id?: string | null
+  product_data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type cart_itemsUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  is_hareruya?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type cart_itemsUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   cart_id?: Prisma.StringFieldUpdateOperationsInput | string
-  single_id?: Prisma.StringFieldUpdateOperationsInput | string
+  single_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  is_hareruya?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type Cart_itemsListRelationFilter = {
@@ -317,6 +370,9 @@ export type cart_itemsCountOrderByAggregateInput = {
   cart_id?: Prisma.SortOrder
   single_id?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  is_hareruya?: Prisma.SortOrder
+  hareruya_id?: Prisma.SortOrder
+  product_data?: Prisma.SortOrder
 }
 
 export type cart_itemsAvgOrderByAggregateInput = {
@@ -328,6 +384,8 @@ export type cart_itemsMaxOrderByAggregateInput = {
   cart_id?: Prisma.SortOrder
   single_id?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  is_hareruya?: Prisma.SortOrder
+  hareruya_id?: Prisma.SortOrder
 }
 
 export type cart_itemsMinOrderByAggregateInput = {
@@ -335,6 +393,8 @@ export type cart_itemsMinOrderByAggregateInput = {
   cart_id?: Prisma.SortOrder
   single_id?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  is_hareruya?: Prisma.SortOrder
+  hareruya_id?: Prisma.SortOrder
 }
 
 export type cart_itemsSumOrderByAggregateInput = {
@@ -428,6 +488,9 @@ export type cart_itemsUncheckedUpdateManyWithoutCartsNestedInput = {
 export type cart_itemsCreateWithoutSinglesInput = {
   id?: string
   quantity: number
+  is_hareruya?: boolean
+  hareruya_id?: string | null
+  product_data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   carts: Prisma.cartsCreateNestedOneWithoutItemsInput
 }
 
@@ -435,6 +498,9 @@ export type cart_itemsUncheckedCreateWithoutSinglesInput = {
   id?: string
   cart_id: string
   quantity: number
+  is_hareruya?: boolean
+  hareruya_id?: string | null
+  product_data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type cart_itemsCreateOrConnectWithoutSinglesInput = {
@@ -469,20 +535,29 @@ export type cart_itemsScalarWhereInput = {
   NOT?: Prisma.cart_itemsScalarWhereInput | Prisma.cart_itemsScalarWhereInput[]
   id?: Prisma.UuidFilter<"cart_items"> | string
   cart_id?: Prisma.UuidFilter<"cart_items"> | string
-  single_id?: Prisma.UuidFilter<"cart_items"> | string
+  single_id?: Prisma.UuidNullableFilter<"cart_items"> | string | null
   quantity?: Prisma.IntFilter<"cart_items"> | number
+  is_hareruya?: Prisma.BoolFilter<"cart_items"> | boolean
+  hareruya_id?: Prisma.StringNullableFilter<"cart_items"> | string | null
+  product_data?: Prisma.JsonNullableFilter<"cart_items">
 }
 
 export type cart_itemsCreateWithoutCartsInput = {
   id?: string
   quantity: number
-  singles: Prisma.singlesCreateNestedOneWithoutCartItemsInput
+  is_hareruya?: boolean
+  hareruya_id?: string | null
+  product_data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  singles?: Prisma.singlesCreateNestedOneWithoutCartItemsInput
 }
 
 export type cart_itemsUncheckedCreateWithoutCartsInput = {
   id?: string
-  single_id: string
+  single_id?: string | null
   quantity: number
+  is_hareruya?: boolean
+  hareruya_id?: string | null
+  product_data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type cart_itemsCreateOrConnectWithoutCartsInput = {
@@ -515,11 +590,17 @@ export type cart_itemsCreateManySinglesInput = {
   id?: string
   cart_id: string
   quantity: number
+  is_hareruya?: boolean
+  hareruya_id?: string | null
+  product_data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type cart_itemsUpdateWithoutSinglesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  is_hareruya?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   carts?: Prisma.cartsUpdateOneRequiredWithoutItemsNestedInput
 }
 
@@ -527,36 +608,54 @@ export type cart_itemsUncheckedUpdateWithoutSinglesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   cart_id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  is_hareruya?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type cart_itemsUncheckedUpdateManyWithoutSinglesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   cart_id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  is_hareruya?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type cart_itemsCreateManyCartsInput = {
   id?: string
-  single_id: string
+  single_id?: string | null
   quantity: number
+  is_hareruya?: boolean
+  hareruya_id?: string | null
+  product_data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type cart_itemsUpdateWithoutCartsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  singles?: Prisma.singlesUpdateOneRequiredWithoutCartItemsNestedInput
+  is_hareruya?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  singles?: Prisma.singlesUpdateOneWithoutCartItemsNestedInput
 }
 
 export type cart_itemsUncheckedUpdateWithoutCartsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  single_id?: Prisma.StringFieldUpdateOperationsInput | string
+  single_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  is_hareruya?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type cart_itemsUncheckedUpdateManyWithoutCartsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  single_id?: Prisma.StringFieldUpdateOperationsInput | string
+  single_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  is_hareruya?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hareruya_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 
@@ -566,8 +665,11 @@ export type cart_itemsSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   cart_id?: boolean
   single_id?: boolean
   quantity?: boolean
+  is_hareruya?: boolean
+  hareruya_id?: boolean
+  product_data?: boolean
   carts?: boolean | Prisma.cartsDefaultArgs<ExtArgs>
-  singles?: boolean | Prisma.singlesDefaultArgs<ExtArgs>
+  singles?: boolean | Prisma.cart_items$singlesArgs<ExtArgs>
 }, ExtArgs["result"]["cart_items"]>
 
 export type cart_itemsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -575,8 +677,11 @@ export type cart_itemsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   cart_id?: boolean
   single_id?: boolean
   quantity?: boolean
+  is_hareruya?: boolean
+  hareruya_id?: boolean
+  product_data?: boolean
   carts?: boolean | Prisma.cartsDefaultArgs<ExtArgs>
-  singles?: boolean | Prisma.singlesDefaultArgs<ExtArgs>
+  singles?: boolean | Prisma.cart_items$singlesArgs<ExtArgs>
 }, ExtArgs["result"]["cart_items"]>
 
 export type cart_itemsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -584,8 +689,11 @@ export type cart_itemsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   cart_id?: boolean
   single_id?: boolean
   quantity?: boolean
+  is_hareruya?: boolean
+  hareruya_id?: boolean
+  product_data?: boolean
   carts?: boolean | Prisma.cartsDefaultArgs<ExtArgs>
-  singles?: boolean | Prisma.singlesDefaultArgs<ExtArgs>
+  singles?: boolean | Prisma.cart_items$singlesArgs<ExtArgs>
 }, ExtArgs["result"]["cart_items"]>
 
 export type cart_itemsSelectScalar = {
@@ -593,33 +701,39 @@ export type cart_itemsSelectScalar = {
   cart_id?: boolean
   single_id?: boolean
   quantity?: boolean
+  is_hareruya?: boolean
+  hareruya_id?: boolean
+  product_data?: boolean
 }
 
-export type cart_itemsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "cart_id" | "single_id" | "quantity", ExtArgs["result"]["cart_items"]>
+export type cart_itemsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "cart_id" | "single_id" | "quantity" | "is_hareruya" | "hareruya_id" | "product_data", ExtArgs["result"]["cart_items"]>
 export type cart_itemsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   carts?: boolean | Prisma.cartsDefaultArgs<ExtArgs>
-  singles?: boolean | Prisma.singlesDefaultArgs<ExtArgs>
+  singles?: boolean | Prisma.cart_items$singlesArgs<ExtArgs>
 }
 export type cart_itemsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   carts?: boolean | Prisma.cartsDefaultArgs<ExtArgs>
-  singles?: boolean | Prisma.singlesDefaultArgs<ExtArgs>
+  singles?: boolean | Prisma.cart_items$singlesArgs<ExtArgs>
 }
 export type cart_itemsIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   carts?: boolean | Prisma.cartsDefaultArgs<ExtArgs>
-  singles?: boolean | Prisma.singlesDefaultArgs<ExtArgs>
+  singles?: boolean | Prisma.cart_items$singlesArgs<ExtArgs>
 }
 
 export type $cart_itemsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "cart_items"
   objects: {
     carts: Prisma.$cartsPayload<ExtArgs>
-    singles: Prisma.$singlesPayload<ExtArgs>
+    singles: Prisma.$singlesPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     cart_id: string
-    single_id: string
+    single_id: string | null
     quantity: number
+    is_hareruya: boolean
+    hareruya_id: string | null
+    product_data: runtime.JsonValue | null
   }, ExtArgs["result"]["cart_items"]>
   composites: {}
 }
@@ -1015,7 +1129,7 @@ readonly fields: cart_itemsFieldRefs;
 export interface Prisma__cart_itemsClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   carts<T extends Prisma.cartsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.cartsDefaultArgs<ExtArgs>>): Prisma.Prisma__cartsClient<runtime.Types.Result.GetResult<Prisma.$cartsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  singles<T extends Prisma.singlesDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.singlesDefaultArgs<ExtArgs>>): Prisma.Prisma__singlesClient<runtime.Types.Result.GetResult<Prisma.$singlesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  singles<T extends Prisma.cart_items$singlesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.cart_items$singlesArgs<ExtArgs>>): Prisma.Prisma__singlesClient<runtime.Types.Result.GetResult<Prisma.$singlesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1049,6 +1163,9 @@ export interface cart_itemsFieldRefs {
   readonly cart_id: Prisma.FieldRef<"cart_items", 'String'>
   readonly single_id: Prisma.FieldRef<"cart_items", 'String'>
   readonly quantity: Prisma.FieldRef<"cart_items", 'Int'>
+  readonly is_hareruya: Prisma.FieldRef<"cart_items", 'Boolean'>
+  readonly hareruya_id: Prisma.FieldRef<"cart_items", 'String'>
+  readonly product_data: Prisma.FieldRef<"cart_items", 'Json'>
 }
     
 
@@ -1442,6 +1559,25 @@ export type cart_itemsDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * Limit how many cart_items to delete.
    */
   limit?: number
+}
+
+/**
+ * cart_items.singles
+ */
+export type cart_items$singlesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the singles
+   */
+  select?: Prisma.singlesSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the singles
+   */
+  omit?: Prisma.singlesOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.singlesInclude<ExtArgs> | null
+  where?: Prisma.singlesWhereInput
 }
 
 /**

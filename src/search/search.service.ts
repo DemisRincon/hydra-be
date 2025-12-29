@@ -309,7 +309,7 @@ export class SearchService {
   /**
    * Transform local product to match Hareruya search result format
    */
-  private transformLocalProductToHareruyaFormat(localProduct: any): any {
+  transformLocalProductToHareruyaFormat(localProduct: any): any {
     // Extract price values (handle Decimal types)
     const getNumericValue = (value: unknown): number => {
       if (value === null || value === undefined) return 0;
@@ -514,8 +514,14 @@ export class SearchService {
       return name || '';
     };
 
+    // Extract product ID
+    const productId = productRecord.id;
+    const productIdString =
+      productId && typeof productId === 'string' ? productId : null;
+
     // Return in Hareruya format
     return {
+      id: productIdString, // Local product ID (UUID)
       borderless,
       cardName: getCardName(),
       cardNumber: getStringValue(productCardNumber),
@@ -946,7 +952,10 @@ export class SearchService {
                 OR: [
                   { isLocalInventory: { not: true } },
                   {
-                    AND: [{ isLocalInventory: true }, { hareruyaId: { not: null } }],
+                    AND: [
+                      { isLocalInventory: true },
+                      { hareruyaId: { not: null } },
+                    ],
                   },
                 ],
               },
@@ -1039,7 +1048,7 @@ export class SearchService {
         // If no category is specified, default to "singles" to match the behavior
         // when category=singles is explicitly provided
         const effectiveCategory = category || 'singles';
-        
+
         this.logger.log(
           `Getting latest local products, page: ${pageNum}, limit: ${limitNum}, pagination: ${enablePagination}, category: ${effectiveCategory}`,
         );
@@ -1047,7 +1056,8 @@ export class SearchService {
         try {
           if (enablePagination) {
             // Get total count first for pagination
-            totalCount = await this.productsService.countByCategory(effectiveCategory);
+            totalCount =
+              await this.productsService.countByCategory(effectiveCategory);
             // Get paginated results
             localProducts = await this.productsService.findLatest(
               limitNum,
