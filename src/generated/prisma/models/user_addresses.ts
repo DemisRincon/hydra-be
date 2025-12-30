@@ -32,6 +32,7 @@ export type User_addressesMinAggregateOutputType = {
   state: string | null
   zip_code: string | null
   country: string | null
+  receiver_name: string | null
   is_default: boolean | null
 }
 
@@ -43,6 +44,7 @@ export type User_addressesMaxAggregateOutputType = {
   state: string | null
   zip_code: string | null
   country: string | null
+  receiver_name: string | null
   is_default: boolean | null
 }
 
@@ -54,6 +56,7 @@ export type User_addressesCountAggregateOutputType = {
   state: number
   zip_code: number
   country: number
+  receiver_name: number
   is_default: number
   _all: number
 }
@@ -67,6 +70,7 @@ export type User_addressesMinAggregateInputType = {
   state?: true
   zip_code?: true
   country?: true
+  receiver_name?: true
   is_default?: true
 }
 
@@ -78,6 +82,7 @@ export type User_addressesMaxAggregateInputType = {
   state?: true
   zip_code?: true
   country?: true
+  receiver_name?: true
   is_default?: true
 }
 
@@ -89,6 +94,7 @@ export type User_addressesCountAggregateInputType = {
   state?: true
   zip_code?: true
   country?: true
+  receiver_name?: true
   is_default?: true
   _all?: true
 }
@@ -173,6 +179,7 @@ export type User_addressesGroupByOutputType = {
   state: string
   zip_code: string
   country: string
+  receiver_name: string | null
   is_default: boolean
   _count: User_addressesCountAggregateOutputType | null
   _min: User_addressesMinAggregateOutputType | null
@@ -205,6 +212,7 @@ export type user_addressesWhereInput = {
   state?: Prisma.StringFilter<"user_addresses"> | string
   zip_code?: Prisma.StringFilter<"user_addresses"> | string
   country?: Prisma.StringFilter<"user_addresses"> | string
+  receiver_name?: Prisma.StringNullableFilter<"user_addresses"> | string | null
   is_default?: Prisma.BoolFilter<"user_addresses"> | boolean
   users?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
   orderShipping?: Prisma.Order_shippingListRelationFilter
@@ -218,6 +226,7 @@ export type user_addressesOrderByWithRelationInput = {
   state?: Prisma.SortOrder
   zip_code?: Prisma.SortOrder
   country?: Prisma.SortOrder
+  receiver_name?: Prisma.SortOrderInput | Prisma.SortOrder
   is_default?: Prisma.SortOrder
   users?: Prisma.usersOrderByWithRelationInput
   orderShipping?: Prisma.order_shippingOrderByRelationAggregateInput
@@ -234,6 +243,7 @@ export type user_addressesWhereUniqueInput = Prisma.AtLeast<{
   state?: Prisma.StringFilter<"user_addresses"> | string
   zip_code?: Prisma.StringFilter<"user_addresses"> | string
   country?: Prisma.StringFilter<"user_addresses"> | string
+  receiver_name?: Prisma.StringNullableFilter<"user_addresses"> | string | null
   is_default?: Prisma.BoolFilter<"user_addresses"> | boolean
   users?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
   orderShipping?: Prisma.Order_shippingListRelationFilter
@@ -247,6 +257,7 @@ export type user_addressesOrderByWithAggregationInput = {
   state?: Prisma.SortOrder
   zip_code?: Prisma.SortOrder
   country?: Prisma.SortOrder
+  receiver_name?: Prisma.SortOrderInput | Prisma.SortOrder
   is_default?: Prisma.SortOrder
   _count?: Prisma.user_addressesCountOrderByAggregateInput
   _max?: Prisma.user_addressesMaxOrderByAggregateInput
@@ -264,6 +275,7 @@ export type user_addressesScalarWhereWithAggregatesInput = {
   state?: Prisma.StringWithAggregatesFilter<"user_addresses"> | string
   zip_code?: Prisma.StringWithAggregatesFilter<"user_addresses"> | string
   country?: Prisma.StringWithAggregatesFilter<"user_addresses"> | string
+  receiver_name?: Prisma.StringNullableWithAggregatesFilter<"user_addresses"> | string | null
   is_default?: Prisma.BoolWithAggregatesFilter<"user_addresses"> | boolean
 }
 
@@ -274,6 +286,7 @@ export type user_addressesCreateInput = {
   state: string
   zip_code: string
   country: string
+  receiver_name?: string | null
   is_default?: boolean
   users: Prisma.usersCreateNestedOneWithoutAddressesInput
   orderShipping?: Prisma.order_shippingCreateNestedManyWithoutUser_addressesInput
@@ -287,6 +300,7 @@ export type user_addressesUncheckedCreateInput = {
   state: string
   zip_code: string
   country: string
+  receiver_name?: string | null
   is_default?: boolean
   orderShipping?: Prisma.order_shippingUncheckedCreateNestedManyWithoutUser_addressesInput
 }
@@ -298,6 +312,7 @@ export type user_addressesUpdateInput = {
   state?: Prisma.StringFieldUpdateOperationsInput | string
   zip_code?: Prisma.StringFieldUpdateOperationsInput | string
   country?: Prisma.StringFieldUpdateOperationsInput | string
+  receiver_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_default?: Prisma.BoolFieldUpdateOperationsInput | boolean
   users?: Prisma.usersUpdateOneRequiredWithoutAddressesNestedInput
   orderShipping?: Prisma.order_shippingUpdateManyWithoutUser_addressesNestedInput
@@ -311,6 +326,7 @@ export type user_addressesUncheckedUpdateInput = {
   state?: Prisma.StringFieldUpdateOperationsInput | string
   zip_code?: Prisma.StringFieldUpdateOperationsInput | string
   country?: Prisma.StringFieldUpdateOperationsInput | string
+  receiver_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_default?: Prisma.BoolFieldUpdateOperationsInput | boolean
   orderShipping?: Prisma.order_shippingUncheckedUpdateManyWithoutUser_addressesNestedInput
 }
@@ -323,6 +339,7 @@ export type user_addressesCreateManyInput = {
   state: string
   zip_code: string
   country: string
+  receiver_name?: string | null
   is_default?: boolean
 }
 
@@ -333,6 +350,7 @@ export type user_addressesUpdateManyMutationInput = {
   state?: Prisma.StringFieldUpdateOperationsInput | string
   zip_code?: Prisma.StringFieldUpdateOperationsInput | string
   country?: Prisma.StringFieldUpdateOperationsInput | string
+  receiver_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_default?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -344,6 +362,7 @@ export type user_addressesUncheckedUpdateManyInput = {
   state?: Prisma.StringFieldUpdateOperationsInput | string
   zip_code?: Prisma.StringFieldUpdateOperationsInput | string
   country?: Prisma.StringFieldUpdateOperationsInput | string
+  receiver_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_default?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -365,6 +384,7 @@ export type user_addressesCountOrderByAggregateInput = {
   state?: Prisma.SortOrder
   zip_code?: Prisma.SortOrder
   country?: Prisma.SortOrder
+  receiver_name?: Prisma.SortOrder
   is_default?: Prisma.SortOrder
 }
 
@@ -376,6 +396,7 @@ export type user_addressesMaxOrderByAggregateInput = {
   state?: Prisma.SortOrder
   zip_code?: Prisma.SortOrder
   country?: Prisma.SortOrder
+  receiver_name?: Prisma.SortOrder
   is_default?: Prisma.SortOrder
 }
 
@@ -387,6 +408,7 @@ export type user_addressesMinOrderByAggregateInput = {
   state?: Prisma.SortOrder
   zip_code?: Prisma.SortOrder
   country?: Prisma.SortOrder
+  receiver_name?: Prisma.SortOrder
   is_default?: Prisma.SortOrder
 }
 
@@ -458,6 +480,7 @@ export type user_addressesCreateWithoutUsersInput = {
   state: string
   zip_code: string
   country: string
+  receiver_name?: string | null
   is_default?: boolean
   orderShipping?: Prisma.order_shippingCreateNestedManyWithoutUser_addressesInput
 }
@@ -469,6 +492,7 @@ export type user_addressesUncheckedCreateWithoutUsersInput = {
   state: string
   zip_code: string
   country: string
+  receiver_name?: string | null
   is_default?: boolean
   orderShipping?: Prisma.order_shippingUncheckedCreateNestedManyWithoutUser_addressesInput
 }
@@ -510,6 +534,7 @@ export type user_addressesScalarWhereInput = {
   state?: Prisma.StringFilter<"user_addresses"> | string
   zip_code?: Prisma.StringFilter<"user_addresses"> | string
   country?: Prisma.StringFilter<"user_addresses"> | string
+  receiver_name?: Prisma.StringNullableFilter<"user_addresses"> | string | null
   is_default?: Prisma.BoolFilter<"user_addresses"> | boolean
 }
 
@@ -520,6 +545,7 @@ export type user_addressesCreateWithoutOrderShippingInput = {
   state: string
   zip_code: string
   country: string
+  receiver_name?: string | null
   is_default?: boolean
   users: Prisma.usersCreateNestedOneWithoutAddressesInput
 }
@@ -532,6 +558,7 @@ export type user_addressesUncheckedCreateWithoutOrderShippingInput = {
   state: string
   zip_code: string
   country: string
+  receiver_name?: string | null
   is_default?: boolean
 }
 
@@ -558,6 +585,7 @@ export type user_addressesUpdateWithoutOrderShippingInput = {
   state?: Prisma.StringFieldUpdateOperationsInput | string
   zip_code?: Prisma.StringFieldUpdateOperationsInput | string
   country?: Prisma.StringFieldUpdateOperationsInput | string
+  receiver_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_default?: Prisma.BoolFieldUpdateOperationsInput | boolean
   users?: Prisma.usersUpdateOneRequiredWithoutAddressesNestedInput
 }
@@ -570,6 +598,7 @@ export type user_addressesUncheckedUpdateWithoutOrderShippingInput = {
   state?: Prisma.StringFieldUpdateOperationsInput | string
   zip_code?: Prisma.StringFieldUpdateOperationsInput | string
   country?: Prisma.StringFieldUpdateOperationsInput | string
+  receiver_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_default?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -580,6 +609,7 @@ export type user_addressesCreateManyUsersInput = {
   state: string
   zip_code: string
   country: string
+  receiver_name?: string | null
   is_default?: boolean
 }
 
@@ -590,6 +620,7 @@ export type user_addressesUpdateWithoutUsersInput = {
   state?: Prisma.StringFieldUpdateOperationsInput | string
   zip_code?: Prisma.StringFieldUpdateOperationsInput | string
   country?: Prisma.StringFieldUpdateOperationsInput | string
+  receiver_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_default?: Prisma.BoolFieldUpdateOperationsInput | boolean
   orderShipping?: Prisma.order_shippingUpdateManyWithoutUser_addressesNestedInput
 }
@@ -601,6 +632,7 @@ export type user_addressesUncheckedUpdateWithoutUsersInput = {
   state?: Prisma.StringFieldUpdateOperationsInput | string
   zip_code?: Prisma.StringFieldUpdateOperationsInput | string
   country?: Prisma.StringFieldUpdateOperationsInput | string
+  receiver_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_default?: Prisma.BoolFieldUpdateOperationsInput | boolean
   orderShipping?: Prisma.order_shippingUncheckedUpdateManyWithoutUser_addressesNestedInput
 }
@@ -612,6 +644,7 @@ export type user_addressesUncheckedUpdateManyWithoutUsersInput = {
   state?: Prisma.StringFieldUpdateOperationsInput | string
   zip_code?: Prisma.StringFieldUpdateOperationsInput | string
   country?: Prisma.StringFieldUpdateOperationsInput | string
+  receiver_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_default?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -654,6 +687,7 @@ export type user_addressesSelect<ExtArgs extends runtime.Types.Extensions.Intern
   state?: boolean
   zip_code?: boolean
   country?: boolean
+  receiver_name?: boolean
   is_default?: boolean
   users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
   orderShipping?: boolean | Prisma.user_addresses$orderShippingArgs<ExtArgs>
@@ -668,6 +702,7 @@ export type user_addressesSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   state?: boolean
   zip_code?: boolean
   country?: boolean
+  receiver_name?: boolean
   is_default?: boolean
   users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user_addresses"]>
@@ -680,6 +715,7 @@ export type user_addressesSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   state?: boolean
   zip_code?: boolean
   country?: boolean
+  receiver_name?: boolean
   is_default?: boolean
   users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user_addresses"]>
@@ -692,10 +728,11 @@ export type user_addressesSelectScalar = {
   state?: boolean
   zip_code?: boolean
   country?: boolean
+  receiver_name?: boolean
   is_default?: boolean
 }
 
-export type user_addressesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "user_id" | "street" | "city" | "state" | "zip_code" | "country" | "is_default", ExtArgs["result"]["user_addresses"]>
+export type user_addressesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "user_id" | "street" | "city" | "state" | "zip_code" | "country" | "receiver_name" | "is_default", ExtArgs["result"]["user_addresses"]>
 export type user_addressesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
   orderShipping?: boolean | Prisma.user_addresses$orderShippingArgs<ExtArgs>
@@ -722,6 +759,7 @@ export type $user_addressesPayload<ExtArgs extends runtime.Types.Extensions.Inte
     state: string
     zip_code: string
     country: string
+    receiver_name: string | null
     is_default: boolean
   }, ExtArgs["result"]["user_addresses"]>
   composites: {}
@@ -1155,6 +1193,7 @@ export interface user_addressesFieldRefs {
   readonly state: Prisma.FieldRef<"user_addresses", 'String'>
   readonly zip_code: Prisma.FieldRef<"user_addresses", 'String'>
   readonly country: Prisma.FieldRef<"user_addresses", 'String'>
+  readonly receiver_name: Prisma.FieldRef<"user_addresses", 'String'>
   readonly is_default: Prisma.FieldRef<"user_addresses", 'Boolean'>
 }
     

@@ -2,6 +2,11 @@ import { IsString, IsNotEmpty, IsBoolean, IsOptional } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateAddressDto {
+  @ApiProperty({ example: 'John Doe', description: 'Name of the person receiving shipment' })
+  @IsString()
+  @IsOptional()
+  receiver_name?: string;
+
   @ApiProperty({ example: '123 Main St', description: 'Street address' })
   @IsString()
   @IsNotEmpty()

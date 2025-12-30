@@ -1900,6 +1900,7 @@ export const User_addressesScalarFieldEnum = {
   state: 'state',
   zip_code: 'zip_code',
   country: 'country',
+  receiver_name: 'receiver_name',
   is_default: 'is_default'
 } as const
 
