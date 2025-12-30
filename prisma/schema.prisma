@@ -29,6 +29,7 @@ model users {
   first_name String
   last_name  String
   avatar_url String?
+  phone      String?
   is_active  Boolean @default(true)
 
   roles roles @relation(fields: [role_id], references: [id])

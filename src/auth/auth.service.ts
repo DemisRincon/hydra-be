@@ -72,6 +72,7 @@ export class AuthService {
         first_name: userWithoutPassword.first_name,
         last_name: userWithoutPassword.last_name,
         avatar_url: userWithoutPassword.avatar_url || null,
+        phone: userWithoutPassword.phone || null,
         role: {
           id: userWithoutPassword.roles.id,
           name: userWithoutPassword.roles.name,
@@ -139,6 +140,7 @@ export class AuthService {
         first_name: userWithoutPassword.first_name,
         last_name: userWithoutPassword.last_name,
         avatar_url: userWithoutPassword.avatar_url || null,
+        phone: userWithoutPassword.phone || null,
         role: {
           id: userWithoutPassword.roles.id,
           name: userWithoutPassword.roles.name,
@@ -260,6 +262,7 @@ export class AuthService {
         first_name: userWithoutPassword.first_name,
         last_name: userWithoutPassword.last_name,
         avatar_url: userWithoutPassword.avatar_url || null,
+        phone: userWithoutPassword.phone || null,
         role: {
           id: userWithoutPassword.roles.id,
           name: userWithoutPassword.roles.name,
