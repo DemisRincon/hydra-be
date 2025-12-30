@@ -19,6 +19,15 @@ export class UpdateProfileDto {
   @IsString()
   @IsOptional()
   last_name?: string;
+
+  @ApiProperty({
+    description: 'Phone number',
+    example: '5512345678',
+    required: false,
+  })
+  @IsString()
+  @IsOptional()
+  phone?: string;
 }
 
 

@@ -325,7 +325,7 @@ export class UsersService {
     }
   }
 
-  async updateProfile(userId: string, updateProfileDto: { first_name?: string; last_name?: string }) {
+  async updateProfile(userId: string, updateProfileDto: { first_name?: string; last_name?: string; phone?: string }) {
     // Check if user exists
     const user = await this.prisma.users.findUnique({
       where: { id: userId },
@@ -344,6 +344,9 @@ export class UsersService {
           }),
           ...(updateProfileDto.last_name !== undefined && {
             last_name: updateProfileDto.last_name,
+          }),
+          ...(updateProfileDto.phone !== undefined && {
+            phone: updateProfileDto.phone,
           }),
         },
         include: {
