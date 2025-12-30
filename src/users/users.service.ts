@@ -9,6 +9,7 @@ import { CreateUserDto } from './dto/create-user.dto.js';
 import { SignupDto } from './dto/signup.dto.js';
 import { UpdateUserDto } from './dto/update-user.dto.js';
 import { ResetPasswordDto } from './dto/reset-password.dto.js';
+import { CreateAddressDto } from './dto/create-address.dto.js';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -356,6 +357,56 @@ export class UsersService {
     } catch (error) {
       throw new BadRequestException('Failed to update profile');
     }
+  }
+
+  async getAddresses(userId: string) {
+    return this.prisma.user_addresses.findMany({
+      where: { user_id: userId },
+      orderBy: { is_default: 'desc' },
+    });
+  }
+
+  async addAddress(userId: string, createAddressDto: CreateAddressDto) {
+    const addressesCount = await this.prisma.user_addresses.count({
+      where: { user_id: userId },
+    });
+
+    const isFirstAddress = addressesCount === 0;
+    
+    // If it's the first address, force it to be default
+    const isDefault = isFirstAddress || createAddressDto.is_default;
+
+    if (isDefault && !isFirstAddress) {
+      // If setting as default, unset other defaults
+      await this.prisma.user_addresses.updateMany({
+        where: { user_id: userId, is_default: true },
+        data: { is_default: false },
+      });
+    }
+
+    return this.prisma.user_addresses.create({
+      data: {
+        ...createAddressDto,
+        user_id: userId,
+        is_default: isDefault || false,
+      },
+    });
+  }
+
+  async deleteAddress(userId: string, addressId: string) {
+    const address = await this.prisma.user_addresses.findFirst({
+      where: { id: addressId, user_id: userId },
+    });
+
+    if (!address) {
+      throw new NotFoundException(`Address with ID ${addressId} not found`);
+    }
+
+    await this.prisma.user_addresses.delete({
+      where: { id: addressId },
+    });
+
+    return { message: 'Address deleted successfully' };
   }
 }
 

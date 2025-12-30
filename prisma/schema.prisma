@@ -48,14 +48,15 @@ model users {
  */
 
 model user_addresses {
-  id         String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  user_id    String  @db.Uuid
-  street     String
-  city       String
-  state      String
-  zip_code   String
-  country    String
-  is_default Boolean @default(false)
+  id            String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id       String  @db.Uuid
+  street        String
+  city          String
+  state         String
+  zip_code      String
+  country       String
+  receiver_name String?
+  is_default    Boolean @default(false)
 
   users         users            @relation(fields: [user_id], references: [id])
   orderShipping order_shipping[]

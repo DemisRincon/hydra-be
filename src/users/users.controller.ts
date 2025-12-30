@@ -24,6 +24,7 @@ import { UpdateUserDto } from './dto/update-user.dto.js';
 import { UpdateProfileDto } from './dto/update-profile.dto.js';
 import { ResetPasswordDto } from './dto/reset-password.dto.js';
 import { SignupDto } from './dto/signup.dto.js';
+import { CreateAddressDto } from './dto/create-address.dto.js';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard.js';
 import { RolesGuard } from '../auth/guards/roles.guard.js';
 import { Roles } from '../auth/decorators/roles.decorator.js';
@@ -116,6 +117,45 @@ export class UsersController {
   async findAll() {
     return this.usersService.findAll();
   }
+
+  @Get('addresses')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('CLIENT', 'ADMIN', 'SELLER') // Allow all roles to manage their addresses
+  @ApiBearerAuth('JWT-auth')
+  @ApiOperation({ summary: 'Get current user addresses' })
+  @ApiResponse({ status: 200, description: 'List of addresses' })
+  async getAddresses(@CurrentUser() user: UserWithRole) {
+    return this.usersService.getAddresses(user.id);
+  }
+
+  @Post('addresses')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('CLIENT', 'ADMIN', 'SELLER')
+  @ApiBearerAuth('JWT-auth')
+  @ApiOperation({ summary: 'Add a new address' })
+  @ApiBody({ type: CreateAddressDto })
+  @ApiResponse({ status: 201, description: 'Address created successfully' })
+  async addAddress(
+    @CurrentUser() user: UserWithRole,
+    @Body() createAddressDto: CreateAddressDto,
+  ) {
+    return this.usersService.addAddress(user.id, createAddressDto);
+  }
+
+  @Delete('addresses/:id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('CLIENT', 'ADMIN', 'SELLER')
+  @ApiBearerAuth('JWT-auth')
+  @ApiOperation({ summary: 'Delete an address' })
+  @ApiParam({ name: 'id', description: 'Address ID (UUID)' })
+  @ApiResponse({ status: 200, description: 'Address deleted successfully' })
+  async deleteAddress(
+    @CurrentUser() user: UserWithRole,
+    @Param('id') addressId: string,
+  ) {
+    return this.usersService.deleteAddress(user.id, addressId);
+  }
+
 
   @Get(':id')
   @UseGuards(JwtAuthGuard, RolesGuard)
@@ -285,4 +325,7 @@ export class UsersController {
     return this.usersService.updateProfile(user.id, updateProfileDto);
   }
 }
+
+
+
 
