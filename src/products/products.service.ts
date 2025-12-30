@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service.js';
 import { CreateSingleDto } from './dto/create-single.dto.js';
+import { UpdateSingleDto } from './dto/update-single.dto.js';
 import { HareruyaService } from '../hareruya/hareruya.service.js';
 
 @Injectable()
@@ -53,18 +54,7 @@ export class ProductsService {
       throw new NotFoundException(`User with ID ${owner_id} not found`);
     }
 
-    // Check if product already exists by Hareruya product ID
-    if (hareruyaId) {
-      const existing = await this.prisma.singles.findUnique({
-        where: { hareruyaId },
-      });
 
-      if (existing) {
-        throw new ConflictException(
-          'Product with this Hareruya ID already exists',
-        );
-      }
-    }
 
     // Verify category exists
     const category = await this.prisma.categories.findUnique({
@@ -111,6 +101,97 @@ export class ProductsService {
       });
       if (!tcg) {
         throw new NotFoundException(`TCG with ID ${tcgId} not found`);
+      }
+    }
+
+    // Check for existing product to merge stock
+    // Match on: owner, hareruyaId (if present), condition, language, foil
+    // For local products without hareruyaId, we check cardName and expansion
+    const whereClause: any = {
+      owner_id,
+      condition_id,
+      language_id,
+      foil: foil || false,
+    };
+
+    if (hareruyaId) {
+      whereClause.hareruyaId = hareruyaId;
+    } else {
+      whereClause.cardName = cardName;
+      // Should we strict match on expansion for local? Yes.
+      if (expansion) whereClause.expansion = expansion;
+    }
+
+    const potentialMatches = await this.prisma.singles.findMany({
+      where: whereClause,
+      include: {
+        tags: {
+          include: {
+            tags: true,
+          },
+        },
+        // Include other relations to return consistent result
+        categories: { select: { id: true, name: true, display_name: true } },
+        conditions: true,
+        languages: true,
+        tcgs: true,
+        owner: { include: { roles: true } },
+      },
+    });
+
+    const incomingTags = (tags || []).map((t) => t.trim().toLowerCase()).sort();
+
+    for (const match of potentialMatches) {
+      const existingTags = match.tags
+        .map((t) => t.tags.name.trim().toLowerCase())
+        .sort();
+
+      // Compare tags arrays
+      const isTagMatch =
+        incomingTags.length === existingTags.length &&
+        incomingTags.every((value, index) => value === existingTags[index]);
+
+      if (isTagMatch) {
+         this.logger.log(`Merging product stock for ${match.id} (Existing: ${match.stock}, Adding: ${stock || 0})`);
+        
+        // Merge found! Update stock.
+        const updatedProduct = await this.prisma.singles.update({
+          where: { id: match.id },
+          data: {
+            stock: match.stock + (stock || 0),
+          },
+          include: {
+            categories: {
+              select: {
+                id: true,
+                name: true,
+                display_name: true,
+                description: true,
+                is_active: true,
+                order: true,
+              },
+            },
+            conditions: true,
+            languages: true,
+            tcgs: true,
+            owner: {
+              include: {
+                roles: true,
+              },
+            },
+            tags: {
+              include: {
+                tags: true,
+              },
+            },
+          },
+        });
+
+        // Return transformed
+        return {
+          ...updatedProduct,
+          tags: updatedProduct.tags.map((st) => st.tags),
+        };
       }
     }
 
@@ -246,14 +327,7 @@ export class ProductsService {
 
       return product;
     } catch (error) {
-      if (
-        error instanceof Error &&
-        error.message.includes('Unique constraint')
-      ) {
-        throw new ConflictException(
-          'Product with this Hareruya ID already exists',
-        );
-      }
+
       throw new BadRequestException(
         `Failed to create product: ${error instanceof Error ? error.message : 'Unknown error'}`,
       );
@@ -517,7 +591,7 @@ export class ProductsService {
   }
 
   async findByHareruyaId(hareruyaProductId: string) {
-    const product = await this.prisma.singles.findUnique({
+    const product = await this.prisma.singles.findFirst({
       where: { hareruyaId: hareruyaProductId },
       include: {
         categories: true,
@@ -598,10 +672,19 @@ export class ProductsService {
     };
   }
 
-  async findAll(page: number = 1, limit: number = 20) {
+  async findAll(page: number = 1, limit: number = 20, search?: string) {
     const skip = (page - 1) * limit;
 
+    const where: any = {};
+    if (search && search.trim() !== '') {
+      where.OR = [
+        { name: { contains: search.trim(), mode: 'insensitive' } },
+        { cardName: { contains: search.trim(), mode: 'insensitive' } },
+      ];
+    }
+
     const products = await this.prisma.singles.findMany({
+      where,
       skip,
       take: limit,
       include: {
@@ -644,7 +727,7 @@ export class ProductsService {
     // For admin dashboard, show all products regardless of Hareruya stock
     // The filtering is only applied in search endpoints for public-facing views
     // Get total count before filtering for accurate pagination
-    const totalCount = await this.prisma.singles.count();
+    const totalCount = await this.prisma.singles.count({ where });
 
     return {
       data: transformedProducts,
@@ -1632,4 +1715,51 @@ export class ProductsService {
       tags: updatedProduct.tags.map((st) => st.tags),
     };
   }
+
+  async update(id: string, updateDto: UpdateSingleDto) {
+    // Separate tags and price string from other data
+    const { tags, price, finalPrice, cardName, ...rest } = updateDto;
+
+    // Verify product exists
+    const existing = await this.prisma.singles.findUnique({ where: { id } });
+    if (!existing) {
+      throw new NotFoundException(`Product with ID ${id} not found`);
+    }
+
+    const dataToUpdate: any = { ...rest };
+    
+    // Explicitly confirm price string is removed if it somehow came through in rest (shouldn't with correct Destructuring but safe to check)
+    if ('price' in dataToUpdate) {
+        delete dataToUpdate.price;
+    }
+
+    // Update name and cardName if provided
+    if (cardName) {
+      dataToUpdate.cardName = cardName;
+      dataToUpdate.name = cardName;
+    }
+
+    // Update price and finalPrice if provided
+    // Ensure we use the numeric finalPrice, ignoring the 'price' string from DTO
+    if (finalPrice !== undefined) {
+      dataToUpdate.price = finalPrice;
+      dataToUpdate.finalPrice = finalPrice;
+    }
+
+    // Update the product
+    const updatedProduct = await this.prisma.singles.update({
+      where: { id },
+      data: dataToUpdate,
+    });
+
+    // Handle tags update if provided
+    if (tags) {
+      // Reuse existing updateTags logic
+      return this.updateTags(id, tags);
+    }
+
+    // If no tags update, return the updated product (with existing tags)
+    return this.findOne(id);
+  }
+
 }

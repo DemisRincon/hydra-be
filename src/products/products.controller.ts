@@ -24,6 +24,7 @@ import {
 } from '@nestjs/swagger';
 import { ProductsService } from './products.service.js';
 import { CreateSingleDto } from './dto/create-single.dto.js';
+import { UpdateSingleDto } from './dto/update-single.dto.js';
 import { CreateBulkSinglesDto } from './dto/create-bulk-singles.dto.js';
 import { Public } from '../auth/guards/jwt-auth.guard.js';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard.js';
@@ -95,8 +96,9 @@ export class ProductsController {
   async findAll(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query('limit', new DefaultValuePipe(20), ParseIntPipe) limit: number,
+    @Query('search') search?: string,
   ) {
-    return this.productsService.findAll(page, limit);
+    return this.productsService.findAll(page, limit, search);
   }
 
   @Get('local')
@@ -246,6 +248,28 @@ export class ProductsController {
   @ApiResponse({ status: 403, description: 'Forbidden - Admin role required' })
   async updateAllProductsToLocalInventory() {
     return this.productsService.updateAllProductsToLocalInventory();
+  }
+
+
+
+  @Patch(':id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('ADMIN', 'SELLER')
+  @ApiBearerAuth('JWT-auth')
+  @ApiOperation({ summary: 'Update a single product (ADMIN, SELLER only)' })
+  @ApiParam({
+    name: 'id',
+    description: 'Product ID (UUID)',
+    example: '123e4567-e89b-12d3-a456-426614174000',
+  })
+  @ApiBody({ type: UpdateSingleDto })
+  @ApiResponse({
+    status: 200,
+    description: 'Product updated successfully',
+  })
+  @ApiResponse({ status: 404, description: 'Product not found' })
+  async update(@Param('id') id: string, @Body() updateDto: UpdateSingleDto) {
+    return this.productsService.update(id, updateDto);
   }
 
   @Delete(':id')
