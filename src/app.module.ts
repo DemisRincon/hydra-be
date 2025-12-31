@@ -16,6 +16,7 @@ import { HareruyaModule } from './hareruya/hareruya.module.js';
 import { TagsModule } from './tags/tags.module.js';
 import { TcgsModule } from './tcgs/tcgs.module.js';
 import { CartModule } from './cart/cart.module.js';
+import { OcrModule } from './ocr/ocr.module.js';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { CartModule } from './cart/cart.module.js';
     TagsModule,
     TcgsModule,
     CartModule,
+    OcrModule,
   ],
   controllers: [AppController],
   providers: [AppService],

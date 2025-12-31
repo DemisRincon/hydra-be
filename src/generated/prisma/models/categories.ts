@@ -435,6 +435,10 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
+}
+
 export type categoriesCreateNestedOneWithoutSinglesInput = {
   create?: Prisma.XOR<Prisma.categoriesCreateWithoutSinglesInput, Prisma.categoriesUncheckedCreateWithoutSinglesInput>
   connectOrCreate?: Prisma.categoriesCreateOrConnectWithoutSinglesInput
