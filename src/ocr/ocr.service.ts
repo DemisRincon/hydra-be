@@ -64,6 +64,8 @@ export class OcrService {
                       .map(line => line.trim())
                       .filter(line => line.length > 2); // Filter noise
 
+    this.logger.log(`OCR Lines Detected: ${JSON.stringify(lines)}`);
+
     if (lines.length === 0) return "";
 
     let titleLine = lines[0];
