@@ -73,6 +73,17 @@ export class ConditionsController {
     return this.conditionsService.findAll();
   }
 
+  @Get('active')
+  @Public()
+  @ApiOperation({ summary: 'Get all active conditions' })
+  @ApiResponse({
+    status: 200,
+    description: 'List of all active conditions',
+  })
+  async findActive() {
+    return this.conditionsService.findAll();
+  }
+
   @Get('code/:code')
   @Public()
   @ApiOperation({ summary: 'Get a condition by code' })

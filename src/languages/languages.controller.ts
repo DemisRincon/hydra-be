@@ -73,6 +73,17 @@ export class LanguagesController {
     return this.languagesService.findAll();
   }
 
+  @Get('active')
+  @Public()
+  @ApiOperation({ summary: 'Get all active languages' })
+  @ApiResponse({
+    status: 200,
+    description: 'List of all active languages',
+  })
+  async findActive() {
+    return this.languagesService.findAll();
+  }
+
   @Get('code/:code')
   @Public()
   @ApiOperation({ summary: 'Get a language by code' })

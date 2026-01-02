@@ -43,7 +43,7 @@ export class OcrController {
     )
     file: Express.Multer.File,
   ) {
-    const text = await this.ocrService.extractText(file.buffer);
-    return { text };
+    const result = await this.ocrService.extractText(file.buffer);
+    return result;
   }
 }

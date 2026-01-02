@@ -2,33 +2,59 @@
 import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 import axios from 'axios';
 import FormData from 'form-data';
+import sharp from 'sharp';
 
 @Injectable()
 export class OcrService {
   private readonly logger = new Logger(OcrService.name);
   private readonly apiUrl = 'https://api.ocr.space/parse/image';
 
-  async extractText(imageBuffer: Buffer): Promise<string> {
+
+
+  async extractText(imageBuffer: Buffer): Promise<{ text: string; image: string }> {
     try {
       this.logger.log('Processing image with OCR.space API...');
 
-      const apiKey = process.env.OCR_SPACE_API_KEY || 'helloworld'; // 'helloworld' is a free test key (limited)
+      // Step 1: Normalize the image (Rotate & Resize first)
+      const normalizedBuffer = await sharp(imageBuffer, { failOnError: false })
+        .rotate()
+        .resize({ width: 1024, withoutEnlargement: true })
+        .jpeg()
+        .toBuffer();
+
+      // Step 2: Define Crop Region on the normalized image
+      const metadata = await sharp(normalizedBuffer).metadata();
+      const width = metadata.width!;
+      const height = metadata.height!;
+      
+      // Target the Title Bar (Center of Image, matching UI Frame)
+      // The UI frame is centered. So we crop the Center Strip.
+      const cropWidth = Math.floor(width * 0.90);
+      const cropHeight = Math.floor(cropWidth / 4.0); // Aspect Ratio 4.0 matches UI
+      const cropLeft = Math.floor((width - cropWidth) / 2);
+      const cropTop = Math.floor((height - cropHeight) / 2);
+
+      const finalBuffer = await sharp(normalizedBuffer)
+        .extract({ left: cropLeft, top: cropTop, width: cropWidth, height: cropHeight }) 
+        .greyscale()
+        .toBuffer();
+
+      const imageBase64 = `data:image/jpeg;base64,${finalBuffer.toString('base64')}`;
+
+      const apiKey = process.env.OCR_SPACE_API_KEY || 'helloworld';
 
       const formData = new FormData();
-      formData.append('base64Image', `data:image/jpeg;base64,${imageBuffer.toString('base64')}`);
+      formData.append('base64Image', imageBase64);
       formData.append('apikey', apiKey);
       formData.append('language', 'eng');
       formData.append('isOverlayRequired', 'false');
-      formData.append('OCREngine', '2'); // Engine 2 is better for numbers and special chars
+      formData.append('OCREngine', '2');
       formData.append('detectOrientation', 'true');
       formData.append('scale', 'true');
-      formData.append('isTable', 'true'); // Forces line-by-line parsing, perfect for extracting just the title
+      formData.append('isTable', 'true');
 
-      // Note: OCR.space free tier has rate limits, handle accordingly if needed
       const response = await axios.post(this.apiUrl, formData, {
-        headers: {
-          ...formData.getHeaders(),
-        },
+        headers: { ...formData.getHeaders() },
       });
 
       if (response.data.IsErroredOnProcessing) {
@@ -37,18 +63,10 @@ export class OcrService {
       }
 
       const parsedResults = response.data.ParsedResults;
-      if (!parsedResults || parsedResults.length === 0) {
-        this.logger.warn('No text detected by OCR.space');
-        return "";
-      }
-
-      const text = parsedResults[0].ParsedText;
-      this.logger.log(`OCR Raw Output: ${text}`);
-
+      const text = parsedResults?.[0]?.ParsedText || "";
       const sanitizedText = this.sanitizeText(text);
-      this.logger.log(`OCR Final Result: ${sanitizedText}`);
       
-      return sanitizedText;
+      return { text: sanitizedText, image: imageBase64 };
 
     } catch (error) {
       this.logger.error('Error processing OCR', error);
