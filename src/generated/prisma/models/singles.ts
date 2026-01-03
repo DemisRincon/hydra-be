@@ -470,7 +470,6 @@ export type singlesOrderByWithRelationInput = {
 
 export type singlesWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  hareruyaId?: string
   AND?: Prisma.singlesWhereInput | Prisma.singlesWhereInput[]
   OR?: Prisma.singlesWhereInput[]
   NOT?: Prisma.singlesWhereInput | Prisma.singlesWhereInput[]
@@ -489,6 +488,7 @@ export type singlesWhereUniqueInput = Prisma.AtLeast<{
   extendedArt?: Prisma.BoolFilter<"singles"> | boolean
   finalPrice?: Prisma.DecimalNullableFilter<"singles"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   foil?: Prisma.BoolFilter<"singles"> | boolean
+  hareruyaId?: Prisma.StringNullableFilter<"singles"> | string | null
   img?: Prisma.StringFilter<"singles"> | string
   isLocalInventory?: Prisma.BoolFilter<"singles"> | boolean
   link?: Prisma.StringNullableFilter<"singles"> | string | null
@@ -512,7 +512,7 @@ export type singlesWhereUniqueInput = Prisma.AtLeast<{
   cartItems?: Prisma.Cart_itemsListRelationFilter
   orderItems?: Prisma.Order_itemsListRelationFilter
   listings?: Prisma.ListingsListRelationFilter
-}, "id" | "hareruyaId">
+}, "id">
 
 export type singlesOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

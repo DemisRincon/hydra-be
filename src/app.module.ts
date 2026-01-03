@@ -17,6 +17,8 @@ import { TagsModule } from './tags/tags.module.js';
 import { TcgsModule } from './tcgs/tcgs.module.js';
 import { CartModule } from './cart/cart.module.js';
 import { OcrModule } from './ocr/ocr.module.js';
+import { OrdersModule } from './orders/orders.module.js';
+import { PaymentsModule } from './payments/payments.module.js';
 
 @Module({
   imports: [
@@ -39,6 +41,8 @@ import { OcrModule } from './ocr/ocr.module.js';
     TcgsModule,
     CartModule,
     OcrModule,
+    OrdersModule,
+    PaymentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

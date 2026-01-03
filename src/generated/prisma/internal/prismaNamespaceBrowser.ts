@@ -67,8 +67,10 @@ export const ModelName = {
   cart_items: 'cart_items',
   orders: 'orders',
   order_items: 'order_items',
+  order_items_hareruya: 'order_items_hareruya',
   shipping_methods: 'shipping_methods',
   order_shipping: 'order_shipping',
+  payments: 'payments',
   listings: 'listings'
 } as const
 
@@ -290,6 +292,18 @@ export const Order_itemsScalarFieldEnum = {
 export type Order_itemsScalarFieldEnum = (typeof Order_itemsScalarFieldEnum)[keyof typeof Order_itemsScalarFieldEnum]
 
 
+export const Order_items_hareruyaScalarFieldEnum = {
+  id: 'id',
+  order_id: 'order_id',
+  hareruya_id: 'hareruya_id',
+  quantity: 'quantity',
+  unit_price: 'unit_price',
+  product_data: 'product_data'
+} as const
+
+export type Order_items_hareruyaScalarFieldEnum = (typeof Order_items_hareruyaScalarFieldEnum)[keyof typeof Order_items_hareruyaScalarFieldEnum]
+
+
 export const Shipping_methodsScalarFieldEnum = {
   id: 'id',
   name: 'name'
@@ -306,6 +320,21 @@ export const Order_shippingScalarFieldEnum = {
 } as const
 
 export type Order_shippingScalarFieldEnum = (typeof Order_shippingScalarFieldEnum)[keyof typeof Order_shippingScalarFieldEnum]
+
+
+export const PaymentsScalarFieldEnum = {
+  id: 'id',
+  order_id: 'order_id',
+  payment_method: 'payment_method',
+  mercadopago_payment_id: 'mercadopago_payment_id',
+  mercadopago_preference_id: 'mercadopago_preference_id',
+  payment_data: 'payment_data',
+  status: 'status',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type PaymentsScalarFieldEnum = (typeof PaymentsScalarFieldEnum)[keyof typeof PaymentsScalarFieldEnum]
 
 
 export const ListingsScalarFieldEnum = {
@@ -332,6 +361,13 @@ export const NullableJsonNullValueInput = {
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueInput = {
+  JsonNull: 'JsonNull'
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {

@@ -57,6 +57,8 @@ async function bootstrap() {
     .addTag('languages')
     .addTag('conditions')
     .addTag('categories')
+    .addTag('orders')
+    .addTag('payments')
     .addBearerAuth(
       {
         type: 'http',

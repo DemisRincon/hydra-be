@@ -400,8 +400,10 @@ export const ModelName = {
   cart_items: 'cart_items',
   orders: 'orders',
   order_items: 'order_items',
+  order_items_hareruya: 'order_items_hareruya',
   shipping_methods: 'shipping_methods',
   order_shipping: 'order_shipping',
+  payments: 'payments',
   listings: 'listings'
 } as const
 
@@ -418,7 +420,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "roles" | "users" | "user_addresses" | "categories" | "conditions" | "languages" | "rarities" | "tcgs" | "singles" | "tags" | "single_tags" | "stock_items" | "carts" | "cart_items" | "orders" | "order_items" | "shipping_methods" | "order_shipping" | "listings"
+    modelProps: "roles" | "users" | "user_addresses" | "categories" | "conditions" | "languages" | "rarities" | "tcgs" | "singles" | "tags" | "single_tags" | "stock_items" | "carts" | "cart_items" | "orders" | "order_items" | "order_items_hareruya" | "shipping_methods" | "order_shipping" | "payments" | "listings"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1606,6 +1608,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    order_items_hareruya: {
+      payload: Prisma.$order_items_hareruyaPayload<ExtArgs>
+      fields: Prisma.order_items_hareruyaFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.order_items_hareruyaFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$order_items_hareruyaPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.order_items_hareruyaFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$order_items_hareruyaPayload>
+        }
+        findFirst: {
+          args: Prisma.order_items_hareruyaFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$order_items_hareruyaPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.order_items_hareruyaFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$order_items_hareruyaPayload>
+        }
+        findMany: {
+          args: Prisma.order_items_hareruyaFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$order_items_hareruyaPayload>[]
+        }
+        create: {
+          args: Prisma.order_items_hareruyaCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$order_items_hareruyaPayload>
+        }
+        createMany: {
+          args: Prisma.order_items_hareruyaCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.order_items_hareruyaCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$order_items_hareruyaPayload>[]
+        }
+        delete: {
+          args: Prisma.order_items_hareruyaDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$order_items_hareruyaPayload>
+        }
+        update: {
+          args: Prisma.order_items_hareruyaUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$order_items_hareruyaPayload>
+        }
+        deleteMany: {
+          args: Prisma.order_items_hareruyaDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.order_items_hareruyaUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.order_items_hareruyaUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$order_items_hareruyaPayload>[]
+        }
+        upsert: {
+          args: Prisma.order_items_hareruyaUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$order_items_hareruyaPayload>
+        }
+        aggregate: {
+          args: Prisma.Order_items_hareruyaAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOrder_items_hareruya>
+        }
+        groupBy: {
+          args: Prisma.order_items_hareruyaGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Order_items_hareruyaGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.order_items_hareruyaCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Order_items_hareruyaCountAggregateOutputType> | number
+        }
+      }
+    }
     shipping_methods: {
       payload: Prisma.$shipping_methodsPayload<ExtArgs>
       fields: Prisma.shipping_methodsFieldRefs
@@ -1751,6 +1827,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.order_shippingCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.Order_shippingCountAggregateOutputType> | number
+        }
+      }
+    }
+    payments: {
+      payload: Prisma.$paymentsPayload<ExtArgs>
+      fields: Prisma.paymentsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.paymentsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$paymentsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.paymentsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$paymentsPayload>
+        }
+        findFirst: {
+          args: Prisma.paymentsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$paymentsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.paymentsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$paymentsPayload>
+        }
+        findMany: {
+          args: Prisma.paymentsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$paymentsPayload>[]
+        }
+        create: {
+          args: Prisma.paymentsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$paymentsPayload>
+        }
+        createMany: {
+          args: Prisma.paymentsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.paymentsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$paymentsPayload>[]
+        }
+        delete: {
+          args: Prisma.paymentsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$paymentsPayload>
+        }
+        update: {
+          args: Prisma.paymentsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$paymentsPayload>
+        }
+        deleteMany: {
+          args: Prisma.paymentsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.paymentsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.paymentsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$paymentsPayload>[]
+        }
+        upsert: {
+          args: Prisma.paymentsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$paymentsPayload>
+        }
+        aggregate: {
+          args: Prisma.PaymentsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePayments>
+        }
+        groupBy: {
+          args: Prisma.paymentsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PaymentsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.paymentsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PaymentsCountAggregateOutputType> | number
         }
       }
     }
@@ -2069,6 +2219,18 @@ export const Order_itemsScalarFieldEnum = {
 export type Order_itemsScalarFieldEnum = (typeof Order_itemsScalarFieldEnum)[keyof typeof Order_itemsScalarFieldEnum]
 
 
+export const Order_items_hareruyaScalarFieldEnum = {
+  id: 'id',
+  order_id: 'order_id',
+  hareruya_id: 'hareruya_id',
+  quantity: 'quantity',
+  unit_price: 'unit_price',
+  product_data: 'product_data'
+} as const
+
+export type Order_items_hareruyaScalarFieldEnum = (typeof Order_items_hareruyaScalarFieldEnum)[keyof typeof Order_items_hareruyaScalarFieldEnum]
+
+
 export const Shipping_methodsScalarFieldEnum = {
   id: 'id',
   name: 'name'
@@ -2085,6 +2247,21 @@ export const Order_shippingScalarFieldEnum = {
 } as const
 
 export type Order_shippingScalarFieldEnum = (typeof Order_shippingScalarFieldEnum)[keyof typeof Order_shippingScalarFieldEnum]
+
+
+export const PaymentsScalarFieldEnum = {
+  id: 'id',
+  order_id: 'order_id',
+  payment_method: 'payment_method',
+  mercadopago_payment_id: 'mercadopago_payment_id',
+  mercadopago_preference_id: 'mercadopago_preference_id',
+  payment_data: 'payment_data',
+  status: 'status',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type PaymentsScalarFieldEnum = (typeof PaymentsScalarFieldEnum)[keyof typeof PaymentsScalarFieldEnum]
 
 
 export const ListingsScalarFieldEnum = {
@@ -2111,6 +2288,13 @@ export const NullableJsonNullValueInput = {
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -2387,8 +2571,10 @@ export type GlobalOmitConfig = {
   cart_items?: Prisma.cart_itemsOmit
   orders?: Prisma.ordersOmit
   order_items?: Prisma.order_itemsOmit
+  order_items_hareruya?: Prisma.order_items_hareruyaOmit
   shipping_methods?: Prisma.shipping_methodsOmit
   order_shipping?: Prisma.order_shippingOmit
+  payments?: Prisma.paymentsOmit
   listings?: Prisma.listingsOmit
 }
 

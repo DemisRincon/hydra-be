@@ -98,6 +98,11 @@ export type orders = Prisma.ordersModel
  */
 export type order_items = Prisma.order_itemsModel
 /**
+ * Model order_items_hareruya
+ * 
+ */
+export type order_items_hareruya = Prisma.order_items_hareruyaModel
+/**
  * Model shipping_methods
  * 
  */
@@ -107,6 +112,11 @@ export type shipping_methods = Prisma.shipping_methodsModel
  * 
  */
 export type order_shipping = Prisma.order_shippingModel
+/**
+ * Model payments
+ * 
+ */
+export type payments = Prisma.paymentsModel
 /**
  * Model listings
  * 

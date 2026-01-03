@@ -143,7 +143,7 @@ model singles {
   extendedArt          Boolean  @default(false)
   finalPrice           Decimal? @map("final_price") @db.Decimal(10, 2)
   foil                 Boolean  @default(false) @map("is_foil")
-  hareruyaId           String?  @unique @map("hareruya_product_id")
+  hareruyaId           String?  @map("hareruya_product_id")
   img                  String   @map("image_url")
   isLocalInventory     Boolean  @default(false) @map("is_local_inventory")
   link                 String?  @map("hareruya_link")
@@ -255,7 +255,9 @@ model orders {
 
   users    users           @relation(fields: [user_id], references: [id])
   items    order_items[]
+  hareruya_items order_items_hareruya[]
   shipping order_shipping?
+  payments payments[]
 }
 
 model order_items {
@@ -267,6 +269,17 @@ model order_items {
 
   orders  orders  @relation(fields: [order_id], references: [id])
   singles singles @relation(fields: [single_id], references: [id])
+}
+
+model order_items_hareruya {
+  id          String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  order_id    String  @db.Uuid
+  hareruya_id String
+  quantity    Int
+  unit_price  Decimal @db.Decimal(10, 2)
+  product_data Json   // Full product data from Hareruya
+
+  orders orders @relation(fields: [order_id], references: [id], onDelete: Cascade)
 }
 
 /**
@@ -291,6 +304,29 @@ model order_shipping {
   orders           orders           @relation(fields: [order_id], references: [id])
   shipping_methods shipping_methods @relation(fields: [shipping_method_id], references: [id])
   user_addresses   user_addresses   @relation(fields: [address_id], references: [id])
+}
+
+/**
+ * =========================
+ * PAYMENTS
+ * =========================
+ */
+
+model payments {
+  id                        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  order_id                 String   @db.Uuid
+  payment_method           String   // 'transfer' or 'mercadopago'
+  mercadopago_payment_id   String?  // Mercado Pago payment ID
+  mercadopago_preference_id String? // Mercado Pago preference ID
+  payment_data             Json?    // Full payment response from Mercado Pago
+  status                   String   // 'pending', 'approved', 'rejected', 'cancelled'
+  created_at               DateTime @default(now())
+  updated_at               DateTime @updatedAt
+
+  orders orders @relation(fields: [order_id], references: [id], onDelete: Cascade)
+
+  @@index([order_id])
+  @@index([mercadopago_payment_id])
 }
 
 /**
