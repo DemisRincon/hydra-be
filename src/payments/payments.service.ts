@@ -2,6 +2,7 @@ import { Injectable, Logger, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service.js';
 import { ConfigService } from '@nestjs/config';
 import { MercadoPagoConfig, Preference, Payment } from 'mercadopago';
+import type { paymentsModel } from '../generated/prisma/models/payments.js';
 
 @Injectable()
 export class PaymentsService {
@@ -30,7 +31,9 @@ export class PaymentsService {
   ) {
     this.logger.log(`Creating Mercado Pago preference for order ${orderId}`);
 
-    const accessToken = this.configService.get<string>('MERCADOPAGO_ACCESS_TOKEN');
+    const accessToken = this.configService.get<string>(
+      'MERCADOPAGO_ACCESS_TOKEN',
+    );
     if (!accessToken) {
       throw new BadRequestException('Mercado Pago access token not configured');
     }
@@ -48,7 +51,8 @@ export class PaymentsService {
       const preference = new Preference(client);
 
       // Transform items to Mercado Pago format
-      const mpItems = items.map((item) => ({
+      const mpItems = items.map((item, index) => ({
+        id: `item-${orderId}-${index}`,
         title: item.title,
         quantity: item.quantity,
         unit_price: item.unit_price,
@@ -88,7 +92,7 @@ export class PaymentsService {
         error,
       );
       throw new BadRequestException(
-        `Failed to create Mercado Pago preference: ${error.message || 'Unknown error'}`,
+        `Failed to create Mercado Pago preference: ${(error as { message?: string }).message || 'Unknown error'}`,
       );
     }
   }
@@ -101,12 +105,14 @@ export class PaymentsService {
     paymentMethod: string,
     mercadopagoPreferenceId?: string,
     paymentData?: any,
-  ) {
-    return this.prisma.payments.create({
+  ): Promise<paymentsModel> {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+    return await this.prisma.payments.create({
       data: {
         order_id: orderId,
         payment_method: paymentMethod,
         mercadopago_preference_id: mercadopagoPreferenceId,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         payment_data: paymentData,
         status: 'pending',
       },
@@ -121,11 +127,13 @@ export class PaymentsService {
     mercadopagoPaymentId: string,
     paymentData: any,
     status: string,
-  ) {
-    return this.prisma.payments.update({
+  ): Promise<paymentsModel> {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+    return await this.prisma.payments.update({
       where: { id: paymentId },
       data: {
         mercadopago_payment_id: mercadopagoPaymentId,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         payment_data: paymentData,
         status,
       },
@@ -142,25 +150,42 @@ export class PaymentsService {
     this.logger.log('Processing Mercado Pago webhook', JSON.stringify(data));
 
     // Handle different webhook types
-    const type = data?.type || data?.action;
-    
-    if (type === 'payment' || data?.data?.id) {
+    const type: string | undefined = ((data as { type?: unknown })?.type ||
+      (data as { action?: unknown })?.action) as string | undefined;
+
+    if (type === 'payment' || (data as { data?: { id?: unknown } })?.data?.id) {
       // Payment notification
       return this.processPaymentWebhook(data);
-    } else if (type === 'merchant_order' || data?.merchant_order_id) {
+    } else if (
+      type === 'merchant_order' ||
+      (data as { merchant_order_id?: unknown })?.merchant_order_id
+    ) {
       // Merchant order notification - we can process this if needed
-      this.logger.log('Received merchant_order notification, processing payment from order');
+      this.logger.log(
+        'Received merchant_order notification, processing payment from order',
+      );
       // Mercado Pago merchant orders contain payment information
       // We'll process the payment from the order
       return this.processMerchantOrderWebhook(data);
     } else {
       // Try to extract payment ID from various possible structures
-      const paymentId = data?.data?.id || data?.id || data?.payment_id;
+      const paymentId: string | number | undefined =
+        ((data as { data?: { id?: unknown } })?.data?.id as
+          | string
+          | number
+          | undefined) ||
+        ((data as { id?: unknown })?.id as string | number | undefined) ||
+        ((data as { payment_id?: unknown })?.payment_id as
+          | string
+          | number
+          | undefined);
       if (paymentId) {
         return this.processPaymentWebhook({ data: { id: paymentId }, ...data });
       }
-      
-      throw new BadRequestException('Unknown webhook type or missing payment ID');
+
+      throw new BadRequestException(
+        'Unknown webhook type or missing payment ID',
+      );
     }
   }
 
@@ -169,14 +194,28 @@ export class PaymentsService {
    */
   private async processPaymentWebhook(data: any) {
     // Extract payment information from webhook
-    const paymentId = data?.data?.id || data?.id;
-    const preferenceId = data?.data?.preference_id || data?.preference_id;
-    
+    const paymentId: string | number | undefined =
+      ((data as { data?: { id?: unknown } })?.data?.id as
+        | string
+        | number
+        | undefined) ||
+      ((data as { id?: unknown })?.id as string | number | undefined);
+    const preferenceId: string | undefined =
+      ((data as { data?: { preference_id?: unknown } })?.data?.preference_id as
+        | string
+        | undefined) ||
+      ((data as { preference_id?: unknown })?.preference_id as
+        | string
+        | undefined);
+
     if (!paymentId && !preferenceId) {
-      throw new BadRequestException('Payment ID or Preference ID not found in webhook data');
+      throw new BadRequestException(
+        'Payment ID or Preference ID not found in webhook data',
+      );
     }
 
     // Find payment by preference_id or payment_id
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
     const payment = await this.prisma.payments.findFirst({
       where: {
         OR: [
@@ -190,37 +229,59 @@ export class PaymentsService {
     });
 
     if (!payment) {
-      this.logger.warn(`Payment not found for webhook data. Payment ID: ${paymentId}, Preference ID: ${preferenceId}`);
+      this.logger.warn(
+        `Payment not found for webhook data. Payment ID: ${paymentId}, Preference ID: ${preferenceId}`,
+      );
       // Don't throw error - webhook might be for a payment we haven't created yet
       // or it might be a test notification
       return { success: true, message: 'Payment not found in database' };
     }
 
     // Get full payment data from Mercado Pago if we only have preference_id
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     let paymentData = data;
-    if (paymentId && !payment.mercadopago_payment_id) {
+    if (
+      paymentId &&
+      !(payment as { mercadopago_payment_id?: string | null })
+        .mercadopago_payment_id
+    ) {
       // We have a payment ID but haven't stored it yet - this is the first notification
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       paymentData = data;
     }
 
     // Update payment status based on webhook data
-    const status = data?.status || data?.data?.status || paymentData?.status || 'pending';
+    const status: string =
+      ((data as { status?: unknown })?.status as string | undefined) ||
+      ((data as { data?: { status?: unknown } })?.data?.status as
+        | string
+        | undefined) ||
+      ((paymentData as { status?: unknown })?.status as string | undefined) ||
+      'pending';
     const paymentStatus = this.mapMercadoPagoStatus(status);
 
     await this.updatePayment(
-      payment.id,
-      paymentId?.toString() || payment.mercadopago_payment_id || '',
+      (payment as { id: string }).id,
+      paymentId?.toString() ||
+        (payment as { mercadopago_payment_id?: string | null })
+          .mercadopago_payment_id ||
+        '',
       paymentData,
       paymentStatus,
     );
 
     // Update order status if payment is approved
-    if (paymentStatus === 'approved' && payment.orders.status === 'PENDING') {
+    if (
+      paymentStatus === 'approved' &&
+      (payment as { orders?: { status?: string } }).orders?.status === 'PENDING'
+    ) {
       await this.prisma.orders.update({
-        where: { id: payment.order_id },
+        where: { id: (payment as { order_id: string }).order_id },
         data: { status: 'PAID' },
       });
-      this.logger.log(`Order ${payment.order_id} marked as PAID`);
+      this.logger.log(
+        `Order ${(payment as { order_id: string }).order_id} marked as PAID`,
+      );
     }
 
     return { success: true };
@@ -230,21 +291,38 @@ export class PaymentsService {
    * Process merchant order webhook
    */
   private async processMerchantOrderWebhook(data: any) {
-    const merchantOrderId = data?.merchant_order_id || data?.data?.id;
+    const merchantOrderId: string | number | undefined =
+      ((data as { merchant_order_id?: unknown })?.merchant_order_id as
+        | string
+        | number
+        | undefined) ||
+      ((data as { data?: { id?: unknown } })?.data?.id as
+        | string
+        | number
+        | undefined);
     if (!merchantOrderId) {
       throw new BadRequestException('Merchant order ID not found');
     }
 
     // Merchant orders contain payment information
     // Extract the first approved payment if available
-    const payments = data?.payments || data?.data?.payments || [];
-    const approvedPayment = payments.find((p: any) => p.status === 'approved');
-    
+    const payments: any[] =
+      ((data as { payments?: unknown })?.payments as any[]) ||
+      ((data as { data?: { payments?: unknown } })?.data?.payments as any[]) ||
+      [];
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const approvedPayment: any = payments.find(
+      (p: any) => (p as { status?: unknown }).status === 'approved',
+    );
+
     if (approvedPayment) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       return this.processPaymentWebhook({ data: approvedPayment });
     }
 
-    this.logger.log(`Merchant order ${merchantOrderId} received but no approved payment found`);
+    this.logger.log(
+      `Merchant order ${merchantOrderId} received but no approved payment found`,
+    );
     return { success: true, message: 'No approved payment in merchant order' };
   }
 
@@ -270,7 +348,9 @@ export class PaymentsService {
   async verifyPayment(paymentId: string) {
     this.logger.log(`Verifying payment ${paymentId}`);
 
-    const accessToken = this.configService.get<string>('MERCADOPAGO_ACCESS_TOKEN');
+    const accessToken = this.configService.get<string>(
+      'MERCADOPAGO_ACCESS_TOKEN',
+    );
     if (!accessToken) {
       throw new BadRequestException('Mercado Pago access token not configured');
     }
@@ -280,7 +360,7 @@ export class PaymentsService {
       const payment = new Payment(client);
 
       const paymentData = await payment.get({ id: paymentId });
-      
+
       return {
         verified: true,
         status: paymentData.status,
@@ -290,9 +370,8 @@ export class PaymentsService {
     } catch (error: any) {
       this.logger.error(`Error verifying payment ${paymentId}:`, error);
       throw new BadRequestException(
-        `Failed to verify payment: ${error.message || 'Unknown error'}`,
+        `Failed to verify payment: ${(error as { message?: string }).message || 'Unknown error'}`,
       );
     }
   }
 }
-

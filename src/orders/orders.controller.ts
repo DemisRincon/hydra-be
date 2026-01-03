@@ -19,7 +19,7 @@ import { CreateOrderDto } from './dto/create-order.dto.js';
 import { OrderResponseDto } from './dto/order-response.dto.js';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard.js';
 import { CurrentUser } from '../auth/decorators/current-user.decorator.js';
-import { UserWithRole } from '../auth/interfaces/jwt-payload.interface.js';
+import type { UserWithRole } from '../users/interfaces/user.interface.js';
 
 @ApiTags('orders')
 @Controller('orders')
@@ -64,11 +64,7 @@ export class OrdersController {
     type: OrderResponseDto,
   })
   @ApiResponse({ status: 404, description: 'Order not found' })
-  async getOrder(
-    @Param('id') id: string,
-    @CurrentUser() user: UserWithRole,
-  ) {
+  async getOrder(@Param('id') id: string, @CurrentUser() user: UserWithRole) {
     return this.ordersService.getOrder(id, user.id);
   }
 }
-

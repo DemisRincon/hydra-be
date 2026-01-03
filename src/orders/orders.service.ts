@@ -5,10 +5,14 @@ import {
   Logger,
 } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service.js';
-import { CreateOrderDto } from './dto/create-order.dto.js';
+import {
+  CreateOrderDto,
+  ShippingMethod,
+  PaymentMethod,
+} from './dto/create-order.dto.js';
 import { CartService } from '../cart/cart.service.js';
 import { PaymentsService } from '../payments/payments.service.js';
-import { Prisma } from '../generated/prisma/client.js';
+import { Prisma, $Enums } from '../generated/prisma/client.js';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
@@ -90,7 +94,7 @@ export class OrdersService {
 
     // Validate shipping method requirements
     if (
-      createOrderDto.shippingMethod === 'shipping' &&
+      createOrderDto.shippingMethod === ShippingMethod.SHIPPING &&
       !createOrderDto.addressId
     ) {
       throw new BadRequestException(
@@ -104,8 +108,8 @@ export class OrdersService {
     );
 
     // Validate address if shipping
-    let addressId = createOrderDto.addressId;
-    if (createOrderDto.shippingMethod === 'shipping') {
+    const addressId = createOrderDto.addressId;
+    if (createOrderDto.shippingMethod === ShippingMethod.SHIPPING) {
       if (!addressId) {
         throw new BadRequestException('Address ID is required');
       }
@@ -133,7 +137,9 @@ export class OrdersService {
       });
 
       // Create order items (local singles)
-      const localItems = cart.items.filter((item) => !item.is_hareruya && item.single_id);
+      const localItems = cart.items.filter(
+        (item) => !item.is_hareruya && item.single_id,
+      );
       if (localItems.length > 0) {
         for (const cartItem of localItems) {
           const single = await tx.singles.findUnique({
@@ -172,23 +178,42 @@ export class OrdersService {
       const hareruyaItems = cart.items.filter((item) => item.is_hareruya);
       if (hareruyaItems.length > 0) {
         for (const cartItem of hareruyaItems) {
-          const productData = cartItem.product_data as any;
-          const price = productData?.price || productData?.finalPrice || 0;
+          const productData = cartItem.product_data as
+            | {
+                price?: string | number;
+                finalPrice?: number;
+                [key: string]: unknown;
+              }
+            | null
+            | undefined;
+          const priceValue =
+            typeof productData?.price === 'number'
+              ? productData.price
+              : typeof productData?.price === 'string'
+                ? parseFloat(productData.price) || 0
+                : productData?.finalPrice || 0;
+          const price = priceValue;
 
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
           await tx.order_items_hareruya.create({
             data: {
               order_id: newOrder.id,
               hareruya_id: cartItem.hareruya_id || '',
               quantity: cartItem.quantity,
               unit_price: new Prisma.Decimal(price),
-              product_data: productData || {},
+              product_data:
+                (productData as Prisma.InputJsonValue) ||
+                ({} as Prisma.InputJsonValue),
             },
           });
         }
       }
 
       // Create shipping info
-      if (createOrderDto.shippingMethod === 'shipping' && addressId) {
+      if (
+        createOrderDto.shippingMethod === ShippingMethod.SHIPPING &&
+        addressId
+      ) {
         await tx.order_shipping.create({
           data: {
             order_id: newOrder.id,
@@ -196,7 +221,7 @@ export class OrdersService {
             address_id: addressId,
           },
         });
-      } else if (createOrderDto.shippingMethod === 'arrange') {
+      } else if (createOrderDto.shippingMethod === ShippingMethod.ARRANGE) {
         // For arrange method, we still create shipping record but without address
         // We'll need to handle this - for now, create a dummy address or make address optional
         // Actually, let's make address optional in the schema or create a placeholder
@@ -214,8 +239,13 @@ export class OrdersService {
     this.logger.log(`Order ${order.id} created for user ${userId}`);
 
     // Create payment record
-    let paymentResult = null;
-    if (createOrderDto.paymentMethod === 'mercadopago') {
+    let paymentResult: {
+      paymentId: string;
+      preferenceId?: string;
+      initPoint?: string;
+      paymentMethod?: string;
+    } | null = null;
+    if (createOrderDto.paymentMethod === PaymentMethod.MERCADOPAGO) {
       // Get order items for Mercado Pago preference
       const orderWithItems = await this.prisma.orders.findUnique({
         where: { id: order.id },
@@ -229,29 +259,66 @@ export class OrdersService {
         },
       });
 
-      const mpItems = [];
-      
+      if (!orderWithItems) {
+        throw new NotFoundException(`Order ${order.id} not found`);
+      }
+
+      const mpItems: Array<{
+        title: string;
+        quantity: number;
+        unit_price: number;
+      }> = [];
+
       // Add local items
+
       for (const item of orderWithItems.items) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+        const single = item.singles;
+
+        const title =
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+          (single?.cardName as string | null | undefined) ||
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+          (single?.name as string | null | undefined) ||
+          'Producto';
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        const quantity = item.quantity as number;
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument
+        const unitPrice = parseFloat(item.unit_price.toString());
         mpItems.push({
-          title: item.singles.cardName || item.singles.name,
-          quantity: item.quantity,
-          unit_price: parseFloat(item.unit_price.toString()),
+          title,
+          quantity,
+          unit_price: unitPrice,
         });
       }
 
       // Add Hareruya items
+
       for (const item of orderWithItems.hareruya_items) {
-        const productData = item.product_data as any;
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        const productData = item.product_data as
+          | {
+              cardName?: string;
+              name?: string;
+              [key: string]: unknown;
+            }
+          | null
+          | undefined;
+        const title = productData?.cardName || productData?.name || 'Producto';
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        const quantity = item.quantity as number;
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument
+        const unitPrice = parseFloat(item.unit_price.toString());
         mpItems.push({
-          title: productData?.cardName || productData?.name || 'Producto',
-          quantity: item.quantity,
-          unit_price: parseFloat(item.unit_price.toString()),
+          title,
+          quantity,
+          unit_price: unitPrice,
         });
       }
 
       // Add shipping cost if applicable
-      const shippingCost = createOrderDto.shippingMethod === 'shipping' ? 280.00 : 0;
+      const shippingCost =
+        createOrderDto.shippingMethod === ShippingMethod.SHIPPING ? 280.0 : 0;
       if (shippingCost > 0) {
         mpItems.push({
           title: 'Envío Express',
@@ -260,7 +327,10 @@ export class OrdersService {
         });
       }
 
-      const frontendUrl = this.configService.get<string>('FRONTEND_URL', 'http://localhost:3000');
+      const frontendUrl = this.configService.get<string>(
+        'FRONTEND_URL',
+        'http://localhost:3000',
+      );
       const baseUrl = frontendUrl.split(',')[0].trim();
 
       const preference = await this.paymentsService.createMercadoPagoPreference(
@@ -273,6 +343,7 @@ export class OrdersService {
         },
       );
 
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const payment = await this.paymentsService.createPayment(
         order.id,
         'mercadopago',
@@ -281,17 +352,20 @@ export class OrdersService {
       );
 
       paymentResult = {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
         paymentId: payment.id,
         preferenceId: preference.preference_id,
         initPoint: preference.init_point,
       };
     } else {
       // For transfer, just create payment record
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const payment = await this.paymentsService.createPayment(
         order.id,
         'transfer',
       );
       paymentResult = {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
         paymentId: payment.id,
         paymentMethod: 'transfer',
       };
@@ -392,10 +466,9 @@ export class OrdersService {
    * Update order status
    */
   async updateOrderStatus(orderId: string, status: string, userId?: string) {
-    const where: any = { id: orderId };
-    if (userId) {
-      where.user_id = userId;
-    }
+    const where: Prisma.ordersWhereUniqueInput = userId
+      ? { id: orderId, user_id: userId }
+      : { id: orderId };
 
     const order = await this.prisma.orders.findUnique({
       where,
@@ -407,8 +480,8 @@ export class OrdersService {
 
     return this.prisma.orders.update({
       where: { id: orderId },
-      data: { status: status as any },
+
+      data: { status: status as $Enums.order_status_enum },
     });
   }
 }
-
