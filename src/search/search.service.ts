@@ -61,7 +61,7 @@ export class SearchService {
       const url = `${this.scryfallBaseUrl}/cards/autocomplete?q=${encodeURIComponent(query)}`;
       this.logger.debug(`Scryfall autocomplete query: ${query}`);
 
-      const response = await fetch(url, {
+      const response: Awaited<ReturnType<typeof fetch>> = await fetch(url, {
         method: 'GET',
         headers: {
           'User-Agent': 'Hydra-BE/1.0',
